@@ -1,0 +1,165 @@
+package com.alfred.Sailfish.app.Service;
+
+import com.alfred.Sailfish.app.DAO.MemberCardDAO;
+import com.alfred.Sailfish.app.DAO.MemberDAO;
+import com.alfred.Sailfish.app.DAO.ShopDAO;
+import com.alfred.Sailfish.app.Util.Reference;
+import com.alfred.Sailfish.app.Util.MethodTool;
+
+public class MemberCardService {
+	
+	private MemberDAO memberDAO = new MemberDAO();
+	private MemberCardDAO memberCardDAO = new MemberCardDAO();
+	private ShopDAO shopDAO = new ShopDAO();
+	
+	public MemberCardService() {
+	}
+
+	/**
+	 * 新增会员卡
+	 * @param member_id
+	 * @param card_id
+	 * @param shopmember_id
+	 * @param balance
+	 * @param start_time
+	 * @param expired_time
+	 * @return
+	 */
+	public String add(long member_id,long card_id,
+		long shopmember_id,int balance,String start_time,String expired_time) {
+		boolean isMemberDeleted = memberDAO.isDel(member_id);
+        long shop_id = shopDAO.queryShopIdByCardId(card_id);
+		long shop_id_1 = shopDAO.queryShopByShopmemberId(member_id);
+        long shop_id_2 = shopDAO.queryShopIdByCardId(card_id);
+        long shop_id_3 = shopDAO.queryShopIdByMemberId(member_id);
+        if (isMemberDeleted ==false) {
+            if (shop_id == shop_id_1 && shop_id_1 == shop_id_2 && shop_id_2 == shop_id_3) {
+                if (memberCardDAO.isMemberCardHasExist(member_id,card_id) == true) {
+                	return qr(Reference.DUPLICATE);
+                }else {
+                    boolean isAdded = memberCardDAO.addMemberCard(member_id,shop_id,card_id,shopmember_id,balance,start_time,expired_time);
+                    if (isAdded == true) {
+                    	return qr(Reference.EXE_SUC);
+                    }else {
+                    	return qr(Reference.EXE_FAIL);
+                    }
+                }
+            } else {
+            	return qr(Reference.NOT_MATCH);
+            }
+        } else {
+        	return qr(Reference.NSR);
+        }
+	}
+	
+	/**
+	 * 删除会员卡
+	 * @param mc_id
+	 * @param lmu_id
+	 * @return
+	 */
+	public String remove(long mc_id,long lmu_id) {
+		if (shopDAO.queryShopByShopmemberId(lmu_id) == shopDAO.queryShopIdByMembercardId(mc_id)) {
+			if (memberCardDAO.isDel(mc_id) == true) {
+				return qr(Reference.NSR);
+			} else {
+				boolean isDeleted = false;
+				isDeleted = memberCardDAO.deleteMemberCardById(mc_id,lmu_id);
+				if (isDeleted == true) {
+					return qr(Reference.EXE_SUC);
+				} else {
+					return qr(Reference.EXE_FAIL);
+				}
+			}
+		} else {
+			return qr(Reference.NOT_MATCH);
+		}
+	}
+	
+	/**
+	 * 增加账户余额
+	 * @param member_card_id
+	 * @param last_modify_user
+	 * @param num
+	 * @return
+	 */
+	public String increaseBalance(long member_card_id,long last_modify_user,int num) {
+		boolean isCharged = memberCardDAO.updateBalancePlus(member_card_id, num, last_modify_user);
+		if (shopDAO.queryShopByShopmemberId(last_modify_user) == shopDAO.queryShopIdByMembercardId(member_card_id)) {
+			if (memberCardDAO.isDel(member_card_id) == false) {
+				if (isCharged == true) {
+					return qr(Reference.EXE_SUC);
+				}else {
+					return qr(Reference.EXE_FAIL);
+				}
+			} else {
+				return qr(Reference.NSR);
+			}
+		} else {
+			return qr(Reference.NOT_MATCH);
+		}
+	}
+	
+	/**
+	 * 缩减账户余额
+	 * @param mc_id
+	 * @param shop_member_id
+	 * @param num
+	 * @return
+	 */
+	public String reduceBalance(long mc_id,long shop_member_id,int num) {
+		boolean isEnough = false;
+		isEnough = memberCardDAO.isBalanceEnough(mc_id, num);
+		if (shopDAO.queryShopIdByMembercardId(mc_id) == shopDAO.queryShopByShopmemberId(shop_member_id)) {
+			if (memberCardDAO.isDel(mc_id) == false) {
+				if (isEnough == true) {
+					boolean isReduced = memberCardDAO.updateBalanceReduce(mc_id,shop_member_id, num);
+					if (isReduced == true) {
+						return qr(Reference.EXE_SUC);
+					}else {
+						return qr(Reference.EXE_FAIL);
+					}
+				}else {
+                	return qr(Reference.BALANCE_NOT_ENOUGH);
+				}
+			} else {
+				return qr(Reference.NSR);
+			}
+		} else {
+			return qr(Reference.NOT_MATCH);
+		}
+	}
+	
+	/**
+	 * 对到期时间进行操作
+	 * @param lmu_id
+	 * @param mc_id
+	 * @param expiredTime
+	 * @return
+	 */
+	public String changeExpiredTime(long lmu_id,long mc_id,String expiredTime) {
+		if(shopDAO.queryShopByShopmemberId(lmu_id) == shopDAO.queryShopIdByMembercardId(mc_id)) {
+			if (memberCardDAO.isDel(mc_id) == false) {
+				boolean isUpdated = memberCardDAO.updateExpiredTime(mc_id, lmu_id, expiredTime);
+				if (isUpdated ==true) {
+					return qr(Reference.EXE_SUC);
+				}else {
+					return qr(Reference.EXE_FAIL);
+				}
+			}else {
+				return qr(Reference.NSR);
+			}
+		}else {
+			return qr(Reference.NOT_MATCH);
+		}
+	}
+	
+	/**
+	 * 快速转换String
+	 * @param s
+	 * @return
+	 */
+	private String qr(String s) {
+		return MethodTool.tfs(s);
+	}
+}
