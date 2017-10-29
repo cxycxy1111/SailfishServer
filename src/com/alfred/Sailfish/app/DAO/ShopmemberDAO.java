@@ -11,8 +11,8 @@ import com.alfred.Sailfish.app.Util.SQLHelper;
 public class ShopmemberDAO {
 
 	SQLHelper helper = new SQLHelper();
-	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public ShopmemberDAO() {
 		
@@ -30,10 +30,18 @@ public class ShopmemberDAO {
 		return helper.update(sql);
 	}
 
+	/**
+	 * 修改教师资料
+	 * @param sm_id
+	 * @param lmu_id
+	 * @param name
+	 * @return
+	 * @throws SQLException
+	 */
 	public boolean modifyInfo(long sm_id,long lmu_id,String name) throws SQLException {
 		String sql = "UPDATE shopmember SET name='" + name +
 				"' , last_modify_user=" + lmu_id +
-				" , last_modify_time='" +simpleDateFormat.format(new Date()) + "' WHERE id=" + sm_id;
+				" , last_modify_time='" +sdf.format(new Date()) + "' WHERE id=" + sm_id;
 		return helper.update(sql);
 	}
 	
@@ -61,7 +69,7 @@ public class ShopmemberDAO {
 	 */
 	public ArrayList<HashMap<String,Object>> queryShopmemberList(long shop_id,int type) {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>> ();
-		String sql = "select id,name,type from shopmember where shop_id = " + shop_id + " AND type = " + type;
+		String sql = "select id,name,type from shopmember where shop_id = " + shop_id + " AND del = 0 AND type = " + type;
 		list = helper.query(sql);
 		return list;
 	}
@@ -108,8 +116,7 @@ public class ShopmemberDAO {
 	public boolean addNewShopmember(long shop_id,int type,String name,String login_name,String password) {
 		boolean isSuccessed = false;
 		String pwd = MethodTool.MD5(password);
-		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );	
-		String sql = "INSERT INTO shopmember (shop_id,type,user_name,password,del,name,create_time) VALUES (" 
+		String sql = "INSERT INTO shopmember (shop_id,type,user_name,password,del,name,create_time) VALUES ("
 		+ shop_id + "," + type + ",'" + login_name + "','" + pwd + "'," + 0 + ",'" + name + "','"
 		+ sdf.format(new Date()) + "')";
 		try {
@@ -131,10 +138,18 @@ public class ShopmemberDAO {
 	 */
 	public boolean addNewShopmember(long shop_id,long shopmember_id,int type,String name,String user_name,String password) {
 		boolean isSuccessed = false;
-		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );	
-		String sql = "INSERT INTO shopmember (shop_id,last_modify_user,creator,type,user_name,password,del,name,create_time,last_modify_time) VALUES (" 
-		+ shop_id + "," + shopmember_id + "," + shopmember_id + "," + type + ",'" + user_name + "','" + MethodTool.MD5(password) + "'," + 0 + ",'" + name + "','"
-		+ sdf.format(new Date()) + "'" + sdf.format(new Date()) + "')";
+		String sql = "INSERT INTO shopmember (shop_id,last_modify_user,creator,type,user_name,password,del,name,create_time,last_modify_time) VALUES (" +
+				shop_id + "," +
+				shopmember_id + "," +
+				shopmember_id + "," +
+				type + ",'" +
+				user_name + "','" +
+				MethodTool.MD5(password) + "'," +
+				0 + ",'" +
+				name + "','" +
+				sdf.format(new Date()) + "','" +
+				sdf.format(new Date()) + "')";
+		System.out.println(sql);
 		try {
 			isSuccessed = helper.update(sql);
 		} catch (SQLException e) {
@@ -149,7 +164,6 @@ public class ShopmemberDAO {
 	 * @param id 要被删除的教师
 	 */
 	public boolean deleteMember(long lmu_id,long id) {
-		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );	
 		boolean isUpdated = false;
 		String sql = "UPDATE shopmember SET del = 1 ,"
 				+ "last_modify_user = " + lmu_id + ","
@@ -183,7 +197,7 @@ public class ShopmemberDAO {
 	 */
 	public boolean isLoginNameExist(String login_name) {
 		boolean isExist = false;
-		String sql = "select * from shopmember where user_name = '" + login_name + "' and del = 0";
+		String sql = "SELECT * FROM shopmember WHERE user_name = '" + login_name + "' AND del = 0";
 		list = helper.query(sql);
 		if (list.size() != 0) {
 			isExist = true;

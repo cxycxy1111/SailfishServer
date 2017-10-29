@@ -35,9 +35,10 @@ public class ShopmemberService {
 		if (isLoginNameExist == false) {
 			isAdded = shopmemberDAO.addNewShopmember(shop_id, shopmember_id, type, name, user_name, password);
 			if (isAdded == true) {
-				return MethodTool.qr(Reference.EXE_SUC);
+				return MethodTool.qr(Reference.dataprefix + shopmemberDAO.queryIdByUserName(user_name) + Reference.datasuffix);
 			} else {
-				return MethodTool.qr(Reference.EXE_FAIL);			}
+				return MethodTool.qr(Reference.EXE_FAIL);
+			}
 		} else {
 			return MethodTool.qr(Reference.DUPLICATE);
 		}

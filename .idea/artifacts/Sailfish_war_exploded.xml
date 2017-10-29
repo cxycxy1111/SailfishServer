@@ -1,0 +1,24 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Sailfish:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/Sailfish_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Sailfish" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="module" name="mysql-connector-java-5.1.34-bin.jar" module-name="Sailfish" />
+          <element id="library" level="module" name="json-20170516.jar" module-name="Sailfish" />
+          <element id="library" level="module" name="json-lib-2.4-jdk15.jar" module-name="Sailfish" />
+          <element id="library" level="module" name="gson-2.8.2.jar" module-name="Sailfish" />
+          <element id="library" level="module" name="gson-2.8.2-javadoc.jar" module-name="Sailfish" />
+          <element id="library" level="module" name="gson-2.8.2-sources.jar" module-name="Sailfish" />
+          <element id="library" level="module" name="c3p0-0.9.5.2.jar" module-name="Sailfish" />
+          <element id="library" level="module" name="c3p0-oracle-thin-extras-0.9.5.2.jar" module-name="Sailfish" />
+          <element id="library" level="module" name="mchange-commons-java-0.2.11.jar" module-name="Sailfish" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="Sailfish/web/Sailfish" />
+    </root>
+  </artifact>
+</component>

@@ -248,13 +248,13 @@ public class CardDAO {
 	 */
 	public ArrayList<HashMap<String,Object>> queryList(long shop_id,int type) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		String sql = "SELECT id,name,type FROM card WHERE shop_id = " + shop_id + " AND type = " + type + " AND del = 0 ORDER BY type";
-		String sql_2 = "SELECT id,name,type FROM card WHERE shop_id = " + shop_id + " AND del = 0 ORDER BY type";
+		String sql;
 		if (type == 0) {
-			list = helper.query(sql_2);
-		}else {
-			list = helper.query(sql);
+			sql = "SELECT id,name,type FROM card WHERE shop_id = " + shop_id + " AND type =" + type + " AND del = 0 ORDER BY type";
+		} else {
+			sql = "SELECT id,name,type FROM card WHERE shop_id = " + shop_id + " AND del = 0 ORDER BY type";
 		}
+		list = helper.query(sql);
 		return list;
 	}
 	
