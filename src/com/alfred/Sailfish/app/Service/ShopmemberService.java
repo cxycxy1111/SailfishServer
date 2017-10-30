@@ -8,7 +8,6 @@ import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.DAO.ShopmemberDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
-import com.sun.org.apache.regexp.internal.RE;
 
 public class ShopmemberService {
 	

@@ -52,7 +52,12 @@ public class CardService {
 		}
 		return MethodTool.tfc(list);
 	}
-	
+
+	/**
+	 * 查询卡明细
+	 * @param c_id
+	 * @return
+	 */
 	public String queryCardDetail(long c_id) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		if (cardDAO.isDel(c_id) == true) {

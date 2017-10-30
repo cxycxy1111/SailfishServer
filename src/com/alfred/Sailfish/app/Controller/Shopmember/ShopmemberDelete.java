@@ -2,7 +2,6 @@ package com.alfred.Sailfish.app.Controller.Shopmember;
 
 import com.alfred.Sailfish.app.Service.ShopmemberService;
 import com.alfred.Sailfish.app.Util.MethodTool;
-import sun.jvm.hotspot.debugger.win32.coff.MachineTypes;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

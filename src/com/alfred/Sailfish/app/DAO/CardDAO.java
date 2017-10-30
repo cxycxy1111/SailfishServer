@@ -249,7 +249,7 @@ public class CardDAO {
 	public ArrayList<HashMap<String,Object>> queryList(long shop_id,int type) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		String sql;
-		if (type == 0) {
+		if (type != 0) {
 			sql = "SELECT id,name,type FROM card WHERE shop_id = " + shop_id + " AND type =" + type + " AND del = 0 ORDER BY type";
 		} else {
 			sql = "SELECT id,name,type FROM card WHERE shop_id = " + shop_id + " AND del = 0 ORDER BY type";
