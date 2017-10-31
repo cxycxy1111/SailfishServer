@@ -99,12 +99,14 @@ public class CourseSupportedCardDAO {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		String sql;
 		if (c_id == 0) {
-			sql = "SELECT c.id c_id,c.name c_name,cs.price c_price FROM course_supportedcard cs "
+			sql = "SELECT truncate(c.id,0) c_id,trim(c.name) card_name,truncate(ce.id,0) course_id,cs.price c_price FROM course_supportedcard cs "
 					+ "LEFT JOIN card c ON cs.card_id = c.id "
+					+ "LEFT JOIN course ce ON cs.course_id=ce.id "
 					+ "WHERE cs.del = 0 AND c.shop_id=" + s_id;
 		}else {
-			sql = "SELECT c.id c_id,c.name c_name,cs.price c_price FROM course_supportedcard cs "
+			sql = "SELECT truncate(c.id,0) c_id,trim(c.name) card_name,trim(ce.name) course_name,cs.price c_price FROM course_supportedcard cs "
 					+ "LEFT JOIN card c ON cs.card_id = c.id "
+					+ "LEFT JOIN course ce ON cs.course_id=ce.id "
 					+ "WHERE cs.del = 0 AND cs.course_id = " + c_id + " AND c.shop_id = " + s_id;
 		}
 		list = helper.query(sql);

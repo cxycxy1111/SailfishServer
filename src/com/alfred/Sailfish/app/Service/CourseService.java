@@ -98,15 +98,29 @@ public class CourseService {
 		if(shopDAO.isDeleted(s_id)){
 			return qr(Reference.NSR);
 		}
-		ArrayList<HashMap<String,Object>> list = new ArrayList<>();
-		list = courseDAO.queryList(s_id);
+		ArrayList<HashMap<String,Object>> course_list = new ArrayList<>();
+		ArrayList<HashMap<String,Object>> full_list = new ArrayList<>();
 		ArrayList<HashMap<String,Object>> csc_list = new ArrayList<>();
+		course_list = courseDAO.queryList(s_id);
 		csc_list = courseSupportedCardDAO.querySupportedCards(s_id,0);
-		if (list.size() == 0) {
-			return qr(Reference.EMPTY_RESULT);
+		for (int i = 0;i < course_list.size();i++) {
+			HashMap<String,Object> temp_map = course_list.get(i);
+			StringBuilder builder = new StringBuilder();
+			String temp_id = String.valueOf(temp_map.get("id"));
+			for (int j = 0;j < csc_list.size();j++) {
+				String temp_csc_course_id = String.valueOf(csc_list.get(j).get("course_id"));
+				if ((temp_csc_course_id.equals(temp_id))) {
+					builder.append(csc_list.get(j).get("card_name"));
+					builder.append("|");
+				}
+			}
+			String sc = builder.toString();
+			String [] scs = sc.split("|");
+			StringBuilder b = new StringBuilder();
+			temp_map.put("supportedcard",builder.toString());
+			full_list.add(temp_map);
 		}
-		list.addAll(csc_list);
-		return MethodTool.tfc(list);
+		return MethodTool.tfc(full_list);
 	}
 	
 	/**

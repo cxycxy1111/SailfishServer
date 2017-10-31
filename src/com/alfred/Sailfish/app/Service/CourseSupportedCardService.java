@@ -35,9 +35,9 @@ public class CourseSupportedCardService {
 	/**
 	 * 修改受支持的会员卡列表
 	 * @param type 操作类型：1新增，2删除，3修改
-	 * @param course_id
-	 * @param card_id
-	 * @param price
+	 * @param course_id 课程ID
+	 * @param card_id 卡ID
+	 * @param price 价格
 	 * @return
 	 */
 	public String modify(int type,long course_id,long card_id,int price) {
