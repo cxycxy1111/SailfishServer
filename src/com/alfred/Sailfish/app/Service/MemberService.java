@@ -27,10 +27,10 @@ public class MemberService {
 	 */
 	public String addMember(String login_name,long shop_id,long shopmember_id,
 			String name,String password,String birthday,String phone,String im) {
-		if (memberDAO.isLoginNameExist(login_name, shop_id) == false) {
+		if (!memberDAO.isLoginNameExist(login_name, shop_id)) {
 			boolean isAdded = memberDAO.addNewMmember(shop_id, shopmember_id, name, login_name,
 					password, birthday, phone, im);
-			if(isAdded == true) {
+			if(isAdded) {
 				return MethodTool.qr(Reference.EXE_SUC);
 			}else {
 				return MethodTool.qr(Reference.EXE_FAIL);
@@ -42,11 +42,11 @@ public class MemberService {
 	
 	public String resetPassword(long sm_id,long m_id,String password) {
 		boolean b = false;
-		if(memberDAO.isDel(m_id) == true) {
+		if(memberDAO.isDel(m_id)) {
 			return MethodTool.qr(Reference.NSR);
 		}
 		b = memberDAO.resetPassword(m_id, sm_id, password);
-		if (b == true) {
+		if (b) {
 			return MethodTool.qr(Reference.EXE_SUC);
 		}
 		return MethodTool.qr(Reference.EXE_FAIL);
@@ -72,7 +72,7 @@ public class MemberService {
 	public String queryMemberDetail(long shop_id,long member_id) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		boolean isDel = memberDAO.isDel(member_id);
-		if (isDel == false) {
+		if (!isDel) {
 			list = memberDAO.queryDetail(member_id, shop_id);
 			if (list.size() == 0) {
 				return MethodTool.qr(Reference.NSR);
@@ -95,11 +95,11 @@ public class MemberService {
 	 * @return
 	 */
 	public String modifyMember(long member_id,long shopmember_id,String name,String birthday,String phone,String im) {
-		if (memberDAO.isDel(member_id) == true) {
+		if (memberDAO.isDel(member_id)) {
 			return MethodTool.qr(Reference.NSR);
 		}
 		boolean isModifyOk = memberDAO.modifyMmember(member_id, shopmember_id, name, birthday, phone, im);
-		if (isModifyOk == true) {
+		if (isModifyOk) {
 			return MethodTool.qr(Reference.EXE_SUC);
 		} else { 
 			return MethodTool.qr(Reference.EXE_FAIL);
@@ -114,11 +114,11 @@ public class MemberService {
 	 */
 	public String removeMember(long m_id,long sm_id) {
 		boolean isDel = memberDAO.isDel(m_id);
-		if (isDel == true) {
+		if (isDel) {
 			return MethodTool.qr(Reference.NSR);
 		} else {
 			boolean isDelete = memberDAO.deleteMember(m_id, sm_id);
-			if (isDelete == true) {
+			if (isDelete) {
 				return MethodTool.qr(Reference.EXE_SUC);
 			}else{
 				return MethodTool.qr(Reference.EXE_FAIL);

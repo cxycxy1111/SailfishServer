@@ -29,7 +29,7 @@ public class CoursePlanService {
 	 * @return
 	 */
 	public String add(long c_id,long cr_id,long lmu_id,String s_time,String e_time,String remark) {
-		if (courseDAO.isExist(c_id) == false) {
+		if (!courseDAO.isExist(c_id)) {
 			return MethodTool.tfs(Reference.NSR);
 		}
 		boolean isAdded = false;
@@ -41,7 +41,7 @@ public class CoursePlanService {
 		}
 		
 		isAdded = coursePlanDAO.addCoursePlan(c_id, cr_id, lmu_id, s_time, e_time, remark);
-		if(isAdded == false) {
+		if(!isAdded) {
 			return MethodTool.tfs(Reference.EXE_FAIL);
 		}
 		return MethodTool.tfs(Reference.EXE_SUC);
@@ -55,14 +55,14 @@ public class CoursePlanService {
 	 */
 	public String remove(long id,long lmu_id) {
 		boolean isRemoved = false;
-		if (coursePlanDAO.isExist(id) == false) {
+		if (!coursePlanDAO.isExist(id)) {
 			return MethodTool.tfs(Reference.NSR);
 		}
 		if (shopDAO.queryShopIdByCoursePlanId(id) != shopDAO.queryShopByShopmemberId(lmu_id)) {
 			return MethodTool.tfs(Reference.INST_NOT_MATCH);
 		}
 		isRemoved = coursePlanDAO.removeCoursePlan(id, lmu_id);
-		if (isRemoved == false) {
+		if (!isRemoved) {
 			return MethodTool.tfs(Reference.EXE_FAIL);
 		}
 		return MethodTool.tfs(Reference.EXE_SUC);
@@ -82,11 +82,10 @@ public class CoursePlanService {
 		if(shopDAO.queryShopIdByCoursePlanId(id) != shopDAO.queryShopByShopmemberId(lmu_id)) {
 			return MethodTool.tfs(Reference.INST_NOT_MATCH);
 		}
-		if(coursePlanDAO.isExist(id) == false) {
+		if(!coursePlanDAO.isExist(id)) {
 			return MethodTool.tfs(Reference.NSR);
 		}
-		boolean isModified = coursePlanDAO.modifyCoursePlan(id, cr_id, lmu_id, s_time, e_time, remark);
-		if (isModified = true) {
+		if (coursePlanDAO.modifyCoursePlan(id, cr_id, lmu_id, s_time, e_time, remark)) {
 			return MethodTool.tfs(Reference.EXE_SUC);
 		}else {
 			return MethodTool.tfs(Reference.EXE_FAIL);

@@ -66,15 +66,13 @@ public class Test {
 		Set<String> set = h.keySet();
 		Iterator<String> iterator = set.iterator();
 		if(iterator.hasNext()) {
-			String key = iterator.next().toString();
-			p(key);
-			p(h.get(key));
+			String key = iterator.next();
 		}
-		p(s.toString());
+		p(courseService.queryList(5));
 		ja = null;
 	}
 	
-	public static void p(Object obj) {
+	private static void p(Object obj) {
 		System.out.println(obj);
 	}
 

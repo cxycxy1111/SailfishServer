@@ -28,11 +28,11 @@ public class CardService {
 	 * @return
 	 */
 	public String addCard(long shop_id,String name,long shopmember_id,int type,int price,int balance,String start_time,String expired_time){
-		if (cardDAO.isCardNameRepeat(shop_id, name) == true ) {
+		if (cardDAO.isCardNameRepeat(shop_id, name)) {
 			return qr(Reference.DUPLICATE);
 		}
 		boolean isAdded = cardDAO.addNewCard(shop_id, shopmember_id, name, type, price, balance, start_time, expired_time);
-		if (isAdded == true) {
+		if (isAdded) {
 			long id = cardDAO.queryIdByName(name, shop_id);
 			return qr(Reference.id_prefix + id + Reference.datasuffix);
 		}
@@ -60,7 +60,7 @@ public class CardService {
 	 */
 	public String queryCardDetail(long c_id) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		if (cardDAO.isDel(c_id) == true) {
+		if (cardDAO.isDel(c_id)) {
 			return MethodTool.qr(Reference.NSR);
 		}
 		list = cardDAO.queryDetail(c_id);
@@ -82,11 +82,11 @@ public class CardService {
 	 * @return
 	 */
 	public String modifyCard(long id,String name,long shopmember_id,int price,int balance,String start_time,String expired_time) {
-		if (cardDAO.isDel(id) == true) {
+		if (cardDAO.isDel(id)) {
 			return qr(Reference.NSR);
 		}
 		boolean isModified = cardDAO.modifyCard(id,shopmember_id, name, price, balance, start_time, expired_time);
-		if (isModified == true) {
+		if (isModified) {
 			return qr(Reference.EXE_SUC);
 		}
 		return qr(Reference.EXE_FAIL);
@@ -99,7 +99,7 @@ public class CardService {
 	 * @return
 	 */
 	public String removeCard(long card_id,long shopmember_id) {
-		if (cardDAO.removeCard(card_id, shopmember_id) == true) {
+		if (cardDAO.removeCard(card_id, shopmember_id)) {
 			return qr(Reference.EXE_SUC);
 		}
 		return qr(Reference.EXE_FAIL);

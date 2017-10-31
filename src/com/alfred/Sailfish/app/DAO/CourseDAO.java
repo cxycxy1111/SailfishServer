@@ -15,6 +15,7 @@ public class CourseDAO {
 	private SQLHelper helper = new SQLHelper();
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private CourseSupportedCardDAO courseSupportedCardDAO = new CourseSupportedCardDAO();
+	private ShopDAO shopDAO = new ShopDAO();
 	
 	public CourseDAO() {
 		
@@ -162,7 +163,7 @@ public class CourseDAO {
 	 * @return ArrayList<HashMap<String,Object>>
 	 */
 	public ArrayList<HashMap<String,Object>> queryList(long s_id) {
-		String sql = "SELECT id,name FROM course "
+		String sql = "SELECT id,name,last_time FROM course "
 				+ "WHERE del = 0 AND shop_id = " + s_id + " ORDER BY create_time DESC";
 		return helper.query(sql);
 	}
@@ -178,7 +179,8 @@ public class CourseDAO {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		String sql = "SELECT id,type,name,last_time,max_book_num FROM course WHERE id = " + c_id;
 		list = helper.query(sql);
-		map.put("card", courseSupportedCardDAO.querySupportedCards(c_id));
+		long s_id = shopDAO.queryShopIdByCourseId(c_id);
+		map.put("card", courseSupportedCardDAO.querySupportedCards(s_id,c_id));
 		list.add(map);
 		return list;
 	}

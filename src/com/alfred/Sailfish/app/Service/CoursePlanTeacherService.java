@@ -35,20 +35,20 @@ public class CoursePlanTeacherService {
 		}
 		switch (type) {
 		case Reference.TYPE_OPERATE_ADD:
-			if(coursePlanTeacherService.isLead(cp_id, sm_id) == true) {
+			if(coursePlanTeacherService.isLead(cp_id, sm_id)) {
 				return MethodTool.qr(Reference.DUPLICATE);
 			}
 			boolean isAdded = coursePlanTeacherService.add(cp_id, sm_id);
-			if (isAdded == false) {
+			if (!isAdded) {
 				return MethodTool.qr(Reference.EXE_FAIL);
 			}
 			return MethodTool.qr(Reference.EXE_SUC);
 		case Reference.TYPE_OPERATE_REMOVE:
-			if(coursePlanTeacherService.isLead(cp_id, sm_id) == false) {
+			if(!coursePlanTeacherService.isLead(cp_id, sm_id)) {
 				return MethodTool.qr(Reference.NSR);
 			}
 			boolean isRemoved = coursePlanTeacherService.remove(cp_id, sm_id);
-			if (isRemoved == true) {
+			if (isRemoved) {
 				return MethodTool.qr(Reference.EXE_SUC);
 			}
 			return MethodTool.qr(Reference.EXE_FAIL);
@@ -63,7 +63,7 @@ public class CoursePlanTeacherService {
 	 * @return
 	 */
 	public String queryList(long cp_id) {
-		if(coursePlanDAO.isExist(cp_id) == false) {
+		if(!coursePlanDAO.isExist(cp_id)) {
 			return MethodTool.tfs(Reference.NSR);
 		}
 		long ce_id = courseDAO.querycourseIdByCoursePlanId(cp_id);

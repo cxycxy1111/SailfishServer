@@ -34,7 +34,8 @@ public class SupportedCardQuery extends HttpServlet {
 		resp.setCharacterEncoding("utf-8");
 		PrintWriter out = resp.getWriter();
 		long c_id = MethodTool.reqParseToLong(req, "c_id");
-		String str = courseSupportedCardService.query(c_id);
+		long s_id = MethodTool.reqParseToLong(req,"s_id");
+		String str = courseSupportedCardService.query(s_id,c_id);
 		out.append(str);
 	}
 

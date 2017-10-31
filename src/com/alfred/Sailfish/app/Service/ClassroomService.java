@@ -22,16 +22,16 @@ public class ClassroomService {
 	 */
 	public String add(long shop_id,String name) {
 		System.out.println(shopDAO.isExist(shop_id));
-		if (shopDAO.isExist(shop_id) == false) {
+		if (!shopDAO.isExist(shop_id)) {
 			return MethodTool.tfs(Reference.NSR);
 		}
 		boolean isAdded = false;
-		if (classroomDAO.isNameRepeated(name, shop_id) == true) {
+		if (classroomDAO.isNameRepeated(name, shop_id)) {
 			return MethodTool.tfs(Reference.DUPLICATE);
 		}
 		isAdded = classroomDAO.add(shop_id, name);
 		
-		if (isAdded == false) {
+		if (!isAdded) {
 			return MethodTool.tfs(Reference.EXE_FAIL);
 		}
 		return MethodTool.tfc(classroomDAO.queryCRIdByCRName(shop_id, name));
@@ -60,7 +60,7 @@ public class ClassroomService {
 	public String queryDetail(long cr_id) {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		list = classroomDAO.queryDetailById(cr_id);
-		if (classroomDAO.isDel(cr_id) == true || list.size() == 0) {
+		if (classroomDAO.isDel(cr_id) || list.size() == 0) {
 			return MethodTool.tfs(Reference.NSR);
 		}
 		return MethodTool.tfc(list);
@@ -77,14 +77,14 @@ public class ClassroomService {
 	 * @return
 	 */
 	public String modify(long cr_id,String name) {
-		if (classroomDAO.isExist(cr_id) == false) {
+		if (!classroomDAO.isExist(cr_id)) {
 			return MethodTool.tfs(Reference.NSR);
 		}
-		if (classroomDAO.isDel(cr_id) == true) {
+		if (classroomDAO.isDel(cr_id)) {
 			return MethodTool.tfs(Reference.NSR);
 		}
 		boolean updated = classroomDAO.modify(cr_id, name);
-		if(updated == true) {
+		if(updated) {
 			return MethodTool.tfs(Reference.EXE_SUC);
 		}
 		return MethodTool.tfs(Reference.EXE_FAIL);
@@ -96,11 +96,11 @@ public class ClassroomService {
 	 * @return
 	 */
 	public String remove(long cr_id) {
-		if (classroomDAO.isDel(cr_id) == true) {
+		if (classroomDAO.isDel(cr_id)) {
 			return MethodTool.tfs(Reference.NSR);
 		}
 		boolean isDel = classroomDAO.remove(cr_id);
-		if (isDel == true) {
+		if (isDel) {
 			return MethodTool.tfs(Reference.EXE_SUC);
 		}else {
 			return MethodTool.tfs(Reference.EXE_FAIL);

@@ -31,9 +31,9 @@ public class ShopmemberService {
 		boolean isAdded = false;
 		boolean isLoginNameExist = false;
 		isLoginNameExist = shopmemberDAO.isLoginNameExist(user_name);
-		if (isLoginNameExist == false) {
+		if (!isLoginNameExist) {
 			isAdded = shopmemberDAO.addNewShopmember(shop_id, shopmember_id, type, name, user_name, password);
-			if (isAdded == true) {
+			if (isAdded) {
 				return MethodTool.qr(Reference.dataprefix + shopmemberDAO.queryIdByUserName(user_name) + Reference.datasuffix);
 			} else {
 				return MethodTool.qr(Reference.EXE_FAIL);
@@ -54,7 +54,7 @@ public class ShopmemberService {
 			return MethodTool.qr(Reference.INST_NOT_MATCH);
 		}
 		boolean is_exe = shopmemberDAO.deleteMember(lmu_id,id);
-		if (is_exe == false) {
+		if (!is_exe) {
 			return MethodTool.qr(Reference.EXE_FAIL);
 		}
 		return MethodTool.qr(Reference.EXE_SUC);
@@ -67,7 +67,7 @@ public class ShopmemberService {
 	 * @return
 	 */
 	public String modifyPassword(long sm_id,String password) {
-		if(shopmemberDAO.isDel(sm_id) == true) {
+		if(shopmemberDAO.isDel(sm_id)) {
 			return MethodTool.qr(Reference.NSR);
 		}
 		boolean isModified = false;
@@ -76,7 +76,7 @@ public class ShopmemberService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if (isModified == true) {
+		if (isModified) {
 			return MethodTool.qr(Reference.EXE_SUC);
 		}else{
 			return MethodTool.qr(Reference.EXE_FAIL);
@@ -87,7 +87,7 @@ public class ShopmemberService {
 		if (shopDao.queryShopByShopmemberId(sm_id) != shopDao.queryShopByShopmemberId(lmu_id)) {
 			return MethodTool.qr(Reference.INST_NOT_MATCH);
 		}
-		if (shopmemberDAO.modifyInfo(sm_id,lmu_id,name) != true) {
+		if (!shopmemberDAO.modifyInfo(sm_id, lmu_id, name)) {
 			return MethodTool.qr(Reference.EXE_FAIL);
 		}
 		return MethodTool.qr(Reference.EXE_SUC);
@@ -111,7 +111,7 @@ public class ShopmemberService {
 	 * @return
 	 */
 	public String queryShopmemberDetail(long sm_id,long s_id){
-		if (shopmemberDAO.isDel(sm_id) == true) {
+		if (shopmemberDAO.isDel(sm_id)) {
 			return MethodTool.qr(Reference.NSR);
 		}
 		if (shopDao.queryShopByShopmemberId(sm_id) != s_id) {
@@ -128,13 +128,13 @@ public class ShopmemberService {
 	 */
 	public String loginCheck(String user_name,String password) {
 		long id = shopmemberDAO.queryIdByUserName(user_name);
-		if (shopmemberDAO.isLoginNameExist(user_name) == false) {
+		if (!shopmemberDAO.isLoginNameExist(user_name)) {
 			return MethodTool.qr(Reference.NSR);
 		}
-		if (shopmemberDAO.isDel(id) == true) {
+		if (shopmemberDAO.isDel(id)) {
 			return MethodTool.qr(Reference.NSR);
 		}
-		if (shopmemberDAO.isLoginNameAndPasswordMatch(user_name, password) == true) {
+		if (shopmemberDAO.isLoginNameAndPasswordMatch(user_name, password)) {
 			return MethodTool.qr(Reference.dataprefix + String.valueOf(id) + Reference.datasuffix);
 		}
 		return MethodTool.qr(Reference.NOT_MATCH);
@@ -151,9 +151,9 @@ public class ShopmemberService {
 	public String register(long shop_id,String login_name,String name,String password) {
 		boolean is_Exist = false;
 		is_Exist = shopmemberDAO.isLoginNameExist(login_name);
-		if (is_Exist == false) {
+		if (!is_Exist) {
 			boolean isRegistered = shopmemberDAO.addNewShopmember(shop_id, 1, name, login_name, password);
-			if (isRegistered == true) {
+			if (isRegistered) {
 				return MethodTool.qr(Reference.EXE_SUC);
 			}else {
 				return MethodTool.qr(Reference.EXE_FAIL);

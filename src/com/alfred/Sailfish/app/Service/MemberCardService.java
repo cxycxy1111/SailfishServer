@@ -32,13 +32,13 @@ public class MemberCardService {
 		long shop_id_1 = shopDAO.queryShopByShopmemberId(member_id);
         long shop_id_2 = shopDAO.queryShopIdByCardId(card_id);
         long shop_id_3 = shopDAO.queryShopIdByMemberId(member_id);
-        if (isMemberDeleted ==false) {
+        if (!isMemberDeleted) {
             if (shop_id == shop_id_1 && shop_id_1 == shop_id_2 && shop_id_2 == shop_id_3) {
-                if (memberCardDAO.isMemberCardHasExist(member_id,card_id) == true) {
+                if (memberCardDAO.isMemberCardHasExist(member_id, card_id)) {
                 	return qr(Reference.DUPLICATE);
                 }else {
                     boolean isAdded = memberCardDAO.addMemberCard(member_id,shop_id,card_id,shopmember_id,balance,start_time,expired_time);
-                    if (isAdded == true) {
+                    if (isAdded) {
                     	return qr(Reference.EXE_SUC);
                     }else {
                     	return qr(Reference.EXE_FAIL);
@@ -60,12 +60,12 @@ public class MemberCardService {
 	 */
 	public String remove(long mc_id,long lmu_id) {
 		if (shopDAO.queryShopByShopmemberId(lmu_id) == shopDAO.queryShopIdByMembercardId(mc_id)) {
-			if (memberCardDAO.isDel(mc_id) == true) {
+			if (memberCardDAO.isDel(mc_id)) {
 				return qr(Reference.NSR);
 			} else {
 				boolean isDeleted = false;
 				isDeleted = memberCardDAO.deleteMemberCardById(mc_id,lmu_id);
-				if (isDeleted == true) {
+				if (isDeleted) {
 					return qr(Reference.EXE_SUC);
 				} else {
 					return qr(Reference.EXE_FAIL);
@@ -86,8 +86,8 @@ public class MemberCardService {
 	public String increaseBalance(long member_card_id,long last_modify_user,int num) {
 		boolean isCharged = memberCardDAO.updateBalancePlus(member_card_id, num, last_modify_user);
 		if (shopDAO.queryShopByShopmemberId(last_modify_user) == shopDAO.queryShopIdByMembercardId(member_card_id)) {
-			if (memberCardDAO.isDel(member_card_id) == false) {
-				if (isCharged == true) {
+			if (!memberCardDAO.isDel(member_card_id)) {
+				if (isCharged) {
 					return qr(Reference.EXE_SUC);
 				}else {
 					return qr(Reference.EXE_FAIL);
@@ -111,10 +111,10 @@ public class MemberCardService {
 		boolean isEnough = false;
 		isEnough = memberCardDAO.isBalanceEnough(mc_id, num);
 		if (shopDAO.queryShopIdByMembercardId(mc_id) == shopDAO.queryShopByShopmemberId(shop_member_id)) {
-			if (memberCardDAO.isDel(mc_id) == false) {
-				if (isEnough == true) {
+			if (!memberCardDAO.isDel(mc_id)) {
+				if (isEnough) {
 					boolean isReduced = memberCardDAO.updateBalanceReduce(mc_id,shop_member_id, num);
-					if (isReduced == true) {
+					if (isReduced) {
 						return qr(Reference.EXE_SUC);
 					}else {
 						return qr(Reference.EXE_FAIL);
@@ -139,9 +139,9 @@ public class MemberCardService {
 	 */
 	public String changeExpiredTime(long lmu_id,long mc_id,String expiredTime) {
 		if(shopDAO.queryShopByShopmemberId(lmu_id) == shopDAO.queryShopIdByMembercardId(mc_id)) {
-			if (memberCardDAO.isDel(mc_id) == false) {
+			if (!memberCardDAO.isDel(mc_id)) {
 				boolean isUpdated = memberCardDAO.updateExpiredTime(mc_id, lmu_id, expiredTime);
-				if (isUpdated ==true) {
+				if (isUpdated) {
 					return qr(Reference.EXE_SUC);
 				}else {
 					return qr(Reference.EXE_FAIL);

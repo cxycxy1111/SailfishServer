@@ -1,9 +1,9 @@
 package com.alfred.Sailfish.app.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
+import java.util.*;
+
 import com.alfred.Sailfish.app.DAO.CourseDAO;
+import com.alfred.Sailfish.app.DAO.CourseSupportedCardDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
@@ -12,6 +12,7 @@ public class CourseService {
 	
 	private CourseDAO courseDAO = new CourseDAO();
 	private ShopDAO shopDAO = new ShopDAO();
+	private CourseSupportedCardDAO courseSupportedCardDAO= new CourseSupportedCardDAO();
 	
 	public CourseService() {
 	}
@@ -36,7 +37,7 @@ public class CourseService {
 		}
 		boolean isAdded = false;
 		isAdded = courseDAO.add(s_id, lmu_id, name, type, last_time, max_book_num, summary);
-		if (isAdded == false) {
+		if (!isAdded) {
 			return qr(Reference.EXE_FAIL);
 		}
 		return qr(Reference.EXE_SUC);
@@ -64,7 +65,7 @@ public class CourseService {
 		}
 		boolean isAdded = false;
 		isAdded = courseDAO.addPrivate(s_id, lmu_id, sm_id, m_id, name, total_times, e_time, actual_cost);
-		if (isAdded == false) {
+		if (!isAdded) {
 			return qr(Reference.EXE_FAIL);
 		}
 		return qr(Reference.EXE_SUC);
@@ -82,7 +83,7 @@ public class CourseService {
 		}
 		boolean isRemoved = false;
 		isRemoved = courseDAO.remove(id, lmu);
-		if (isRemoved == true) {
+		if (isRemoved) {
 			return qr(Reference.EXE_SUC);
 		}
 		return qr(Reference.EXE_FAIL);
@@ -94,15 +95,18 @@ public class CourseService {
 	 * @return
 	 */
 	public String queryList(long s_id) {
-		if(shopDAO.isDeleted(s_id) == true){
+		if(shopDAO.isDeleted(s_id)){
 			return qr(Reference.NSR);
 		}
-		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		ArrayList<HashMap<String,Object>> list = new ArrayList<>();
 		list = courseDAO.queryList(s_id);
+		ArrayList<HashMap<String,Object>> csc_list = new ArrayList<>();
+		csc_list = courseSupportedCardDAO.querySupportedCards(s_id,0);
 		if (list.size() == 0) {
 			return qr(Reference.EMPTY_RESULT);
 		}
-		return MethodTool.tfc(courseDAO.queryList(s_id));
+		list.addAll(csc_list);
+		return MethodTool.tfc(list);
 	}
 	
 	/**
@@ -123,7 +127,7 @@ public class CourseService {
 			return qr(Reference.INST_NOT_MATCH);
 		}
 		isModified = courseDAO.modify(c_id, lmu_id, name, last_time, max_book_num, summary);
-		if (isModified == true) {
+		if (isModified) {
 			return qr(Reference.EXE_SUC);
 		}
 		return qr(Reference.EXE_FAIL);

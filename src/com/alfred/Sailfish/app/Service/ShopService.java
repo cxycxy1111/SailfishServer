@@ -20,9 +20,9 @@ public class ShopService {
 	 */
 	public String register(String name,String intro) {
 		boolean isExist = shopDAO.isShopNameRepeat(name);
-		if (isExist == false) {
+		if (!isExist) {
 			boolean created = shopDAO.createShop(name, intro);
-			if (created == true) {
+			if (created) {
 				long id = shopDAO.queryShopByName(name);
 				return Reference.dataprefix + String.valueOf(id) + Reference.datasuffix;
 			}else {

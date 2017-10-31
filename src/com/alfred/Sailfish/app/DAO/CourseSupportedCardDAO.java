@@ -95,11 +95,18 @@ public class CourseSupportedCardDAO {
 	 * @param c_id
 	 * @return
 	 */
-	public ArrayList<HashMap<String,Object>> querySupportedCards(long c_id) {
+	public ArrayList<HashMap<String,Object>> querySupportedCards(long s_id,long c_id) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		String sql = "SELECT c.id c_id,c.name c_name,cs.price c_price FROM course_supportedcard cs "
-				+ "LEFT JOIN card c ON cs.card_id = c.id "
-				+ "WHERE cs.del = 0 AND cs.course_id = " + c_id;
+		String sql;
+		if (c_id == 0) {
+			sql = "SELECT c.id c_id,c.name c_name,cs.price c_price FROM course_supportedcard cs "
+					+ "LEFT JOIN card c ON cs.card_id = c.id "
+					+ "WHERE cs.del = 0 AND c.shop_id=" + s_id;
+		}else {
+			sql = "SELECT c.id c_id,c.name c_name,cs.price c_price FROM course_supportedcard cs "
+					+ "LEFT JOIN card c ON cs.card_id = c.id "
+					+ "WHERE cs.del = 0 AND cs.course_id = " + c_id + " AND c.shop_id = " + s_id;
+		}
 		list = helper.query(sql);
 		return list;
 	}

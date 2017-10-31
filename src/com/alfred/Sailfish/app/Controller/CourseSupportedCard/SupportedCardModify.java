@@ -37,8 +37,8 @@ public class SupportedCardModify extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		String s = req.getParameter("m");
 		String [] str = s.split("-");
-		for (int i = 0;i < str.length;i++) {
-			String [] strs = str[i].split("_");
+		for (String aStr : str) {
+			String[] strs = aStr.split("_");
 			String result = courseSupportedCardService.modify(Integer.valueOf(strs[0]), Integer.valueOf(strs[1]), Integer.valueOf(strs[2]), Integer.valueOf(strs[3]));
 			out.append(result);
 		}
