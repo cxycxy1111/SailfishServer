@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -79,8 +80,8 @@ public class MethodTool {
 		Object o = map.get(key);
 		String s = String.valueOf(o);
 		System.out.println(s);
-		long l = Long.parseLong(s);
-		return l;
+
+		return Long.parseLong(s);
 	}
 	
 	/**
@@ -140,7 +141,7 @@ public class MethodTool {
 	 * @return
 	 */
 	public static String tfs(String s) {
-		if (s != null && s != "") {
+		if (s != null && !Objects.equals(s, "")) {
 			JSONObject js = new JSONObject(s);
 			return js.toString();
 		}else {
@@ -175,9 +176,7 @@ public class MethodTool {
 	 * @return
 	 */
 	public static long reqParseToLong (HttpServletRequest req,String param) {
-		String s = req.getParameter(param);
-		long l = Long.valueOf(s);
-		return l;
+		return Long.valueOf(req.getParameter(param));
 	}
 
 	/**
@@ -187,9 +186,7 @@ public class MethodTool {
 	 * @return
 	 */
 	public static int reqParseToInt (HttpServletRequest req,String param) {
-		String s = req.getParameter(param);
-		int i = Integer.parseInt(s);
-		return i;
+		return Integer.parseInt(req.getParameter(param));
 	}
 	
 }
