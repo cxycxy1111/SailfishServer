@@ -61,10 +61,9 @@ public class CourseService {
 			return qr(Reference.NOT_MATCH);
 		}
 		if (s_id != shopDAO.queryShopByShopmemberId(lmu_id)) {
-			return qr(Reference.NOT_MATCH);
+			return qr(Reference.INST_NOT_MATCH);
 		}
-		boolean isAdded = false;
-		isAdded = courseDAO.addPrivate(s_id, lmu_id, sm_id, m_id, name, total_times, e_time, actual_cost);
+		boolean isAdded = courseDAO.addPrivate(s_id, lmu_id, sm_id, m_id, name, total_times, e_time, actual_cost);
 		if (!isAdded) {
 			return qr(Reference.EXE_FAIL);
 		}

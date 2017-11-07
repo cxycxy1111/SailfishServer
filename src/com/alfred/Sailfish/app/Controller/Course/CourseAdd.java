@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alfred.Sailfish.app.Service.CourseService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * http://localhost:8080/Sailfish/courseAdd?s_id=5&lmu_id=1&name=余额卡1111&type=2&last_time=40&max_book_num=50&summary=测试会员5

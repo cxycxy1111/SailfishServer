@@ -69,7 +69,12 @@ public class ShopmemberDAO {
 	 */
 	public ArrayList<HashMap<String,Object>> queryShopmemberList(long shop_id,int type) {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>> ();
-		String sql = "select id,name,type from shopmember where shop_id = " + shop_id + " AND del = 0 AND type = " + type;
+		String sql;
+		if (type == 0) {
+			sql = "select id,name,type from shopmember where shop_id = " + shop_id + " AND del = 0";
+		}else {
+			sql = "select id,name,type from shopmember where shop_id = " + shop_id + " AND del = 0 AND type = " + type;
+		}
 		list = helper.query(sql);
 		return list;
 	}
@@ -149,7 +154,6 @@ public class ShopmemberDAO {
 				name + "','" +
 				sdf.format(new Date()) + "','" +
 				sdf.format(new Date()) + "')";
-		System.out.println(sql);
 		try {
 			isSuccessed = helper.update(sql);
 		} catch (SQLException e) {

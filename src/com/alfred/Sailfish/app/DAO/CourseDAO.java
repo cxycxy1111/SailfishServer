@@ -64,6 +64,9 @@ public class CourseDAO {
 	 */
 	public boolean addPrivate(long s_id,long lmu_id,long sm_id,long m_id,String name,
 			int total_times,String e_time,int actual_cost) {
+		if (e_time.equals("") || e_time.equals(null)) {
+			e_time = sdf.format(new Date());
+		}
 		boolean isAdded = false;
 		String t = sdf.format(new Date());
 		String sql = "INSERT INTO course (shop_id,creator,last_modify_user,teacher_id,student_id,"
