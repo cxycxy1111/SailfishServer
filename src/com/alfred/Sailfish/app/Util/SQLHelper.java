@@ -69,7 +69,8 @@ public class SQLHelper {
      * @param sql
      * @return
      */
-    public ArrayList<IdentityHashMap<String,Object>> linkquery(String sql) {  
+    public ArrayList<IdentityHashMap<String,Object>> linkquery(String sql) {
+        System.out.println(sql);
         if(sql.equals("") || sql == null){  
             return null;  
         }
@@ -105,7 +106,8 @@ public class SQLHelper {
      * @param sql 语句
      * @return boolean 成功返回true，失败返回false 
      */  
-    public boolean update(String sql) throws SQLException {  
+    public boolean update(String sql) throws SQLException {
+        System.out.println(sql);
         boolean b = false;  
         if(sql.equals("") || sql == null){  
             return b;  

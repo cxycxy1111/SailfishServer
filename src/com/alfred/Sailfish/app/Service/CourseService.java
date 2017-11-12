@@ -7,6 +7,7 @@ import com.alfred.Sailfish.app.DAO.CourseSupportedCardDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.sun.org.apache.regexp.internal.RE;
 
 public class CourseService {
 	
@@ -29,6 +30,9 @@ public class CourseService {
 	 * @return
 	 */
 	public String add(long s_id, long lmu_id, String name, int type, int last_time, int max_book_num, String summary) {
+		if (courseDAO.isCourseNameExist(name, s_id)) {
+			return MethodTool.qr(Reference.DUPLICATE);
+		}
 		if(type == Reference.TYPE_PRIVATE_COURSE){
 			return MethodTool.qr(Reference.NOT_MATCH);
 		}
@@ -40,7 +44,8 @@ public class CourseService {
 		if (!isAdded) {
 			return qr(Reference.EXE_FAIL);
 		}
-		return qr(Reference.EXE_SUC);
+		long ce_id = courseDAO.queryCourseIdByCourseName(name,s_id);
+		return MethodTool.tfs(Reference.dataprefix + ce_id + Reference.datasuffix);
 	}
 	
 	/**
@@ -67,7 +72,8 @@ public class CourseService {
 		if (!isAdded) {
 			return qr(Reference.EXE_FAIL);
 		}
-		return qr(Reference.EXE_SUC);
+		long ce_id = courseDAO.queryCourseIdByCourseName(name,s_id);
+		return MethodTool.tfs(Reference.dataprefix + ce_id + Reference.datasuffix);
 	}
 	
 	/**
@@ -114,7 +120,7 @@ public class CourseService {
 				}
 			}
 			String sc = builder.toString();
-			String [] scs = sc.split("|");
+			String [] scs = sc.split("、");
 			StringBuilder b = new StringBuilder();
 			temp_map.put("supportedcard",builder.toString());
 			full_list.add(temp_map);

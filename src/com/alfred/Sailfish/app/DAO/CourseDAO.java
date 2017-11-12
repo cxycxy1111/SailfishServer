@@ -217,6 +217,14 @@ public class CourseDAO {
 			return MethodTool.toInt(list, "type");
 		}
 	}
+
+	public boolean isCourseNameExist(String course_name,long s_id) {
+		String sql = "SELECT * FROM course WHERE name = '" + course_name + "' AND shop_id = " + s_id;
+		if (helper.query(sql).size() == 0) {
+			return false;
+		}
+		return true;
+	}
 	
 	/**
 	 * 通过排课ID查询课程ID
@@ -226,6 +234,16 @@ public class CourseDAO {
 	public long querycourseIdByCoursePlanId(long cp_id) {
 		String sql = "SELECT course_id FROM courseplan WHERE id = " + cp_id;
 		return MethodTool.toLong(helper.query(sql), "course_id");
+	}
+
+	/**
+	 * 通过课程名称查询课程ID
+	 * @param name
+	 * @return
+	 */
+	public long queryCourseIdByCourseName(String name,long s_id) {
+		String sql = "SELECT id FROM course WHERE name = '" + name + "' AND shop_id = " + s_id;
+		return MethodTool.toLong(helper.query(sql),"id");
 	}
 	
 	/**
