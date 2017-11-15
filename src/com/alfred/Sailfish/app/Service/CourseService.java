@@ -116,7 +116,7 @@ public class CourseService {
 				String temp_csc_course_id = String.valueOf(csc_list.get(j).get("course_id"));
 				if ((temp_csc_course_id.equals(temp_id))) {
 					builder.append(csc_list.get(j).get("card_name"));
-					builder.append("|");
+					builder.append("、");
 				}
 			}
 			String sc = builder.toString();
@@ -158,36 +158,22 @@ public class CourseService {
 	 * @return
 	 */
 	public String queryDetail(long c_id) {
-		ArrayList<IdentityHashMap<String, Object>> list = new ArrayList<IdentityHashMap<String,Object>>();
-		ArrayList<HashMap<String, Object>> list_2 = new ArrayList<HashMap<String,Object>>();
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();
 		int i = courseDAO.queryType(c_id);
-		switch (i){
-		case Reference.TYPE_PRIVATE_COURSE:
+		if (i == 4) {
 			list = courseDAO.queryPrivateDetail(c_id);
 			if (list.size() == 0) {
-				return qr(Reference.EMPTY_RESULT);
+				return MethodTool.tfs(Reference.EMPTY_RESULT);
 			}
 			return MethodTool.tfc(list);
-		case Reference.TYPE_COLLECTION_COURSE:
-			list_2 = courseDAO.queryDetail(c_id);
-			if (list_2.size() == 0) {
-				return qr(Reference.EMPTY_RESULT);
+		}else if (c_id == 1 || c_id == 2 || c_id == 3){
+			list = courseDAO.queryDetail(c_id);
+			if (list.size() == 0) {
+				return MethodTool.tfs(Reference.EMPTY_RESULT);
 			}
-			return MethodTool.tfc(list_2);
-		case Reference.TYPE_MEMBER_COURSE:
-			list_2 = courseDAO.queryDetail(c_id);
-			if (list_2.size() == 0) {
-				return qr(Reference.EMPTY_RESULT);
-			}
-			return MethodTool.tfc(list_2);
-		case Reference.TYPE_TRAINNER_COURSE:
-			list_2 = courseDAO.queryDetail(c_id);
-			if (list_2.size() == 0) {
-				return qr(Reference.EMPTY_RESULT);
-			}
-			return MethodTool.tfc(list_2);
-		default :
-			return qr(Reference.NSR);
+			return MethodTool.tfc(list);
+		}else {
+			return MethodTool.tfs(Reference.EMPTY_RESULT);
 		}
 	}
 	

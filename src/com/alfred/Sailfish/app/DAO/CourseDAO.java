@@ -166,7 +166,7 @@ public class CourseDAO {
 	 * @return ArrayList<HashMap<String,Object>>
 	 */
 	public ArrayList<HashMap<String,Object>> queryList(long s_id) {
-		String sql = "SELECT id,name,last_time FROM course "
+		String sql = "SELECT id,name,last_time,type FROM course "
 				+ "WHERE del = 0 AND shop_id = " + s_id + " ORDER BY create_time DESC";
 		return helper.query(sql);
 	}
@@ -194,12 +194,12 @@ public class CourseDAO {
 	 * @param c_id 课程ID
 	 * @return
 	 */
-	public ArrayList<IdentityHashMap<String,Object>> queryPrivateDetail(long c_id){
+	public ArrayList<HashMap<String,Object>> queryPrivateDetail(long c_id){
 		String sql = "SELECT c.id,c.type,trim(c.name) course_name,trim(sm.name) shopmember_name,trim(m.name) member_name,c.total_times,c.rest_times,c.expired_time FROM course c "
 				+ "LEFT JOIN shopmember sm ON c.shop_id = sm.id "
 				+ "LEFT JOIN member m ON c.student_id = m.id "
 				+ "WHERE c.type IN (4) AND c.id = " + c_id;
-		return helper.linkquery(sql);
+		return helper.query(sql);
 	}
 	
 	/**
