@@ -39,7 +39,8 @@ public class MemberCardAdd extends HttpServlet {
         String expired_time = request.getParameter("etime");
         String str = memberCardService.add(member_id, card_id,
         		shopmember_id, balance, start_time, expired_time);
-        out.append(str);
+		System.out.println(str);
+		out.append(str);
 	}
 
 	/**

@@ -36,6 +36,7 @@ public class ClassroomAdd extends HttpServlet {
 		long s_id = MethodTool.reqParseToLong(req, "s_id");
 		String name = req.getParameter("name");
 		String str = classroomService.add(s_id, name);
+		System.out.println(str);
 		out.append(str);
 	}
 

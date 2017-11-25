@@ -42,6 +42,7 @@ public class CardAdd extends HttpServlet {
 		String start_time = req.getParameter("start_time");
 		String expired_time = req.getParameter("expired_time");
 		String str = cardService.addCard(shop_id, name, shopmember_id, type, price, balance, start_time, expired_time);
+		System.out.println(str);
 		out.append(str);
 	}
 

@@ -36,6 +36,7 @@ public class SupportedCardQuery extends HttpServlet {
 		long c_id = MethodTool.reqParseToLong(req, "c_id");
 		long s_id = MethodTool.reqParseToLong(req,"s_id");
 		String str = courseSupportedCardService.query(s_id,c_id);
+		System.out.println(str);
 		out.append(str);
 	}
 

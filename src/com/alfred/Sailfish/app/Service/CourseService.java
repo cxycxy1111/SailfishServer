@@ -166,7 +166,7 @@ public class CourseService {
 				return MethodTool.tfs(Reference.EMPTY_RESULT);
 			}
 			return MethodTool.tfc(list);
-		}else if (c_id == 1 || c_id == 2 || c_id == 3){
+		}else if (i == 1 || i == 2 || i == 3){
 			list = courseDAO.queryDetail(c_id);
 			if (list.size() == 0) {
 				return MethodTool.tfs(Reference.EMPTY_RESULT);

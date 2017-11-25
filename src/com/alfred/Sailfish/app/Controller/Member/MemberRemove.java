@@ -34,6 +34,7 @@ public class MemberRemove extends HttpServlet {
 		long m_id = Long.parseLong(request.getParameter("member_id"));
 		System.out.println("SM_ID is :" + sm_id);
 		String str = memberService.removeMember(m_id, sm_id);
+		System.out.println(str);
 		out.append(str);
 	}
 

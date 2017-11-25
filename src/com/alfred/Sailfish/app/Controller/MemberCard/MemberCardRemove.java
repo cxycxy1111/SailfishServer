@@ -35,6 +35,7 @@ public class MemberCardRemove extends HttpServlet {
 		long mc_id = Long.parseLong(request.getParameter("mc_id"));
 		long sm_id = Long.parseLong(request.getParameter("sm_id"));
 		String str = memberCardService.remove(mc_id, sm_id);
+		System.out.println(str);
 		out.append(str);
 	}
 

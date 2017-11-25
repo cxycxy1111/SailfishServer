@@ -35,7 +35,9 @@ public class CardDetailQuery extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		long c_id = MethodTool.reqParseToLong(request, "c_id");
-		out.append(cardService.queryCardDetail(c_id));
+		String str = cardService.queryCardDetail(c_id);
+		System.out.println(str);
+		out.append(str);
 	}
 
 	/**

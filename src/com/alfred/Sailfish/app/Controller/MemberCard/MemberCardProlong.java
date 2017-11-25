@@ -36,6 +36,7 @@ public class MemberCardProlong extends HttpServlet {
 		long lmu_id = Long.parseLong(request.getParameter("lmu_id"));
 		String expiredTime = request.getParameter("et");
 		String str = memberCardService.changeExpiredTime(lmu_id, mc_id, expiredTime);
+		System.out.println(str);
 		out.append(str);
 	}
 

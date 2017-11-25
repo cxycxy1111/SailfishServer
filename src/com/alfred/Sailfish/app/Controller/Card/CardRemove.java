@@ -33,6 +33,7 @@ public class CardRemove extends HttpServlet {
 		long card_id = Long.parseLong(req.getParameter("card_id"));
 		long shopmember_id = Long.parseLong(req.getParameter("shopmember_id"));
 		String str = cardService.removeCard(card_id, shopmember_id);
+		System.out.println(str);
 		out.append(str);
 	}
 	

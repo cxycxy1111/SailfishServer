@@ -41,6 +41,8 @@ public class SupportedCardModify extends HttpServlet {
 			String[] strs = aStr.split("_");
 			String result = courseSupportedCardService.modify(Integer.valueOf(strs[0]), Integer.valueOf(strs[1]), Integer.valueOf(strs[2]), Integer.valueOf(strs[3]));
 			out.append(result);
+			System.out.println(result);
+
 		}
 	}
 

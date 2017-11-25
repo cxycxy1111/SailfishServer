@@ -35,6 +35,7 @@ public class CourseDetailQuery extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		long c_id = MethodTool.reqParseToLong(req, "c_id");
 		String str = courseService.queryDetail(c_id);
+		System.out.println(str);
 		out.append(str);
 	}
 

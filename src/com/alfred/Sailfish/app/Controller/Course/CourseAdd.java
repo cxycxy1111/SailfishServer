@@ -43,6 +43,7 @@ public class CourseAdd extends HttpServlet {
 		int max_book_num = MethodTool.reqParseToInt(request, "max_book_num");
 		String summary = request.getParameter("summary");
 		String str = courseService.add(s_id, lmu_id, name, type, last_time, max_book_num, summary);
+		System.out.println(str);
 		out.append(str);
 	}
 

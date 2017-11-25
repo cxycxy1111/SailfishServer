@@ -38,6 +38,7 @@ public class MemberResetPassword extends HttpServlet {
 		long sm_id = MethodTool.reqParseToLong(request, "sm_id");
 		String newpwd = request.getParameter("newpwd");
 		String str = memberService.resetPassword(sm_id, m_id, newpwd);
+		System.out.println(str);
 		out.append(str);
 	}
 

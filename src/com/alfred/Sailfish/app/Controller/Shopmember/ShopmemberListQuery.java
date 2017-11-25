@@ -37,7 +37,9 @@ public class ShopmemberListQuery extends HttpServlet {
 		shop_id = Long.parseUnsignedLong(request.getParameter("shop_id"));
 		int type = MethodTool.reqParseToInt(request, "type");
 		session.setAttribute("shop_id", shop_id);
-		out.append(shopmemberService.queryShopmemberList(shop_id,type));
+		String str = shopmemberService.queryShopmemberDetail(shop_id,type);
+		System.out.println(str);
+		out.append(str);
 	}
 
 	/**

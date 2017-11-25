@@ -35,7 +35,9 @@ public class CardListQuery extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		long shop_id = Long.parseLong(request.getParameter("shop_id"));
 		int type = MethodTool.reqParseToInt(request,"type");
-		out.append(cardService.queryCardList(shop_id,type));
+		String str = cardService.queryCardList(shop_id,type);
+		System.out.println(str);
+		out.append(str);
 	}
 
 	/**

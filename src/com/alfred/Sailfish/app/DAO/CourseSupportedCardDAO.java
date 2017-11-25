@@ -99,12 +99,14 @@ public class CourseSupportedCardDAO {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		String sql;
 		if (c_id == 0) {
-			sql = "SELECT truncate(c.id,0) card_id,trim(c.name) card_name,truncate(ce.id,0) course_id,cs.price cs_price FROM course_supportedcard cs "
+			//查询全部课程
+			sql = "SELECT truncate(c.id,0) c_id,trim(c.name) card_name,truncate(cs.price,0) cs_price,truncate(ce.id,0) course_id FROM course_supportedcard cs "
 					+ "LEFT JOIN card c ON cs.card_id = c.id "
 					+ "LEFT JOIN course ce ON cs.course_id=ce.id "
 					+ "WHERE cs.del = 0 AND c.shop_id=" + s_id;
 		}else {
-			sql = "SELECT truncate(c.id,0) c_id,trim(c.name) card_name,trim(ce.name) course_name,cs.price c_price FROM course_supportedcard cs "
+			//查询具体课程所支持的会员卡
+			sql = "SELECT truncate(c.id,0) c_id,trim(c.name) card_name,truncate(cs.price,0) cs_price,trim(ce.name) course_name FROM course_supportedcard cs "
 					+ "LEFT JOIN card c ON cs.card_id = c.id "
 					+ "LEFT JOIN course ce ON cs.course_id=ce.id "
 					+ "WHERE cs.del = 0 AND cs.course_id = " + c_id + " AND c.shop_id = " + s_id;

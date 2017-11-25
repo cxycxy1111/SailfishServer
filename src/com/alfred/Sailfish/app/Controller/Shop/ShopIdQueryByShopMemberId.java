@@ -34,7 +34,9 @@ public class ShopIdQueryByShopMemberId extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		response.setCharacterEncoding("utf-8");
 		long sm_id = MethodTool.reqParseToLong(request, "sm_id");
-		out.append(shopService.queryShopIdByShopmemberId(sm_id));
+		String str = shopService.queryShopIdByShopmemberId(sm_id);
+		System.out.println(str);
+		out.append(str);
 		
 		
 	}

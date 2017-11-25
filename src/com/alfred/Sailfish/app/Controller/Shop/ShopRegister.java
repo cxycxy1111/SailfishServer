@@ -32,7 +32,8 @@ public class ShopRegister extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String name = request.getParameter("name");
 		String intro = request.getParameter("intro");
-		String str = shopService.register(name, intro);	
+		String str = shopService.register(name, intro);
+		System.out.println(str);
 		out.append(str);
 	}
 

@@ -179,12 +179,9 @@ public class CourseDAO {
 	 */
 	public ArrayList<HashMap<String,Object>> queryDetail(long c_id){
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		HashMap<String,Object> map = new HashMap<String,Object>();
 		String sql = "SELECT id,type,name,last_time,max_book_num FROM course WHERE id = " + c_id;
 		list = helper.query(sql);
 		long s_id = shopDAO.queryShopIdByCourseId(c_id);
-		map.put("card", courseSupportedCardDAO.querySupportedCards(s_id,c_id));
-		list.add(map);
 		return list;
 	}
 	
@@ -196,7 +193,7 @@ public class CourseDAO {
 	 */
 	public ArrayList<HashMap<String,Object>> queryPrivateDetail(long c_id){
 		String sql = "SELECT c.id,c.type,trim(c.name) course_name,trim(sm.name) shopmember_name,trim(m.name) member_name,c.total_times,c.rest_times,c.expired_time FROM course c "
-				+ "LEFT JOIN shopmember sm ON c.shop_id = sm.id "
+				+ "LEFT JOIN shopmember sm ON c.teacher_id = sm.id "
 				+ "LEFT JOIN member m ON c.student_id = m.id "
 				+ "WHERE c.type IN (4) AND c.id = " + c_id;
 		return helper.query(sql);

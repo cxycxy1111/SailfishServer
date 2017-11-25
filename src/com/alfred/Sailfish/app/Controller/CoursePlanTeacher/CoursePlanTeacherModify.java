@@ -39,6 +39,7 @@ public class CoursePlanTeacherModify extends HttpServlet {
 			String [] strs = str[i].split("_");
 			String result = coursePlanTeacherService.modify(Integer.parseInt(strs[0]), Long.parseLong(strs[1]), Long.parseLong(strs[2]));
 			out.append(result);
+			System.out.println(result);
 		}
 	}
 

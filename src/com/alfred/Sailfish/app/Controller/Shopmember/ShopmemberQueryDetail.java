@@ -35,8 +35,9 @@ public class ShopmemberQueryDetail extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		long sm_id = MethodTool.reqParseToLong(request, "sm_id");
 		long s_id = MethodTool.reqParseToLong(request, "s_id");
-		shopmemberService.queryShopmemberDetail(sm_id, s_id);
-		out.append(shopmemberService.queryShopmemberDetail(sm_id, s_id));
+		String str = shopmemberService.queryShopmemberDetail(sm_id, s_id);
+		System.out.println(str);
+		out.append(str);
 	
 	
 	}

@@ -33,6 +33,7 @@ public class ShopmemberLogin extends HttpServlet {
 		String user_name = request.getParameter("user_name");
 		String password = request.getParameter("password");
 		String str = shopMemberService.loginCheck(user_name, password);
+		System.out.println(str);
 		out.append(str);
 	}
 

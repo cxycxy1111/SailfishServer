@@ -35,6 +35,7 @@ public class ClassroomDetailQuery extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		long cr_id = MethodTool.reqParseToLong(req, "cr_id");
 		String str = classroomService.queryDetail(cr_id);
+		System.out.println(str);
 		out.append(str);
 	}
 

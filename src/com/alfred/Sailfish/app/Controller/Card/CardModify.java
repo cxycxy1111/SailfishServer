@@ -38,6 +38,7 @@ public class CardModify extends HttpServlet {
 		String start_time = req.getParameter("start_time");
 		String expired_time = req.getParameter("expired_time");
 		String str = cardService.modifyCard(id, name, shopmember_id, price, balance, start_time, expired_time);
+		System.out.println(str);
 		out.append(str);
 	}
 

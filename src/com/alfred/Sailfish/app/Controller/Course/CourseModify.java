@@ -41,6 +41,8 @@ public class CourseModify extends HttpServlet {
 		int max_book_num = MethodTool.reqParseToInt(req, "max_book_num");
 		String summary = req.getParameter("summary");
 		String str = courseDAO.modify(c_id, lmu_id, name, last_time, max_book_num, summary);
+		System.out.println(str);
+
 		out.append(str);
 	}
 

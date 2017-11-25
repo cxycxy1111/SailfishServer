@@ -38,6 +38,7 @@ public class MemberModify extends HttpServlet {
 		String phone = request.getParameter("phone");
 		String im = request.getParameter("im");
 		String str = memberService.modifyMember(member_id, shopmember_id, name, birthday, phone, im);
+		System.out.println(str);
 		w.append(str);
 	}
 

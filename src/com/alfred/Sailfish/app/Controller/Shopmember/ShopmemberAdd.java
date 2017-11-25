@@ -37,6 +37,7 @@ public class ShopmemberAdd extends HttpServlet {
 		String password = req.getParameter("password");
 		int type = Integer.parseInt(req.getParameter("type"));
 		String str = shopmemberService.addShopmember(shop_id, shopmember_id, name, user_name, type, password);
+		System.out.println(str);
 		out.append(str);
 	}
 
