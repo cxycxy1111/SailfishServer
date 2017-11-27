@@ -14,6 +14,7 @@ public abstract class Reference {
 	public static final String datasuffix = "}";
 	public static final String NSR = prefix + "no_such_record" + suffix;
 	public static final String EXE_FAIL =prefix +  "exe_fail" + suffix;
+	public static final String EXE_PARTLY_FAIL =prefix +  "exe_partly_fail" + suffix;
 	public static final String EXE_SUC = prefix + "exe_suc" + suffix;
 	public static final String DUPLICATE = prefix + "duplicate" + suffix;
 	public static final String INST_NOT_MATCH = prefix + "institution_not_match" + suffix;

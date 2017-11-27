@@ -192,7 +192,7 @@ public class CourseDAO {
 	 * @return
 	 */
 	public ArrayList<HashMap<String,Object>> queryPrivateDetail(long c_id){
-		String sql = "SELECT c.id,c.type,trim(c.name) course_name,trim(sm.name) shopmember_name,trim(m.name) member_name,c.total_times,c.rest_times,c.expired_time FROM course c "
+		String sql = "SELECT c.id,c.type,trim(c.name) course_name,trim(sm.name) shopmember_name,trim(m.name) member_name,c.total_times,c.rest_times,c.expired_time,c.actual_cost FROM course c "
 				+ "LEFT JOIN shopmember sm ON c.teacher_id = sm.id "
 				+ "LEFT JOIN member m ON c.student_id = m.id "
 				+ "WHERE c.type IN (4) AND c.id = " + c_id;

@@ -151,7 +151,20 @@ public class CourseService {
 		}
 		return qr(Reference.EXE_FAIL);
 	}
-	
+
+	public String modifyPrivate(long c_id,long lmu_id,String name,int total_times,String invalid_time,int total_cost) {
+		boolean isUpdated = false;
+		if (shopDAO.queryShopIdByCourseId(c_id) != shopDAO.queryShopByShopmemberId(lmu_id)) {
+			return qr(Reference.INST_NOT_MATCH);
+		}
+		isUpdated = courseDAO.modifyPrivate(c_id,lmu_id,name,invalid_time,total_times,total_cost);
+		if (isUpdated) {
+			return qr(Reference.EXE_SUC);
+		}else {
+			return qr(Reference.EXE_FAIL);
+		}
+	}
+
 	/**
 	 * 查询课程详情
 	 * @param c_id

@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alfred.Sailfish.app.Service.CourseSupportedCardService;
+import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
+
 /**
  * 请求示例
  * http://localhost:8080/Sailfish/SupportedCardModify?m=3_1_2_100-2_1_3_100
@@ -37,13 +40,26 @@ public class SupportedCardModify extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		String s = req.getParameter("m");
 		String [] str = s.split("-");
+		String result;
+		StringBuilder builder = new StringBuilder();
 		for (String aStr : str) {
 			String[] strs = aStr.split("_");
-			String result = courseSupportedCardService.modify(Integer.valueOf(strs[0]), Integer.valueOf(strs[1]), Integer.valueOf(strs[2]), Integer.valueOf(strs[3]));
-			out.append(result);
-			System.out.println(result);
-
+			builder.append(courseSupportedCardService.modify(Integer.valueOf(strs[0]), Integer.valueOf(strs[1]), Integer.valueOf(strs[2]), Integer.valueOf(strs[3])));
+			builder.append(",");
 		}
+		result = builder.toString();
+		String js_result;
+		if (result.contains(Reference.EXE_FAIL)) {
+			if (!result.contains(Reference.EXE_SUC)) {
+				js_result = MethodTool.tfs(Reference.EXE_FAIL);
+			}else {
+				js_result = MethodTool.tfs(Reference.EXE_PARTLY_FAIL);
+			}
+		}else {
+			js_result = MethodTool.tfs(Reference.EXE_SUC);
+		}
+		out.append(js_result);
+		System.out.append(js_result);
 	}
 
 	/**
