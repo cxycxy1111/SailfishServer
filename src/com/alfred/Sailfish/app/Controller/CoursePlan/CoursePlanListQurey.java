@@ -16,7 +16,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
  * http://localhost:8080/Sailfish/CoursePlanListQurey?s_id=1
  * Servlet implementation class CoursePlanListQurey
  */
-@WebServlet("/CoursePlanListQurey")
+@WebServlet(name = "CoursePlanListQurey",urlPatterns = "/CoursePlanListQurey")
 public class CoursePlanListQurey extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CoursePlanService coursePlanService = new CoursePlanService();
@@ -37,6 +37,7 @@ public class CoursePlanListQurey extends HttpServlet {
 		long s_id = MethodTool.reqParseToLong(req, "s_id");
 		String str = coursePlanService.queryByShopId(s_id);
 		out.append(str);
+		System.out.println("排课列表：" + str);
 	}
 
 	/**

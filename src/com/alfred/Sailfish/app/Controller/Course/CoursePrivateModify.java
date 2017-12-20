@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.soap.MTOM;
 import java.io.IOException;
 
-@WebServlet("/CoursePrivateModify")
+@WebServlet(name = "CourseModifyPrivate",urlPatterns = "/CoursePrivateModify")
 public class CoursePrivateModify extends HttpServlet {
 
     private CourseService courseService = new CourseService();

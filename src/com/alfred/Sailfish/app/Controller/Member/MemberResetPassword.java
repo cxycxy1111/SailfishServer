@@ -15,7 +15,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
 /**
  * Servlet implementation class MemberResetPassword
  */
-@WebServlet("/MemberResetPassword")
+@WebServlet(name = "MemberPasswordReset",urlPatterns = "/MemberResetPassword")
 public class MemberResetPassword extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberService memberService = new MemberService();

@@ -12,7 +12,7 @@ import com.alfred.Sailfish.app.Service.MemberCardService;
 /**
  * Servlet implementation class Charge
  */
-@WebServlet("/Charge")
+@WebServlet(name = "MemberCardCharge",urlPatterns = "/Charge")
 public class MemberCardCharge extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberCardService memberCardService = new MemberCardService();

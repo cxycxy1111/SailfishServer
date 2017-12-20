@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.soap.MTOM;
 import java.io.IOException;
 
-@WebServlet("/CourseAddPrivate")
+@WebServlet(name = "CourseAddPrivate",urlPatterns = "/CourseAddPrivate")
 public class CourseAddPrivate extends HttpServlet {
 
     CourseService courseService = new CourseService();

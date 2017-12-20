@@ -15,7 +15,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
 /**
  * Servlet implementation class CoursePlanListQueryByCourseId
  */
-@WebServlet("/CoursePlanListQueryByCourseId")
+@WebServlet(name = "CoursePlanListQueryByCourseId",urlPatterns = "/CoursePlanListQueryByCourseId")
 public class CoursePlanListQueryByCourseId extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CoursePlanService coursePlanService = new CoursePlanService();

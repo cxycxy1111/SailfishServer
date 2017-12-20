@@ -12,7 +12,7 @@ import com.alfred.Sailfish.app.Service.MemberService;
 /**
  * Servlet implementation class QueryMemberList
  */
-@WebServlet("/QueryMemberList")
+@WebServlet(name = "MemberListQuery",urlPatterns = "/QueryMemberList")
 public class MemberListQuery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberService memberService = new MemberService();

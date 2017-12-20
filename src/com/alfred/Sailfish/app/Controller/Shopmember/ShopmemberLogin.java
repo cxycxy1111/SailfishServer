@@ -12,7 +12,7 @@ import com.alfred.Sailfish.app.Service.ShopmemberService;
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/ShopMemberLogin")
+@WebServlet(name = "ShopMemberLogin",urlPatterns = "/ShopMemberLogin")
 public class ShopmemberLogin extends HttpServlet {
 	private ShopmemberService shopMemberService = new ShopmemberService();
 	private static final long serialVersionUID = 1L;

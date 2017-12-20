@@ -12,7 +12,7 @@ import com.alfred.Sailfish.app.Service.CardService;
 /**
  * Servlet implementation class RemoveCard
  */
-@WebServlet("/RemoveCard")
+@WebServlet(name = "CardRemove",urlPatterns = "/RemoveCard")
 public class CardRemove extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CardService cardService = new CardService();

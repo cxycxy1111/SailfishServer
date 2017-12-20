@@ -14,7 +14,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
 /**
  * Servlet implementation class CourseDelete
  */
-@WebServlet("/CourseDelete")
+@WebServlet(name = "CourseDelete",urlPatterns = "/CourseDelete")
 public class CourseRemove extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CourseService courseService = new CourseService();

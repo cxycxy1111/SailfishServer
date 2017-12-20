@@ -15,7 +15,7 @@ import com.alfred.Sailfish.app.Service.MemberService;
  * 请求示例
  * AddNewMember?shop_id=5&shop_member_id=1&name=邓伟雄&login_name=dengweixiong44&password=111&phone=13751729017&im=111&birthday=2017-01-01 00:00:00
  */
-@WebServlet("/AddNewMember")
+@WebServlet(name = "MemberAdd",urlPatterns = "/AddNewMember")
 public class MemberAdd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberService memberService = new MemberService();

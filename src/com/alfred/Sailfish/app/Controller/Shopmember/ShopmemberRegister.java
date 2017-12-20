@@ -13,7 +13,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
 /**
  * Servlet implementation class ShopMemberRegister
  */
-@WebServlet("/ShopMemberRegister")
+@WebServlet(name = "ShopMemberRegister",urlPatterns = "/ShopMemberRegister")
 public class ShopmemberRegister extends HttpServlet {
 	
 	private ShopmemberService shopMemberService = new ShopmemberService();

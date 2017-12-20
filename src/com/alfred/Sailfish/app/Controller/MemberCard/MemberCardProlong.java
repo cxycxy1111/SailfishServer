@@ -13,7 +13,7 @@ import com.alfred.Sailfish.app.Service.MemberCardService;
 /**
  * Servlet implementation class ProlongExpiredTime
  */
-@WebServlet("/ProlongExpiredTime")
+@WebServlet(name = "MemberCardProlongExpiredTime",urlPatterns = "/ProlongExpiredTime")
 public class MemberCardProlong extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberCardService memberCardService = new MemberCardService();

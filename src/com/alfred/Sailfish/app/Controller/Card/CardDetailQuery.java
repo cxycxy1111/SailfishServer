@@ -15,7 +15,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
 /**
  * Servlet implementation class CardDetailQuery
  */
-@WebServlet("/CardDetailQuery")
+@WebServlet(name = "CardDetailQuery",urlPatterns = "/CardDetailQuery")
 public class CardDetailQuery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CardService cardService = new CardService();

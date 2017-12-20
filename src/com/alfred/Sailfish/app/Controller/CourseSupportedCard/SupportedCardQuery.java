@@ -15,7 +15,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
 /**
  * Servlet implementation class QuerySupportedCard
  */
-@WebServlet("/SupportedCardQuery")
+@WebServlet(name = "SupportedCardQuery",urlPatterns = "/SupportedCardQuery")
 public class SupportedCardQuery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CourseSupportedCardService courseSupportedCardService = new CourseSupportedCardService();

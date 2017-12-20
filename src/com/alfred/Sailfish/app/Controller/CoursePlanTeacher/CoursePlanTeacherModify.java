@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alfred.Sailfish.app.Service.CoursePlanTeacherService;
+import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * http://localhost:8080/Sailfish/CoursePlanTeacherAdd?m=3_1_2-2_1_3
  * Servlet implementation class CoursePlanTeacherAdd
  */
-@WebServlet("/CoursePlanTeacherModify")
+@WebServlet(name = "CoursePlanTeacherModify",urlPatterns = "/CoursePlanTeacherModify")
 public class CoursePlanTeacherModify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CoursePlanTeacherService coursePlanTeacherService = new CoursePlanTeacherService();
@@ -34,13 +36,27 @@ public class CoursePlanTeacherModify extends HttpServlet {
 		resp.setCharacterEncoding("utf-8");
 		PrintWriter out = resp.getWriter();
 		String s = req.getParameter("m");
-		String [] str = s.split("-");
-		for (int i = 0;i < str.length;i++) {
-			String [] strs = str[i].split("_");
-			String result = coursePlanTeacherService.modify(Integer.parseInt(strs[0]), Long.parseLong(strs[1]), Long.parseLong(strs[2]));
-			out.append(result);
-			System.out.println(result);
+		String [] strs = s.split("-");
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0;i < strs.length;i++) {
+			String [] s_strs = strs[i].split("_");
+			String result = coursePlanTeacherService.modify(Integer.parseInt(s_strs[0]), Long.parseLong(s_strs[1]), Long.parseLong(s_strs[2]));
+			builder.append(result);
+			builder.append(",");
 		}
+		String result = builder.toString();
+		String js_result;
+		if (result.contains(Reference.EXE_FAIL)) {
+			if (!result.contains(Reference.EXE_SUC)) {
+				js_result = MethodTool.tfs(Reference.EXE_FAIL);
+			}else {
+				js_result = MethodTool.tfs(Reference.EXE_PARTLY_FAIL);
+			}
+		}else {
+			js_result = MethodTool.tfs(Reference.EXE_SUC);
+		}
+		out.append(js_result);
+		System.out.append(js_result);
 	}
 
 	/**

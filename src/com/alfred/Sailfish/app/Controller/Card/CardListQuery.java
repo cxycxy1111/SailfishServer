@@ -15,7 +15,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
  * 请求示例
  * http://localhost:8080/Sailfish/QueryCardList?shop_id=5
  */
-@WebServlet("/QueryCardList")
+@WebServlet(name = "CardListQuery",urlPatterns = "/QueryCardList")
 public class CardListQuery extends HttpServlet {
 	private CardService cardService = new CardService();
 	private static final long serialVersionUID = 1L;

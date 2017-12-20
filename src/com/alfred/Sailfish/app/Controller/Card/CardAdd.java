@@ -15,7 +15,7 @@ import com.alfred.Sailfish.app.Service.CardService;
  * 请求示例
  * http://localhost:8080/Sailfish/AddNewCard?shop_id=5&shopmember_id=1&name=余额卡&type=1&price=200&balance=210&start_time=2017-09-25%2000:00:00&expired_time=2018-09-25%2000:00:00
  */
-@WebServlet("/AddNewCard")
+@WebServlet(name = "CardAdd",urlPatterns = "/AddNewCard")
 public class CardAdd extends HttpServlet {
 	private CardService cardService = new CardService();
 	private static final long serialVersionUID = 1L;

@@ -14,7 +14,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
 /**
  * Servlet implementation class QueryMemberList
  */
-@WebServlet("/QueryShopmemberList")
+@WebServlet(name = "ShopmemberListQuery",urlPatterns = "/QueryShopmemberList")
 public class ShopmemberListQuery extends HttpServlet {
 	private ShopmemberService shopmemberService = new ShopmemberService();
 	private static final long serialVersionUID = 1L;
@@ -37,7 +37,7 @@ public class ShopmemberListQuery extends HttpServlet {
 		shop_id = Long.parseUnsignedLong(request.getParameter("shop_id"));
 		int type = MethodTool.reqParseToInt(request, "type");
 		session.setAttribute("shop_id", shop_id);
-		String str = shopmemberService.queryShopmemberDetail(shop_id,type);
+		String str = shopmemberService.queryShopmemberList(shop_id,type);
 		System.out.println(str);
 		out.append(str);
 	}

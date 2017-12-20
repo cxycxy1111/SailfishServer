@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/ShopmemberModify")
+@WebServlet(name = "ShopmemberModify",urlPatterns = "/ShopmemberModify")
 public class ShopmemberModify extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

@@ -14,7 +14,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
  * http://localhost:8080/Sailfish/CoursePlanAdd?c_id=2&cr_id=3&lmu_id=5&s_time=2017-12-28%2000:00:00&e_time=2017-12-28%2000:40:00&remark=123
  * Servlet implementation class CoursePlanAdd
  */
-@WebServlet("/CoursePlanAdd")
+@WebServlet(name = "CoursePlanAdd",urlPatterns = "/CoursePlanAdd")
 public class CoursePlanAdd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CoursePlanService coursePlanService = new CoursePlanService();

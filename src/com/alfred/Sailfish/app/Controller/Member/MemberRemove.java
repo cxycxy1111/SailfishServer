@@ -12,7 +12,7 @@ import com.alfred.Sailfish.app.Service.MemberService;
 /**
  * Servlet implementation class deleteMember
  */
-@WebServlet("/removeMember")
+@WebServlet(name = "MemberRemove",urlPatterns = "/removeMember")
 public class MemberRemove extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberService memberService = new MemberService();

@@ -16,7 +16,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
  * http://localhost:8080/Sailfish/ClassroomModify?cr_id=3&name=广州大剧院
  * Servlet implementation class ClassroomModify
  */
-@WebServlet("/ClassroomModify")
+@WebServlet(name = "ClassroomModify",urlPatterns = "/ClassroomModify")
 public class ClassroomModify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ClassroomService classroomService = new ClassroomService();

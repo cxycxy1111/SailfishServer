@@ -2,10 +2,7 @@ package com.alfred.Sailfish.app.DAO;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
+import java.util.*;
 
 import com.alfred.Sailfish.app.Util.SQLHelper;
 
@@ -158,18 +155,55 @@ public class CoursePlanDAO {
 	 */
 	public ArrayList<IdentityHashMap<String, Object>> queryByShopId(long s_id) {
 		ArrayList<IdentityHashMap<String, Object>> list = new ArrayList<IdentityHashMap<String, Object>>();
-		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,trim(cr.name) classroom_name,truncate(c.last_time,0) last_time,cp.start_time FROM courseplan cp "
+		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,truncate(c.type,0) course_type,trim(cr.name) classroom_name,truncate(c.last_time,0) last_time,cp.start_time FROM courseplan cp "
 				+ "LEFT JOIN course c ON cp.course_id = c.id "
 				+ "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
 				+ "LEFT JOIN courseplan_teacher ct ON cp.id = ct.courseplan_id "
-				+ "WHERE cp.del = 0 AND cp.shop_id = " + s_id + " AND cp.start_time > now() ORDER BY cp.start_time DESC";
+				+ "WHERE cp.del = 0 " +
+				"AND cp.shop_id = " + s_id +
+				" AND cp.start_time > now() ORDER BY cp.start_time DESC";
 		list = helper.linkquery(sql);
 		return list;
+	}
+
+	/**
+	 * 通过课程ID、课室ID、开始时间判断是否重复
+	 * @param ce_id
+	 * @param cr_id
+	 * @param start_time
+	 * @return
+	 */
+	public boolean isRepeated(long ce_id,long cr_id,String start_time) {
+		ArrayList<HashMap<String,Object>> list = new ArrayList<>();
+		String sql = "SELECT * FROM courseplan WHERE course_id=" + ce_id +
+				" AND start_time = '" + start_time +
+				"' AND classroom_id = " + cr_id;
+		list = helper.query(sql);
+		if (list.size() != 0) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 通过课程信息查询排课
+	 * @param ce_id 课程ID
+	 * @param cr_id 课室ID
+	 * @param start_time 课程开始时间
+	 * @return
+	 */
+	public long queryCoursePlanIdByInfo(long ce_id,long cr_id,String start_time) {
+		ArrayList<HashMap<String,Object>> list = new ArrayList<>();
+		String sql = "SELECT id FROM courseplan WHERE course_id=" + ce_id +
+				" AND start_time = '" + start_time +
+				"' AND classroom_id = " + cr_id;
+		list = helper.query(sql);
+		return Long.parseLong(String.valueOf(list.get(0).get("id")));
 	}
 	
 	/**
 	 * 判断排课是否存在
-	 * @param id
+	 * @param id 排课ID
 	 * @return
 	 */
 	public boolean isExist(long id) {

@@ -1,6 +1,7 @@
 package com.alfred.Sailfish.app.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 
 import com.alfred.Sailfish.app.DAO.CourseDAO;
@@ -8,6 +9,8 @@ import com.alfred.Sailfish.app.DAO.CoursePlanDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
+
+import javax.xml.ws.soap.MTOM;
 
 public class CoursePlanService {
 	
@@ -39,12 +42,15 @@ public class CoursePlanService {
 		if((shopId_1 != shopId_2) |( shopId_1 != shopId_3 )|( shopId_2 != shopId_3)) {
 			return MethodTool.tfs(Reference.INST_NOT_MATCH);
 		}
-		
+		if (coursePlanDAO.isRepeated(c_id,cr_id,s_time)) {
+			return MethodTool.tfs(Reference.DUPLICATE);
+		}
 		isAdded = coursePlanDAO.addCoursePlan(c_id, cr_id, lmu_id, s_time, e_time, remark);
 		if(!isAdded) {
 			return MethodTool.tfs(Reference.EXE_FAIL);
 		}
-		return MethodTool.tfs(Reference.EXE_SUC);
+		long id = coursePlanDAO.queryCoursePlanIdByInfo(c_id,cr_id,s_time);
+		return MethodTool.tfs(Reference.dataprefix + id + Reference.datasuffix);
 	}
 	
 	/**
@@ -70,15 +76,19 @@ public class CoursePlanService {
 	
 	/**
 	 * 修改排课
-	 * @param id
-	 * @param cr_id
-	 * @param lmu_id
-	 * @param s_time
-	 * @param e_time
-	 * @param remark
+	 * @param id 排课ID
+	 * @param cr_id 课室ID
+	 * @param lmu_id 最后修改人ID
+	 * @param s_time 开始时间
+	 * @param e_time 结束时间
+	 * @param remark 备注
 	 * @return
 	 */
 	public String modify(long id,long cr_id,long lmu_id,String s_time,String e_time,String remark) {
+		long ce_id = courseDAO.querycourseIdByCoursePlanId(id);
+		if (coursePlanDAO.isRepeated(ce_id,cr_id,s_time)) {
+			return MethodTool.tfs(Reference.DUPLICATE);
+		}
 		if(shopDAO.queryShopIdByCoursePlanId(id) != shopDAO.queryShopByShopmemberId(lmu_id)) {
 			return MethodTool.tfs(Reference.INST_NOT_MATCH);
 		}
@@ -91,7 +101,16 @@ public class CoursePlanService {
 			return MethodTool.tfs(Reference.EXE_FAIL);
 		}
 	}
-	
+
+	public String queryByCoursePlanId(long cp_id) {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		list = coursePlanDAO.queryById(cp_id);
+		if (list.size() != 0) {
+			return MethodTool.tfc(list);
+		}
+		return MethodTool.tfs(Reference.NSR);
+	}
+
 	/**
 	 * 通过机构ID查询所有排课
 	 * @param s_id

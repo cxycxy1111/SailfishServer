@@ -13,7 +13,7 @@ import com.alfred.Sailfish.app.Service.MemberCardService;
  * Servlet implementation class AddNewMemberCard
  * localhost:8080/Sailfish/AddNewMemberCard?smid=1&mid=2&cid=1&balance=50&stime=2017-09-28 17:00:00&etime=2018-09-28+17:00:00
  */
-@WebServlet(urlPatterns = "/AddNewMemberCard")
+@WebServlet(name = "MemberCardAdd",urlPatterns = "/AddNewMemberCard")
 public class MemberCardAdd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberCardService memberCardService = new MemberCardService();

@@ -107,6 +107,9 @@ public class CourseService {
 		ArrayList<HashMap<String,Object>> full_list = new ArrayList<>();
 		ArrayList<HashMap<String,Object>> csc_list = new ArrayList<>();
 		course_list = courseDAO.queryList(s_id);
+		if (course_list.size() == 0) {
+			return qr(Reference.EMPTY_RESULT);
+		}
 		csc_list = courseSupportedCardDAO.querySupportedCards(s_id,0);
 		for (int i = 0;i < course_list.size();i++) {
 			HashMap<String,Object> temp_map = course_list.get(i);

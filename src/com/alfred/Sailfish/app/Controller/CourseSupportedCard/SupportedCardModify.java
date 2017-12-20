@@ -20,7 +20,7 @@ import com.alfred.Sailfish.app.Util.Reference;
  * type_courseid_cardid_price
  * Servlet implementation class SupportedCardModify
  */
-@WebServlet("/SupportedCardModify")
+@WebServlet(name = "SupportedCardModify",urlPatterns = "/SupportedCardModify")
 public class SupportedCardModify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CourseSupportedCardService courseSupportedCardService = new CourseSupportedCardService();

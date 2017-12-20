@@ -14,7 +14,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
 /**
  * Servlet implementation class CourseModify
  */
-@WebServlet("/CourseModify")
+@WebServlet(name = "CourseModify",urlPatterns = "/CourseModify")
 public class CourseModify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     CourseService courseDAO = new CourseService();

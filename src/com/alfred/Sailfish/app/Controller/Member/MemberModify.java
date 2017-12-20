@@ -13,7 +13,7 @@ import com.alfred.Sailfish.app.Service.MemberService;
 /**
  * Servlet implementation class ModifyMember
  */
-@WebServlet("/ModifyMember")
+@WebServlet(name = "MemberModify",urlPatterns = "/ModifyMember")
 public class MemberModify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberService memberService = new MemberService();

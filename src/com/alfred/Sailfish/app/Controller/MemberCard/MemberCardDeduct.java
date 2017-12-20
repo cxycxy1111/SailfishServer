@@ -12,7 +12,7 @@ import com.alfred.Sailfish.app.Service.MemberCardService;
 /**
  * Servlet implementation class Deduct
  */
-@WebServlet("/Deduct")
+@WebServlet(name = "MemberCardDeduct",urlPatterns = "/Deduct")
 public class MemberCardDeduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberCardService memberCardService = new MemberCardService();
