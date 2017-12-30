@@ -117,7 +117,13 @@ public class ShopmemberService {
 		if (shopDao.queryShopByShopmemberId(sm_id) != s_id) {
 			return MethodTool.qr(Reference.INST_NOT_MATCH);
 		}
-		return MethodTool.tfc(shopmemberDAO.queryDetail(sm_id, s_id));
+		ArrayList<HashMap<String,Object>> arrayList = new ArrayList<>();
+		arrayList = shopmemberDAO.queryDetail(sm_id);
+		if (arrayList.size()==0) {
+			return MethodTool.tfs(Reference.NSR);
+		}else {
+			return MethodTool.tfc(arrayList);
+		}
 	}
 
 	/**

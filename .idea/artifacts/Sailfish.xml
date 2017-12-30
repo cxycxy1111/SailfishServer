@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Sailfish">
+    <output-path>$PROJECT_DIR$/out/artifacts/Sailfish</output-path>
+    <root id="archive" name="Sailfish.war">
+      <element id="artifact" artifact-name="Sailfish:war exploded" />
+    </root>
+  </artifact>
+</component>

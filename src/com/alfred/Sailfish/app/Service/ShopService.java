@@ -35,7 +35,6 @@ public class ShopService {
 	
 	public String queryShopIdByShopmemberId(long sm_id) {
 		long s_id = shopDAO.queryShopByShopmemberId(sm_id);
-		System.out.println(s_id);
 		return MethodTool.tfs(Reference.dataprefix + String.valueOf(s_id) + Reference.datasuffix);
 	}
 	

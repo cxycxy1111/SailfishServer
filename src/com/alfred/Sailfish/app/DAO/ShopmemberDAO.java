@@ -85,9 +85,9 @@ public class ShopmemberDAO {
 	 * @param s_id
 	 * @return
 	 */
-	public ArrayList<HashMap<String,Object>> queryDetail(long sm_id,long s_id) {
+	public ArrayList<HashMap<String,Object>> queryDetail(long sm_id) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<>();
-		String sql = "SELECT id,type,name,user_name FROM shopmember WHERE id = " + sm_id + " AND shop_id = " + s_id;
+		String sql = "SELECT id,type,name,user_name FROM shopmember WHERE id = " + sm_id;
 		list = helper.query(sql);
 		return list;
 	}
