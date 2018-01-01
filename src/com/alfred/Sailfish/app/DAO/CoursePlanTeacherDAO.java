@@ -57,7 +57,7 @@ public class CoursePlanTeacherDAO {
 	 */
 	public ArrayList<HashMap<String,Object>> queryById(long cp_id,long shop_id) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		String sql = "SELECT truncate(sm.id,0) sm_id,trim(name) t_name,truncate(ct.courseplan_id,0) cp_id "
+		String sql = "SELECT truncate(sm.id,0) sm_id,trim(name) tea_name "
 				+ "FROM shopmember sm "
 				+ "LEFT JOIN courseplan_teacher ct ON ct.teacher_id = sm.id "
 				+ "WHERE sm.del = 0 AND shop_id = " + shop_id;
@@ -87,7 +87,7 @@ public class CoursePlanTeacherDAO {
 	 * @return
 	 */
 	public ArrayList<HashMap<String,Object>> queryPrivateCoursePlanTeacher(long c_id) {
-		String sql = "SELECT sm.id,sm.name FROM course c "
+		String sql = "SELECT truncate(sm.id,0) sm_id,trim(sm.name) tea_name FROM course c "
 				+ "LEFT JOIN shopmember sm ON c.teacher_id = sm.id "
 				+ "WHERE id = " + c_id;
 		return helper.query(sql);
