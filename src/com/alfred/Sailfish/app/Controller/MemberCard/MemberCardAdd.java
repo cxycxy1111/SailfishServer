@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.alfred.Sailfish.app.Service.MemberCardService;
+import com.alfred.Sailfish.app.Util.MethodTool;
 
 /**
  * Servlet implementation class AddNewMemberCard
@@ -39,7 +40,7 @@ public class MemberCardAdd extends HttpServlet {
         String expired_time = request.getParameter("etime");
         String str = memberCardService.add(member_id, card_id,
         		shopmember_id, balance, start_time, expired_time);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

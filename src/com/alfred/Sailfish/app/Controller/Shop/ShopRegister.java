@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.alfred.Sailfish.app.Service.ShopService;
+import com.alfred.Sailfish.app.Util.MethodTool;
 
 /**
  * Servlet implementation class ShopRegister
@@ -33,7 +34,7 @@ public class ShopRegister extends HttpServlet {
 		String name = request.getParameter("name");
 		String intro = request.getParameter("intro");
 		String str = shopService.register(name, intro);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

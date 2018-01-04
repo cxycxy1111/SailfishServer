@@ -32,7 +32,7 @@ public class CourseAddPrivate extends HttpServlet {
         String e_time = request.getParameter("e_time");
         int acutal_cost = MethodTool.reqParseToInt(request,"actual_cost");
         String str = courseService.addPrivate(s_id,lmu_id,sm_id,m_id,name,type,total_times,e_time,acutal_cost);
-        System.out.println(str);
+        System.out.println(MethodTool.getTime() +  ",Response:" + str);
         response.getWriter().append(str);
     }
 }

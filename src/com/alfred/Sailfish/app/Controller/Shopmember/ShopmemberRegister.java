@@ -37,7 +37,7 @@ public class ShopmemberRegister extends HttpServlet {
 		String name = request.getParameter("name");
 		long shop_id = MethodTool.reqParseToLong(request, "s_id");
 		String str = shopMemberService.register(shop_id, login_name, name, password);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

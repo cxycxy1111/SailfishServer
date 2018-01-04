@@ -25,6 +25,7 @@ public class CoursePlanDetailQuery extends HttpServlet {
         long cp_id = MethodTool.reqParseToLong(request,"cp_id");
         String resp = coursePlanService.queryByCoursePlanId(cp_id);
         PrintWriter printWriter = response.getWriter();
+        System.out.println(MethodTool.getTime() +  ",Response:" + resp);
         printWriter.append(resp);
     }
 }

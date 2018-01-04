@@ -2,6 +2,8 @@ package com.alfred.Sailfish.app.Controller.Card;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.alfred.Sailfish.app.Service.CardService;
+import com.alfred.Sailfish.app.Util.MethodTool;
 
 /**
  * Servlet implementation class AddNewCard
@@ -19,7 +22,7 @@ import com.alfred.Sailfish.app.Service.CardService;
 public class CardAdd extends HttpServlet {
 	private CardService cardService = new CardService();
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -42,7 +45,7 @@ public class CardAdd extends HttpServlet {
 		String start_time = req.getParameter("start_time");
 		String expired_time = req.getParameter("expired_time");
 		String str = cardService.addCard(shop_id, name, shopmember_id, type, price, balance, start_time, expired_time);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

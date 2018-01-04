@@ -59,7 +59,7 @@ public class SupportedCardModify extends HttpServlet {
 			js_result = MethodTool.tfs(Reference.EXE_SUC);
 		}
 		out.append(js_result);
-		System.out.append(js_result);
+		System.out.println(MethodTool.getTime() +  ",Response:" + js_result);
 	}
 
 	/**

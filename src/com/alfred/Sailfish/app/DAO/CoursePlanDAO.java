@@ -79,7 +79,7 @@ public class CoursePlanDAO {
 				+ "start_time = '" + s_time + "',"
 				+ "end_time = '" + e_time + "',"
 				+ "remark = '" + remark
-				+ "' WHERE id = " + id;
+				+ "',last_modify_time=now() WHERE id = " + id;
 		try {
 			isAdded = helper.update(sql);
 		} catch (SQLException e) {

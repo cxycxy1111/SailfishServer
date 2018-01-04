@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alfred.Sailfish.app.Service.MemberCardService;
+import com.alfred.Sailfish.app.Util.MethodTool;
 
 /**
  * Servlet implementation class MemberCardRemove
@@ -35,7 +36,7 @@ public class MemberCardRemove extends HttpServlet {
 		long mc_id = Long.parseLong(request.getParameter("mc_id"));
 		long sm_id = Long.parseLong(request.getParameter("sm_id"));
 		String str = memberCardService.remove(mc_id, sm_id);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

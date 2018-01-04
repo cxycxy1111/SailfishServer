@@ -32,13 +32,10 @@ public class ShopmemberListQuery extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		long shop_id = 0;
-		HttpSession session = request.getSession();
-		shop_id = Long.parseUnsignedLong(request.getParameter("s_id"));
+		long shop_id = MethodTool.reqParseToLong(request,"s_id");
 		int type = MethodTool.reqParseToInt(request, "type");
-		session.setAttribute("shop_id", shop_id);
 		String str = shopmemberService.queryShopmemberList(shop_id,type);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

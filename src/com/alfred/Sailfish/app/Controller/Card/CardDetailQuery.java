@@ -36,7 +36,7 @@ public class CardDetailQuery extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		long c_id = MethodTool.reqParseToLong(request, "c_id");
 		String str = cardService.queryCardDetail(c_id);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

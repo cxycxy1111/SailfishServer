@@ -24,7 +24,7 @@ public class ShopmemberModify extends HttpServlet {
         String name = request.getParameter("name");
         try {
             String str = shopmemberService.modifyInfo(sm_id,name,lmu_id);
-            System.out.println(str);
+            System.out.println(MethodTool.getTime() +  ",Response:" + str);
             response.getWriter().append(str);
             response.flushBuffer();
         } catch (SQLException e) {

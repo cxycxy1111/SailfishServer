@@ -35,6 +35,7 @@ public class CoursePlanListQueryByCourseId extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		long ce_id = MethodTool.reqParseToLong(req, "ce_id");
 		String str = coursePlanService.queryByCourseId(ce_id);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

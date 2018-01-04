@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.alfred.Sailfish.app.Service.MemberCardService;
+import com.alfred.Sailfish.app.Util.MethodTool;
 
 /**
  * Servlet implementation class ProlongExpiredTime
@@ -36,7 +37,7 @@ public class MemberCardProlong extends HttpServlet {
 		long lmu_id = Long.parseLong(request.getParameter("lmu_id"));
 		String expiredTime = request.getParameter("et");
 		String str = memberCardService.changeExpiredTime(lmu_id, mc_id, expiredTime);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

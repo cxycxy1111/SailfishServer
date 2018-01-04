@@ -70,7 +70,7 @@ public class SQLHelper {
      * @return
      */
     public ArrayList<IdentityHashMap<String,Object>> linkquery(String sql) {
-        System.out.println(sql);
+        System.out.println(sdf.format(new Date()) +  ",SQL:" + sql);
         if(sql.equals("") || sql == null){  
             return null;  
         }
@@ -107,7 +107,7 @@ public class SQLHelper {
      * @return boolean 成功返回true，失败返回false 
      */  
     public boolean update(String sql) throws SQLException {
-        System.out.println(sql);
+        System.out.println(sdf.format(new Date()) +  ",SQL:" + sql);
         boolean b = false;  
         if(sql.equals("") || sql == null){  
             return b;  

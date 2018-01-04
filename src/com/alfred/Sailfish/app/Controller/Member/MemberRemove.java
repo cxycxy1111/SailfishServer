@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.alfred.Sailfish.app.Service.MemberService;
+import com.alfred.Sailfish.app.Util.MethodTool;
 
 /**
  * Servlet implementation class deleteMember
@@ -34,7 +35,7 @@ public class MemberRemove extends HttpServlet {
 		long m_id = Long.parseLong(request.getParameter("member_id"));
 		System.out.println("SM_ID is :" + sm_id);
 		String str = memberService.removeMember(m_id, sm_id);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

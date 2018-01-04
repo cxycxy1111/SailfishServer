@@ -36,6 +36,7 @@ public class CoursePlanRemove extends HttpServlet {
 		long id = MethodTool.reqParseToLong(req, "id");
 		long lmu_id = MethodTool.reqParseToLong(req, "lmu_id");
 		String str = coursePlanService.remove(id, lmu_id);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

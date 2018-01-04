@@ -37,7 +37,7 @@ public class ClassroomQueryCRIdByName extends HttpServlet {
 		long s_id = MethodTool.reqParseToLong(request, "s_id");
 		String cr_name = request.getParameter("cr_name");
 		String str = classroomService.queryCRIdByCRName(s_id,cr_name);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

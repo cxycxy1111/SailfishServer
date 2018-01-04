@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.alfred.Sailfish.app.Service.MemberCardService;
+import com.alfred.Sailfish.app.Util.MethodTool;
 
 /**
  * Servlet implementation class Deduct
@@ -34,7 +35,7 @@ public class MemberCardDeduct extends HttpServlet {
 		long mc_id = Long.valueOf(request.getParameter("mc_id"));
 		long shop_member_id = Long.parseLong(request.getParameter("sm_id"));
 		String str = memberCardService.reduceBalance(mc_id, shop_member_id, num);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

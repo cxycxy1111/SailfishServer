@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.alfred.Sailfish.app.Service.MemberCardService;
+import com.alfred.Sailfish.app.Util.MethodTool;
 
 /**
  * Servlet implementation class Charge
@@ -33,7 +34,7 @@ public class MemberCardCharge extends HttpServlet {
 		long last_modify_user = Long.parseLong(request.getParameter("lmu"));
 		int num = Integer.parseInt(request.getParameter("num"));
 		String str = memberCardService.increaseBalance(member_card_id, last_modify_user, num);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.alfred.Sailfish.app.Service.MemberService;
+import com.alfred.Sailfish.app.Util.MethodTool;
 
 /**
  * Servlet implementation class QueryMemberDetail
@@ -34,7 +35,7 @@ public class MemberDetailQuery extends HttpServlet {
 		System.out.println(member_id);
 		long shop_id =Long.parseLong(request.getParameter("shop_id"));
 		String str = memberService.queryMemberDetail(shop_id, member_id);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

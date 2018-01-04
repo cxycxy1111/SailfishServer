@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.alfred.Sailfish.app.Service.ShopmemberService;
+import com.alfred.Sailfish.app.Util.MethodTool;
 
 /**
  * Servlet implementation class AddNewShopMember
@@ -37,7 +38,7 @@ public class ShopmemberAdd extends HttpServlet {
 		String password = req.getParameter("password");
 		int type = Integer.parseInt(req.getParameter("type"));
 		String str = shopmemberService.addShopmember(shop_id, shopmember_id, name, user_name, type, password);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

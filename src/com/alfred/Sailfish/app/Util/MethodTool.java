@@ -1,10 +1,8 @@
 package com.alfred.Sailfish.app.Util;
 
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -187,6 +185,11 @@ public class MethodTool {
 	 */
 	public static int reqParseToInt (HttpServletRequest req,String param) {
 		return Integer.parseInt(req.getParameter(param));
+	}
+
+	public static String getTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSSSSS");
+		return sdf.format(new Date());
 	}
 	
 }

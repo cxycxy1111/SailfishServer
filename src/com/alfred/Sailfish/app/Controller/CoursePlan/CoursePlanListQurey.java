@@ -37,7 +37,7 @@ public class CoursePlanListQurey extends HttpServlet {
 		long s_id = MethodTool.reqParseToLong(req, "s_id");
 		String str = coursePlanService.queryByShopId(s_id);
 		out.append(str);
-		System.out.println("排课列表：" + str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 	}
 
 	/**

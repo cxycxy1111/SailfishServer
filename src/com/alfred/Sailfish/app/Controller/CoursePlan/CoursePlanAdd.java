@@ -39,6 +39,7 @@ public class CoursePlanAdd extends HttpServlet {
 		String e_time = req.getParameter("e_time");
 		String remark = req.getParameter("remark");
 		String str = coursePlanService.add(c_id, cr_id, lmu_id, s_time, e_time, remark);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

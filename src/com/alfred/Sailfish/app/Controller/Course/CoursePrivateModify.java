@@ -31,7 +31,7 @@ public class CoursePrivateModify extends HttpServlet {
         String invalid_time = request.getParameter("invalid_time");
         int total_cost = MethodTool.reqParseToInt(request,"total_cost");
         String str = courseService.modifyPrivate(id,sm_id,name,total_times,invalid_time,total_cost);
-        System.out.println(str);
+        System.out.println(MethodTool.getTime() +  ",Response:" + str);
         response.getWriter().append(str);
     }
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.alfred.Sailfish.app.Service.ShopmemberService;
+import com.alfred.Sailfish.app.Util.MethodTool;
 
 /**
  * Servlet implementation class Login
@@ -33,7 +34,7 @@ public class ShopmemberLogin extends HttpServlet {
 		String user_name = request.getParameter("user_name");
 		String password = request.getParameter("password");
 		String str = shopMemberService.loginCheck(user_name, password);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 

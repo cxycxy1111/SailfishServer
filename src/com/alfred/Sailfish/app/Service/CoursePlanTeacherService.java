@@ -71,7 +71,7 @@ public class CoursePlanTeacherService {
 		if (courseDAO.queryType(ce_id) == Reference.TYPE_PRIVATE_COURSE) {
 			return MethodTool.tfc(coursePlanTeacherService.queryPrivateCoursePlanTeacher(ce_id));
 		}
-		return MethodTool.tfc(coursePlanTeacherService.queryById(cp_id,s_id));
+		return MethodTool.tfc(coursePlanTeacherService.queryById(cp_id));
 	}
 	
 }

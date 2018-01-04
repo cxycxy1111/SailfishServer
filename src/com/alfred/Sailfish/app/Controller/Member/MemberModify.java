@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.alfred.Sailfish.app.Service.MemberService;
+import com.alfred.Sailfish.app.Util.MethodTool;
 
 /**
  * Servlet implementation class ModifyMember
@@ -38,7 +39,7 @@ public class MemberModify extends HttpServlet {
 		String phone = request.getParameter("phone");
 		String im = request.getParameter("im");
 		String str = memberService.modifyMember(member_id, shopmember_id, name, birthday, phone, im);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		w.append(str);
 	}
 

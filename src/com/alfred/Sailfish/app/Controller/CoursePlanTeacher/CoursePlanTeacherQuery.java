@@ -35,7 +35,7 @@ public class CoursePlanTeacherQuery extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		long cp_id = MethodTool.reqParseToLong(req, "cp_id");
 		String str = coursePlanTeacherService.queryList(cp_id);
-		System.out.println(str);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}
 
