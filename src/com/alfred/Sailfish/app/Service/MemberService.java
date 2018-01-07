@@ -60,6 +60,9 @@ public class MemberService {
 	public String queryMemberList(long shop_id) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		list = memberDAO.queryList(shop_id);
+		if (list.size() == 0) {
+			return MethodTool.qr(Reference.EMPTY_RESULT);
+		}
 		return MethodTool.tfc(list);
 	}
 	

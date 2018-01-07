@@ -31,7 +31,7 @@ public class MemberListQuery extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		long shop_id = Long.parseLong(request.getParameter("shop_id"));
+		long shop_id = Long.parseLong(request.getParameter("s_id"));
 		String str = memberService.queryMemberList(shop_id);
 		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);

@@ -6,6 +6,9 @@ import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class MemberCardService {
 	
 	private MemberDAO memberDAO = new MemberDAO();
@@ -29,11 +32,11 @@ public class MemberCardService {
 		long shopmember_id,int balance,String start_time,String expired_time) {
 		boolean isMemberDeleted = memberDAO.isDel(member_id);
         long shop_id = shopDAO.queryShopIdByCardId(card_id);
-		long shop_id_1 = shopDAO.queryShopByShopmemberId(member_id);
+		long shop_id_1 = shopDAO.queryShopByShopmemberId(shopmember_id);
         long shop_id_2 = shopDAO.queryShopIdByCardId(card_id);
         long shop_id_3 = shopDAO.queryShopIdByMemberId(member_id);
         if (!isMemberDeleted) {
-            if (shop_id == shop_id_1 && shop_id_1 == shop_id_2 && shop_id_2 == shop_id_3) {
+            if (shop_id_3 == shop_id_1 && shop_id_1 == shop_id_2) {
                 if (memberCardDAO.isMemberCardHasExist(member_id, card_id)) {
                 	return qr(Reference.DUPLICATE);
                 }else {
@@ -74,6 +77,20 @@ public class MemberCardService {
 		} else {
 			return qr(Reference.NOT_MATCH);
 		}
+	}
+
+	/**
+	 * 通过会员ID获取会员卡列表
+	 * @param m_id 会员ID
+	 * @return
+	 */
+	public String queryListByMemberId(long m_id) {
+		ArrayList<HashMap<String,Object>> arrayList = new ArrayList<>();
+		arrayList = memberCardDAO.queryListByMemberId(m_id);
+		if (arrayList.size() == 0) {
+			return MethodTool.qr(Reference.EMPTY_RESULT);
+		}
+		return MethodTool.tfc(arrayList);
 	}
 	
 	/**
@@ -152,6 +169,13 @@ public class MemberCardService {
 		}else {
 			return qr(Reference.NOT_MATCH);
 		}
+	}
+
+	public String queryDetail(long mc_id) {
+		if (memberCardDAO.isDel(mc_id)) {
+			return MethodTool.tfs(Reference.NSR);
+		}
+		return MethodTool.tfc(memberCardDAO.queryDetailById(mc_id));
 	}
 	
 	/**
