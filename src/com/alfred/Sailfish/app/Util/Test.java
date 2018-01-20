@@ -50,7 +50,7 @@ public class Test {
 		
 		ArrayList<HashMap<String,Object>> l = new ArrayList<HashMap<String,Object>>();
 		LinkedList<HashMap<String,Object>> ll = new LinkedList<HashMap<String,Object>>();
-		ArrayList<IdentityHashMap<String,Object>> hash = new ArrayList<IdentityHashMap<String,Object>>();
+		ArrayList<HashMap<String,Object>> hash = new ArrayList<HashMap<String,Object>>();
 		String s = null;
 
 		JSONObject jo = null;

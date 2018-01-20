@@ -33,7 +33,8 @@ public class MemberCardCharge extends HttpServlet {
 		long member_card_id = Long.parseLong(request.getParameter("mc_id"));
 		long last_modify_user = Long.parseLong(request.getParameter("lmu"));
 		int num = Integer.parseInt(request.getParameter("num"));
-		String str = memberCardService.increaseBalance(member_card_id, last_modify_user, num);
+		String new_invalid_date = request.getParameter("invalid_date");
+		String str = memberCardService.increaseBalance(member_card_id, last_modify_user, new_invalid_date, num);
 		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}

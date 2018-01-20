@@ -100,8 +100,8 @@ public class MemberCardService {
 	 * @param num
 	 * @return
 	 */
-	public String increaseBalance(long member_card_id,long last_modify_user,int num) {
-		boolean isCharged = memberCardDAO.updateBalancePlus(member_card_id, num, last_modify_user);
+	public String increaseBalance(long member_card_id,long last_modify_user,String invalid_date,int num) {
+		boolean isCharged = memberCardDAO.updateBalancePlus(member_card_id, num,invalid_date, last_modify_user);
 		if (shopDAO.queryShopByShopmemberId(last_modify_user) == shopDAO.queryShopIdByMembercardId(member_card_id)) {
 			if (!memberCardDAO.isDel(member_card_id)) {
 				if (isCharged) {
@@ -124,13 +124,13 @@ public class MemberCardService {
 	 * @param num
 	 * @return
 	 */
-	public String reduceBalance(long mc_id,long shop_member_id,int num) {
+	public String reduceBalance(long mc_id,long shop_member_id,int num,String invalid_date) {
 		boolean isEnough = false;
 		isEnough = memberCardDAO.isBalanceEnough(mc_id, num);
 		if (shopDAO.queryShopIdByMembercardId(mc_id) == shopDAO.queryShopByShopmemberId(shop_member_id)) {
 			if (!memberCardDAO.isDel(mc_id)) {
 				if (isEnough) {
-					boolean isReduced = memberCardDAO.updateBalanceReduce(mc_id,shop_member_id, num);
+					boolean isReduced = memberCardDAO.updateBalanceReduce(mc_id,shop_member_id, num,invalid_date);
 					if (isReduced) {
 						return qr(Reference.EXE_SUC);
 					}else {

@@ -1,7 +1,6 @@
 package com.alfred.Sailfish.app.Controller.MemberCard;
 
 import com.alfred.Sailfish.app.Service.MemberCardService;
-import com.alfred.Sailfish.app.Service.MemberService;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
 import javax.servlet.ServletException;

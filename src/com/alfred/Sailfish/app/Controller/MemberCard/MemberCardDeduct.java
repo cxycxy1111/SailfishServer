@@ -34,7 +34,8 @@ public class MemberCardDeduct extends HttpServlet {
 		int num = Integer.valueOf(request.getParameter("num"));
 		long mc_id = Long.valueOf(request.getParameter("mc_id"));
 		long shop_member_id = Long.parseLong(request.getParameter("sm_id"));
-		String str = memberCardService.reduceBalance(mc_id, shop_member_id, num);
+		String invalid_date = request.getParameter("invalid_date");
+		String str = memberCardService.reduceBalance(mc_id, shop_member_id, num,invalid_date);
 		System.out.println(MethodTool.getTime() +  ",Response:" + str);
 		out.append(str);
 	}

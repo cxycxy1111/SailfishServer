@@ -86,9 +86,6 @@ public class CoursePlanService {
 	 */
 	public String modify(long id,long cr_id,long lmu_id,String s_time,String e_time,String remark) {
 		long ce_id = courseDAO.querycourseIdByCoursePlanId(id);
-		if (coursePlanDAO.isRepeated(ce_id,cr_id,s_time)) {
-			return MethodTool.tfs(Reference.DUPLICATE);
-		}
 		if(shopDAO.queryShopIdByCoursePlanId(id) != shopDAO.queryShopByShopmemberId(lmu_id)) {
 			return MethodTool.tfs(Reference.INST_NOT_MATCH);
 		}
@@ -111,14 +108,24 @@ public class CoursePlanService {
 		return MethodTool.tfs(Reference.NSR);
 	}
 
+	public String queryPrivateByCoursePlanId(long cp_id) {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		list = coursePlanDAO.queryPrivateById(cp_id);
+		if (list.size() != 0) {
+			return MethodTool.tfc(list);
+		}
+		return MethodTool.tfs(Reference.NSR);
+	}
+
 	/**
 	 * 通过机构ID查询所有排课
 	 * @param s_id
 	 * @return
 	 */
 	public String queryByShopId(long s_id) {
-		ArrayList<IdentityHashMap<String, Object>> list = new ArrayList<IdentityHashMap<String, Object>>();
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		list = coursePlanDAO.queryByShopId(s_id);
+		System.out.println(MethodTool.tfc(list));
 		if (list.size() == 0) {
 			return MethodTool.qr(Reference.EMPTY_RESULT);
 		}
@@ -131,7 +138,7 @@ public class CoursePlanService {
 	 * @return
 	 */
 	public String queryByCourseId(long ce_id) {
-		ArrayList<IdentityHashMap<String, Object>> list = new ArrayList<IdentityHashMap<String, Object>>();
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		list = coursePlanDAO.queryByCourseId(ce_id);
 		if (list.size() == 0) {
 			return MethodTool.tfs(Reference.EMPTY_RESULT);

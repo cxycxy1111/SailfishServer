@@ -176,13 +176,18 @@ public class MemberCardDAO {
 	 * @param last_modify_user
 	 * @return
 	 */
-	public boolean updateBalancePlus(long id,int increasement,long last_modify_user) {
+	public boolean updateBalancePlus(long id,int increasement,String new_invalid_date,long last_modify_user) {
 		boolean isCharged = false;
 		int currentBalance = this.queryCurrentBalanceByMemberCardId(id);
 		int i = currentBalance + increasement;
-		String sql = "UPDATE member_card SET balance = " + i 
-				+ ",last_modify_user = " + last_modify_user 
-				+ ",last_modify_time = '" + sdf.format(new Date()) + "' WHERE id = " + id;
+		StringBuilder builder = new StringBuilder();
+		builder.append("UPDATE member_card SET balance = " + i );
+		if (new_invalid_date.length() != 0) {
+			builder.append(",expired_time= '" + new_invalid_date + "'");
+		}
+		builder.append(",last_modify_user = " + last_modify_user
+				+ ",last_modify_time = '" + sdf.format(new Date()) + "' WHERE id = " + id);
+		String sql = builder.toString();
 		try {
 			if (helper.update(sql) == true) {
 				isCharged = true;
@@ -200,12 +205,18 @@ public class MemberCardDAO {
 	 * @param price 扣费金额/次数
 	 * @return
 	 */
-	public boolean updateBalanceReduce(long membercard_id,long lmu_id,int price) {
+	public boolean updateBalanceReduce(long membercard_id,long lmu_id,int price,String invalid_date) {
 		boolean isOk = false;
 		int current_balance = this.queryCurrentBalanceByMemberCardId(membercard_id) - price;
-		String sql = "UPDATE member_card SET balance = " + current_balance + ",last_modify_user = "
-				+ lmu_id
-				+ " WHERE id = " + membercard_id;
+
+		StringBuilder builder = new StringBuilder();
+		builder.append("UPDATE member_card SET balance = " + current_balance + ",last_modify_user = " + lmu_id);
+		if (invalid_date.length() != 0) {
+			builder.append(",expired_time='").append(invalid_date).append("'");
+		}
+		builder.append(" WHERE id = " + membercard_id);
+
+		String sql = builder.toString();
 		try {
 			isOk = helper.update(sql);
 		} catch (SQLException e) {
@@ -258,7 +269,7 @@ public class MemberCardDAO {
 	 */
 	public ArrayList<HashMap<String,Object>> queryListByMemberId(long member_id) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		String sql = "SELECT mc.id,c.name,mc.balance FROM member_card mc "
+		String sql = "SELECT mc.id,c.name,mc.balance,c.type FROM member_card mc "
 				+ "LEFT JOIN card c ON mc.card_id = c.id "
 				+ "WHERE mc.member_id = " + member_id + " AND mc.del = 0";
 		list = helper.query(sql);
@@ -288,7 +299,7 @@ public class MemberCardDAO {
 	 */
 	public ArrayList<HashMap<String,Object>> queryDetailById(long member_card_id) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		String sql = "SELECT mc.id,trim(m.name) member_name,trim(c.name) card_name,mc.type,mc.balance,mc.start_time,mc.expired_time FROM member_card mc "
+		String sql = "SELECT mc.id,mc.member_id,mc.card_id,trim(m.name) member_name,trim(c.name) card_name,mc.type,mc.balance,mc.start_time,mc.expired_time FROM member_card mc "
 				+ "LEFT JOIN card c ON mc.card_id = c.id "
 				+ "LEFT JOIN member m ON mc.member_id = m.id "
 				+ "WHERE mc.id = " + member_card_id;

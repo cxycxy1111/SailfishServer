@@ -167,7 +167,7 @@ public class CourseDAO {
 	 */
 	public ArrayList<HashMap<String,Object>> queryList(long s_id) {
 		String sql = "SELECT id,name,last_time,type FROM course "
-				+ "WHERE del = 0 AND shop_id = " + s_id + " ORDER BY create_time DESC";
+				+ "WHERE del = 0 AND shop_id = " + s_id + " ORDER BY type,name DESC";
 		return helper.query(sql);
 	}
 	

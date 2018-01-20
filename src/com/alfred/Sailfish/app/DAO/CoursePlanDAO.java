@@ -94,15 +94,23 @@ public class CoursePlanDAO {
 	 * @return
 	 */
 	public ArrayList<HashMap<String,Object>> queryById(long id) {
-		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		String sql = "SELECT trim(c.name) course_name,trim(cr.name) classroom_name,cp.start_time,c.last_time,cp.remark FROM courseplan cp "
+		String sql = "SELECT trim(c.name) course_name,trim(cr.name) classroom_name,,cp.start_time,c.last_time,cp.remark FROM courseplan cp "
 				+ "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
 				+ "LEFT JOIN course c ON cp.course_id = c.id "
-				+ "WHERE cp.id = " + id;
-		list = helper.query(sql);
-		return list;
+				+ "WHERE cp.id = " + id + " AND cp.del = 0";
+		return helper.query(sql);
 	}
-	
+
+	public ArrayList<HashMap<String,Object>> queryPrivateById(long id) {
+		String sql = "SELECT cp.id,trim(c.name) c_name,trim(sm.name) tea_name,trim(m.name) stu_name,cp.start_time,cp.end_time,c.last_time,truncate(cr.id,0) cr_id,trim(cr.name) cr_name FROM courseplan cp " +
+				"LEFT JOIN classroom cr ON cp.classroom_id=cr.id " +
+				"LEFT JOIN course c ON cp.course_id=c.id " +
+				"LEFT JOIN shopmember sm ON c.teacher_id=sm.id " +
+				"LEFT JOIN member m ON c.student_id = m.id " +
+				"WHERE cp.id=" + id + " AND cp.del=0";
+		return helper.query(sql);
+	}
+
 	/**
 	 * 查询排课是否已被删除
 	 * @param id
@@ -122,12 +130,12 @@ public class CoursePlanDAO {
 	 * @param course_id
 	 * @return
 	 */
-	public ArrayList<IdentityHashMap<String, Object>> queryByCourseId(long course_id) {
-		ArrayList<IdentityHashMap<String, Object>> list = new ArrayList<IdentityHashMap<String, Object>>();
+	public ArrayList<HashMap<String, Object>> queryByCourseId(long course_id) {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,truncate(c.last_time,0) last_time,cp.start_time FROM courseplan cp "
 				+ "LEFT JOIN course c ON cp.course_id = c.id "
 				+ "WHERE cp.del = 0 AND course_id = " + course_id + " ORDER BY cp.start_time DESC";
-		list = helper.linkquery(sql);
+		list = helper.query(sql);
 		return list;
 	}
 	
@@ -153,16 +161,15 @@ public class CoursePlanDAO {
 	 * @param s_id
 	 * @return
 	 */
-	public ArrayList<IdentityHashMap<String, Object>> queryByShopId(long s_id) {
-		ArrayList<IdentityHashMap<String, Object>> list = new ArrayList<IdentityHashMap<String, Object>>();
+	public ArrayList<HashMap<String, Object>> queryByShopId(long s_id) {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,truncate(c.type,0) course_type,trim(cr.name) classroom_name,truncate(c.last_time,0) last_time,cp.start_time FROM courseplan cp "
 				+ "LEFT JOIN course c ON cp.course_id = c.id "
 				+ "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
-				+ "LEFT JOIN courseplan_teacher ct ON cp.id = ct.courseplan_id "
 				+ "WHERE cp.del = 0 " +
 				"AND cp.shop_id = " + s_id +
 				" AND cp.start_time > now() ORDER BY cp.start_time DESC";
-		list = helper.linkquery(sql);
+		list = helper.query(sql);
 		return list;
 	}
 
