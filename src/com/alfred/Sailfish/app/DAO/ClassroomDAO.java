@@ -3,6 +3,8 @@ package com.alfred.Sailfish.app.DAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.SQLHelper;
 
@@ -78,9 +80,12 @@ public class ClassroomDAO {
 	}
 	
 	
-	public ArrayList<HashMap<String,Object>> queryCRIdByCRName(long shop_id,String name) {
+	public long queryCRIdByCRName(long shop_id,String name) {
 		String sql = "SELECT id FROM classroom WHERE shop_id = " + shop_id + " AND name = '" + name + "' AND del = 0";
-		return helper.query(sql);
+		ArrayList<HashMap<String,Object>> mapArrayList = new ArrayList<>();
+		mapArrayList = helper.query(sql);
+		long id = Long.parseLong(String.valueOf(mapArrayList.get(0).get("id")));
+		return id;
 	}
 	
 	/**

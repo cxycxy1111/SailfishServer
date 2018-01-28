@@ -34,7 +34,7 @@ public class ClassroomService {
 		if (!isAdded) {
 			return MethodTool.tfs(Reference.EXE_FAIL);
 		}
-		return MethodTool.tfc(classroomDAO.queryCRIdByCRName(shop_id, name));
+		return MethodTool.tfs(Reference.id_prefix + classroomDAO.queryCRIdByCRName(shop_id,name) + Reference.datasuffix);
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class ClassroomService {
 	}
 	
 	public String queryCRIdByCRName(long shop_id,String name) {
-		return MethodTool.tfc(classroomDAO.queryCRIdByCRName(shop_id, name));
+		return MethodTool.tfs(Reference.id_prefix + classroomDAO.queryCRIdByCRName(shop_id,name) + Reference.datasuffix);
 	}
 	
 	/**

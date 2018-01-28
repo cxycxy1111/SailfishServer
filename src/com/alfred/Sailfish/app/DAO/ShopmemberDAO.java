@@ -38,10 +38,10 @@ public class ShopmemberDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean modifyInfo(long sm_id,long lmu_id,String name) throws SQLException {
+	public boolean modifyInfo(long sm_id,long lmu_id,String name,int new_type) throws SQLException {
 		String sql = "UPDATE shopmember SET name='" + name +
 				"' , last_modify_user=" + lmu_id +
-				" , last_modify_time='" +sdf.format(new Date()) + "' WHERE id=" + sm_id;
+				" , last_modify_time='" +sdf.format(new Date()) + "',type=" + new_type +" WHERE id=" + sm_id;
 		return helper.update(sql);
 	}
 	
@@ -82,7 +82,6 @@ public class ShopmemberDAO {
 	/**
 	 * 根据ID获取教师信息
 	 * @param sm_id
-	 * @param s_id
 	 * @return
 	 */
 	public ArrayList<HashMap<String,Object>> queryDetail(long sm_id) {

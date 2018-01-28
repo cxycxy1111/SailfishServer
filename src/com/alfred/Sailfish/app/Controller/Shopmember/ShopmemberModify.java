@@ -21,9 +21,10 @@ public class ShopmemberModify extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         long sm_id = MethodTool.reqParseToLong(request,"sm_id");
         long lmu_id = MethodTool.reqParseToLong(request,"lmu_id");
+        int new_type = MethodTool.reqParseToInt(request,"new_type");
         String name = request.getParameter("name");
         try {
-            String str = shopmemberService.modifyInfo(sm_id,name,lmu_id);
+            String str = shopmemberService.modifyInfo(sm_id,name,lmu_id,new_type);
             System.out.println(MethodTool.getTime() +  ",Response:" + str);
             response.getWriter().append(str);
             response.flushBuffer();

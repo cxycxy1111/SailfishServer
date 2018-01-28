@@ -94,7 +94,7 @@ public class CoursePlanDAO {
 	 * @return
 	 */
 	public ArrayList<HashMap<String,Object>> queryById(long id) {
-		String sql = "SELECT trim(c.name) course_name,trim(cr.name) classroom_name,,cp.start_time,c.last_time,cp.remark FROM courseplan cp "
+		String sql = "SELECT trim(c.name) course_name,trim(cr.name) classroom_name,cp.start_time,c.last_time,cp.remark FROM courseplan cp "
 				+ "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
 				+ "LEFT JOIN course c ON cp.course_id = c.id "
 				+ "WHERE cp.id = " + id + " AND cp.del = 0";
@@ -163,7 +163,7 @@ public class CoursePlanDAO {
 	 */
 	public ArrayList<HashMap<String, Object>> queryByShopId(long s_id) {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,truncate(c.type,0) course_type,trim(cr.name) classroom_name,truncate(c.last_time,0) last_time,cp.start_time FROM courseplan cp "
+		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,truncate(c.type,0) course_type,trim(cr.name) classroom_name,cp.end_time,cp.start_time FROM courseplan cp "
 				+ "LEFT JOIN course c ON cp.course_id = c.id "
 				+ "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
 				+ "WHERE cp.del = 0 " +

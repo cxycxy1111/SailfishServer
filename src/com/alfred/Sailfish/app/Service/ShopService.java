@@ -1,5 +1,6 @@
 package com.alfred.Sailfish.app.Service;
 
+import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
@@ -7,6 +8,7 @@ import com.alfred.Sailfish.app.Util.MethodTool;
 public class ShopService {
 	
 	private ShopDAO shopDAO = new ShopDAO();
+	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
 	
 	public ShopService(){
 		
@@ -24,6 +26,7 @@ public class ShopService {
 			boolean created = shopDAO.createShop(name, intro);
 			if (created) {
 				long id = shopDAO.queryShopByName(name);
+				shopConfigDAO.initParamaterAfterShopCreated(id);
 				return Reference.dataprefix + String.valueOf(id) + Reference.datasuffix;
 			}else {
 				return MethodTool.qr(Reference.EXE_FAIL);

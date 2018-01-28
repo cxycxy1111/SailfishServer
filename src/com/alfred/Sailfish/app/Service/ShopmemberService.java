@@ -83,11 +83,11 @@ public class ShopmemberService {
 		}
 	}
 
-	public String modifyInfo(long sm_id,String name,long lmu_id) throws SQLException{
+	public String modifyInfo(long sm_id,String name,long lmu_id,int new_type) throws SQLException{
 		if (shopDao.queryShopByShopmemberId(sm_id) != shopDao.queryShopByShopmemberId(lmu_id)) {
 			return MethodTool.qr(Reference.INST_NOT_MATCH);
 		}
-		if (!shopmemberDAO.modifyInfo(sm_id, lmu_id, name)) {
+		if (!shopmemberDAO.modifyInfo(sm_id, lmu_id, name,new_type)) {
 			return MethodTool.qr(Reference.EXE_FAIL);
 		}
 		return MethodTool.qr(Reference.EXE_SUC);
@@ -101,6 +101,9 @@ public class ShopmemberService {
 	public String queryShopmemberList(long shop_id,int type){
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>> ();
 		list = shopmemberDAO.queryShopmemberList(shop_id,type);
+		if (list.size()==0) {
+			return MethodTool.qr(Reference.NSR);
+		}
 		return MethodTool.tfc(list);
 	}
 
