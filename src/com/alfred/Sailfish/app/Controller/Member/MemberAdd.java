@@ -8,8 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.ws.soap.MTOM;
+
 import com.alfred.Sailfish.app.Service.MemberService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * Servlet implementation class AddNewMember
@@ -34,17 +38,22 @@ public class MemberAdd extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		long shop_id = Long.parseUnsignedLong(request.getParameter("shop_id"));
-		long shopmember_id = Long.parseUnsignedLong(request.getParameter("shop_member_id"));
-		String name = request.getParameter("name");
-		String login_name = request.getParameter("login_name");
-		String birthday = request.getParameter("birthday");
-		String phone = request.getParameter("phone");
-		String im = request.getParameter("im");
-		String password = request.getParameter("password");
-		String str = memberService.addMember(login_name, shop_id, shopmember_id, name, password, birthday, phone, im);
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
-		out.append(str);
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			out.append(Reference.SESSION_EXPIRED);
+		} else {
+			long shop_id = MethodTool.getSessionValueToLong(session,"s_id");
+			long shopmember_id = MethodTool.getSessionValueToLong(session,"sm_id");
+			String name = request.getParameter("name");
+			String login_name = request.getParameter("login_name");
+			String birthday = request.getParameter("birthday");
+			String phone = request.getParameter("phone");
+			String im = request.getParameter("im");
+			String password = request.getParameter("password");
+			String str = memberService.addMember(login_name, shop_id, shopmember_id, name, password, birthday, phone, im);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			out.append(str);
+		}
 	}
 
 	/**

@@ -7,9 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.alfred.Sailfish.app.Service.CourseService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * Servlet implementation class CourseDelete
@@ -32,12 +34,18 @@ public class CourseRemove extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter out = resp.getWriter();
 		resp.setCharacterEncoding("utf-8");
-		long id = MethodTool.reqParseToLong(req, "id");
-		long lmu = MethodTool.reqParseToLong(req, "lmu");
-		String str = courseService.remove(id, lmu);
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
-		out.append(str);
+		HttpSession session = req.getSession(false);
+		if (session == null) {
+			out.append(Reference.SESSION_EXPIRED);
+		} else {
+			long id = MethodTool.reqParseToLong(req, "id");
+			long lmu_id = MethodTool.getSessionValueToLong(session, "sm_id");
+			String str = courseService.remove(id, lmu_id);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			out.append(str);
+		}
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

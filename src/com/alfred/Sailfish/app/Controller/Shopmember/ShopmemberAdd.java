@@ -7,8 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.alfred.Sailfish.app.Service.ShopmemberService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * Servlet implementation class AddNewShopMember
@@ -31,15 +34,20 @@ public class ShopmemberAdd extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("utf-8");
 		PrintWriter out = resp.getWriter();
-		long shop_id = Long.parseLong(req.getParameter("shop_id"));
-		long shopmember_id = Long.parseLong(req.getParameter("shopmember_id"));
-		String name = req.getParameter("name");
-		String user_name = req.getParameter("user_name");
-		String password = req.getParameter("password");
-		int type = Integer.parseInt(req.getParameter("type"));
-		String str = shopmemberService.addShopmember(shop_id, shopmember_id, name, user_name, type, password);
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
-		out.append(str);
+		HttpSession session = req.getSession(false);
+		if (session == null) {
+			out.append(Reference.SESSION_EXPIRED);
+		}else {
+			long shop_id = MethodTool.getSessionValueToLong(session,"s_id");
+			long shopmember_id = MethodTool.getSessionValueToLong(session,"sm_id");
+			String name = req.getParameter("name");
+			String user_name = req.getParameter("user_name");
+			String password = req.getParameter("password");
+			int type = Integer.parseInt(req.getParameter("type"));
+			String str = shopmemberService.addShopmember(shop_id, shopmember_id, name, user_name, type, password);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			out.append(str);
+		}
 	}
 
 	/**

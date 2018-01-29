@@ -21,6 +21,7 @@ public abstract class Reference {
 	public static final String BALANCE_NOT_ENOUGH = prefix + "balance_not_enough" + suffix;
 	public static final String NOT_MATCH = prefix + "not_match" + suffix;
 	public static final String EMPTY_RESULT = prefix + "empty_result" + suffix;
+	public static final String SESSION_EXPIRED=prefix + "session_expired" + suffix;
 	
 	public static final int TYPE_MEMBER_COURSE = 1;
 	public static final int TYPE_TRAINNER_COURSE = 2;

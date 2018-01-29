@@ -7,8 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.alfred.Sailfish.app.Service.CardService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * Servlet implementation class QueryCardList
@@ -33,11 +36,17 @@ public class CardListQuery extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		long shop_id = Long.parseLong(request.getParameter("shop_id"));
-		int type = MethodTool.reqParseToInt(request,"type");
-		String str = cardService.queryCardList(shop_id,type);
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
-		out.append(str);
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			long shop_id = MethodTool.getSessionValueToLong(session,"s_id");
+			int type = MethodTool.reqParseToInt(request,"type");
+			String str = cardService.queryCardList(shop_id,type);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			out.append(str);
+		}else {
+			out.append(Reference.SESSION_EXPIRED);
+		}
+
 	}
 
 	/**

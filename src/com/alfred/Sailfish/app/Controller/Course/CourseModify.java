@@ -8,8 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.alfred.Sailfish.app.Service.CourseService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * Servlet implementation class CourseModify
@@ -34,16 +37,21 @@ public class CourseModify extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("utf-8");
 		PrintWriter out = resp.getWriter();
-		long c_id = MethodTool.reqParseToLong(req, "c_id");
-		long lmu_id = MethodTool.reqParseToLong(req, "lmu_id");
-		String name = req.getParameter("name");
-		int last_time = MethodTool.reqParseToInt(req, "last_time");
-		int max_book_num = MethodTool.reqParseToInt(req, "max_book_num");
-		String summary = req.getParameter("summary");
-		String str = courseDAO.modify(c_id, lmu_id, name, last_time, max_book_num, summary);
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
+		HttpSession session = req.getSession(false);
+		if (session == null) {
+			out.append(Reference.SESSION_EXPIRED);
+		}else {
+			long c_id = MethodTool.reqParseToLong(req, "c_id");
+			long lmu_id = MethodTool.getSessionValueToLong(session, "sm_id");
+			String name = req.getParameter("name");
+			int last_time = MethodTool.reqParseToInt(req, "last_time");
+			int max_book_num = MethodTool.reqParseToInt(req, "max_book_num");
+			String summary = req.getParameter("summary");
+			String str = courseDAO.modify(c_id, lmu_id, name, last_time, max_book_num, summary);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			out.append(str);
+		}
 
-		out.append(str);
 	}
 
 	/**

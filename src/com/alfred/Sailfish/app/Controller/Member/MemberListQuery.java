@@ -7,8 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.alfred.Sailfish.app.Service.MemberService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * Servlet implementation class QueryMemberList
@@ -31,10 +34,15 @@ public class MemberListQuery extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		long shop_id = Long.parseLong(request.getParameter("s_id"));
-		String str = memberService.queryMemberList(shop_id);
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
-		out.append(str);
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			out.append(Reference.SESSION_EXPIRED);
+		} else {
+			long shop_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String str = memberService.queryMemberList(shop_id);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			out.append(str);
+		}
 	}
 
 	/**

@@ -144,7 +144,8 @@ public class ShopmemberService {
 			return MethodTool.qr(Reference.NSR);
 		}
 		if (shopmemberDAO.isLoginNameAndPasswordMatch(user_name, password)) {
-			return MethodTool.qr(Reference.dataprefix + String.valueOf(id) + Reference.datasuffix);
+			long sm_id = shopmemberDAO.queryIdByUserName(user_name);
+			return MethodTool.tfc(shopmemberDAO.queryEssentiailDataAfterLogin(sm_id));
 		}
 		return MethodTool.qr(Reference.NOT_MATCH);
 	}

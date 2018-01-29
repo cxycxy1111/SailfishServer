@@ -10,8 +10,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.ws.soap.MTOM;
+
 import com.alfred.Sailfish.app.Service.CardService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * Servlet implementation class AddNewCard
@@ -35,18 +39,24 @@ public class CardAdd extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("utf-8");
+		HttpSession session = req.getSession(false);
 		PrintWriter out = resp.getWriter();
-		long shop_id = Long.parseLong(req.getParameter("shop_id"));
-		long shopmember_id = Long.parseLong(req.getParameter("shopmember_id"));
-		String name = req.getParameter("name");
-		int type = Integer.parseInt(req.getParameter("type"));
-		int price = Integer.parseInt(req.getParameter("price"));
-		int balance = Integer.parseInt(req.getParameter("balance"));
-		String start_time = req.getParameter("start_time");
-		String expired_time = req.getParameter("expired_time");
-		String str = cardService.addCard(shop_id, name, shopmember_id, type, price, balance, start_time, expired_time);
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
-		out.append(str);
+		if (session == null) {
+			out.append(Reference.SESSION_EXPIRED);
+		}else {
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			long sm_id = MethodTool.getSessionValueToLong(session,"sm_id");
+			String name = req.getParameter("name");
+			int type = Integer.parseInt(req.getParameter("type"));
+			int price = Integer.parseInt(req.getParameter("price"));
+			int balance = Integer.parseInt(req.getParameter("balance"));
+			String start_time = req.getParameter("start_time");
+			String expired_time = req.getParameter("expired_time");
+			String str = cardService.addCard(s_id, name, sm_id, type, price, balance, start_time, expired_time);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			out.append(str);
+		}
+
 	}
 
 	/**

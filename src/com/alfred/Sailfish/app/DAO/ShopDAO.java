@@ -200,5 +200,4 @@ public class ShopDAO {
 		return MethodTool.toLong(list, "shop_id");
 	}
 
-
 }

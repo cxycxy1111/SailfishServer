@@ -7,8 +7,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.ws.soap.MTOM;
+
 import com.alfred.Sailfish.app.Service.MemberService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * Servlet implementation class deleteMember
@@ -31,12 +35,17 @@ public class MemberRemove extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		long sm_id = Long.parseLong(request.getParameter("shopmember_id"));
-		long m_id = Long.parseLong(request.getParameter("member_id"));
-		System.out.println("SM_ID is :" + sm_id);
-		String str = memberService.removeMember(m_id, sm_id);
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
-		out.append(str);
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			out.append(Reference.SESSION_EXPIRED);
+		}else {
+			long sm_id = MethodTool.getSessionValueToLong(session,"sm_id");
+			long m_id = Long.parseLong(request.getParameter("member_id"));
+			System.out.println("SM_ID is :" + sm_id);
+			String str = memberService.removeMember(m_id, sm_id);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			out.append(str);
+		}
 	}
 
 	/**

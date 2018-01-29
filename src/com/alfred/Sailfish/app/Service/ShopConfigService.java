@@ -4,8 +4,6 @@ import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
-
-import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.HashMap;
 

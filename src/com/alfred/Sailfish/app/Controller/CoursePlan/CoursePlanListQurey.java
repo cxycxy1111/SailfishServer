@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.alfred.Sailfish.app.Service.CoursePlanService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * http://localhost:8080/Sailfish/CoursePlanListQurey?s_id=1
@@ -34,10 +36,15 @@ public class CoursePlanListQurey extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("utf-8");
 		PrintWriter out = resp.getWriter();
-		long s_id = MethodTool.reqParseToLong(req, "s_id");
-		String str = coursePlanService.queryByShopId(s_id);
-		out.append(str);
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
+		HttpSession session = req.getSession();
+		if (session == null) {
+			out.append(Reference.SESSION_EXPIRED);
+		}else {
+			long s_id = MethodTool.getSessionValueToLong(session, "s_id");
+			String str = coursePlanService.queryByShopId(s_id);
+			out.append(str);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+		}
 	}
 
 	/**

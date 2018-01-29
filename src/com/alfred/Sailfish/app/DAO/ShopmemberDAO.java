@@ -78,6 +78,13 @@ public class ShopmemberDAO {
 		list = helper.query(sql);
 		return list;
 	}
+
+	public int queryShopmemberTypeById(long id) {
+		String sql = "SELECT type FROM shopmember WHERE id=" + id;
+		ArrayList<HashMap<String,Object>> maps = new ArrayList<>();
+		maps = helper.query(sql);
+		return Integer.parseInt(String.valueOf(maps.get(0).get("type")));
+	}
 	
 	/**
 	 * 根据ID获取教师信息
@@ -105,6 +112,17 @@ public class ShopmemberDAO {
 			return 0;
 		}else {
 			return Long.parseLong(String.valueOf(list.get(0).get("id")));
+		}
+	}
+
+	public long queryShopIdByUserName(String user_name) {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>> ();
+		String sql = "SELECT shop_id FROM shopmember WHERE user_name = '" + user_name + "'";
+		list = helper.query(sql);
+		if (list.size() == 0) {
+			return 0;
+		}else {
+			return Long.parseLong(String.valueOf(list.get(0).get("shop_id")));
 		}
 	}
 	
@@ -183,11 +201,11 @@ public class ShopmemberDAO {
 	/**
 	 * pass
 	 * 检查教师是否被删
-	 * @param member_id
+	 * @param sm_id
 	 * @return
 	 */
-	public boolean isDel(long member_id) {
-		String sql = "select del from shopmember where id = "+ member_id;
+	public boolean isDel(long sm_id) {
+		String sql = "select del from shopmember where id = "+ sm_id;
 		return MethodTool.toBool(helper.query(sql), "del");
 	}
 	
@@ -226,6 +244,12 @@ public class ShopmemberDAO {
 		System.gc();
 		return isMatch;
 	}
-	
+
+	public ArrayList<HashMap<String,Object>> queryEssentiailDataAfterLogin(long sm_id) {
+		String sql = "SELECT id,shop_id,user_name,type FROM shopmember WHERE id=" + sm_id;
+		ArrayList<HashMap<String,Object>> list = new ArrayList<>();
+		list = helper.query(sql);
+		return list;
+	}
 	
 }

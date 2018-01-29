@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.alfred.Sailfish.app.Service.ClassroomService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * Servlet implementation class ClassroomListQuery
@@ -33,10 +35,16 @@ public class ClassroomListQuery extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("utf-8");
 		PrintWriter out = resp.getWriter();
-		long s_id = MethodTool.reqParseToLong(req, "s_id");
-		String str = classroomService.getList(s_id);
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
-		out.append(str);
+		HttpSession session = req.getSession(false);
+		if (session == null) {
+			out.append(Reference.SESSION_EXPIRED);
+		}else {
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String str = classroomService.getList(s_id);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			out.append(str);
+		}
+
 	}
 
 	/**

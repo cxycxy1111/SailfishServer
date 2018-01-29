@@ -2,12 +2,14 @@ package com.alfred.Sailfish.app.Controller.MemberCard;
 
 import com.alfred.Sailfish.app.Service.MemberCardService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -23,9 +25,14 @@ public class MemberCardDetailQuery extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("utf-8");
         PrintWriter out = resp.getWriter();
-        long mc_id = Long.parseLong(req.getParameter("mc_id"));
-        String str = memberCardService.queryDetail(mc_id);
-        System.out.println(MethodTool.getTime() +  ",Response:" + mc_id);
-        out.append(str);
+        HttpSession session = req.getSession(false);
+        if (session == null) {
+            out.append(Reference.SESSION_EXPIRED);
+        }else {
+            long mc_id = Long.parseLong(req.getParameter("mc_id"));
+            String str = memberCardService.queryDetail(mc_id);
+            System.out.println(MethodTool.getTime() +  ",Response:" + mc_id);
+            out.append(str);
+        }
     }
 }

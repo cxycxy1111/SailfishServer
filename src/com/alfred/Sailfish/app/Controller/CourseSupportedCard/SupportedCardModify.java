@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.alfred.Sailfish.app.Service.CourseSupportedCardService;
 import com.alfred.Sailfish.app.Util.MethodTool;
@@ -38,28 +39,33 @@ public class SupportedCardModify extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("utf-8");
 		PrintWriter out = resp.getWriter();
-		String s = req.getParameter("m");
-		String [] str = s.split("-");
-		String result;
-		StringBuilder builder = new StringBuilder();
-		for (String aStr : str) {
-			String[] strs = aStr.split("_");
-			builder.append(courseSupportedCardService.modify(Integer.valueOf(strs[0]), Integer.valueOf(strs[1]), Integer.valueOf(strs[2]), Integer.valueOf(strs[3])));
-			builder.append(",");
-		}
-		result = builder.toString();
-		String js_result;
-		if (result.contains(Reference.EXE_FAIL)) {
-			if (!result.contains(Reference.EXE_SUC)) {
-				js_result = MethodTool.tfs(Reference.EXE_FAIL);
-			}else {
-				js_result = MethodTool.tfs(Reference.EXE_PARTLY_FAIL);
+		HttpSession session = req.getSession(false);
+		if (session == null) {
+			out.append(Reference.SESSION_EXPIRED);
+		} else {
+			String s = req.getParameter("m");
+			String [] str = s.split("-");
+			String result;
+			StringBuilder builder = new StringBuilder();
+			for (String aStr : str) {
+				String[] strs = aStr.split("_");
+				builder.append(courseSupportedCardService.modify(Integer.valueOf(strs[0]), Integer.valueOf(strs[1]), Integer.valueOf(strs[2]), Integer.valueOf(strs[3])));
+				builder.append(",");
 			}
-		}else {
-			js_result = MethodTool.tfs(Reference.EXE_SUC);
+			result = builder.toString();
+			String js_result;
+			if (result.contains(Reference.EXE_FAIL)) {
+				if (!result.contains(Reference.EXE_SUC)) {
+					js_result = MethodTool.tfs(Reference.EXE_FAIL);
+				}else {
+					js_result = MethodTool.tfs(Reference.EXE_PARTLY_FAIL);
+				}
+			}else {
+				js_result = MethodTool.tfs(Reference.EXE_SUC);
+			}
+			out.append(js_result);
+			System.out.println(MethodTool.getTime() +  ",Response:" + js_result);
 		}
-		out.append(js_result);
-		System.out.println(MethodTool.getTime() +  ",Response:" + js_result);
 	}
 
 	/**

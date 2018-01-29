@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -190,6 +191,11 @@ public class MethodTool {
 	public static String getTime() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSSSSS");
 		return sdf.format(new Date());
+	}
+
+	public static long getSessionValueToLong(HttpSession session,String key) {
+		Object o = session.getAttribute(key);
+		return Long.parseLong(String.valueOf(o));
 	}
 	
 }

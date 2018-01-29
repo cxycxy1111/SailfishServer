@@ -7,8 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.alfred.Sailfish.app.Service.CardService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * Servlet implementation class ModifyCard
@@ -31,16 +34,21 @@ public class CardModify extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("utf-8");
 		PrintWriter out = resp.getWriter();
-		long id = Long.parseLong(req.getParameter("id"));
-		long shopmember_id = Long.parseLong(req.getParameter("shopmember_id"));
-		String name = req.getParameter("name");
-		int price = Integer.parseInt(req.getParameter("price"));
-		int balance = Integer.parseInt(req.getParameter("balance"));
-		String start_time = req.getParameter("start_time");
-		String expired_time = req.getParameter("expired_time");
-		String str = cardService.modifyCard(id, name, shopmember_id, price, balance, start_time, expired_time);
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
-		out.append(str);
+		HttpSession session = req.getSession(false);
+		if (session == null) {
+			out.append(Reference.SESSION_EXPIRED);
+		}else {
+			long id = Long.parseLong(req.getParameter("id"));
+			long shopmember_id = MethodTool.getSessionValueToLong(session,"sm_id");
+			String name = req.getParameter("name");
+			int price = Integer.parseInt(req.getParameter("price"));
+			int balance = Integer.parseInt(req.getParameter("balance"));
+			String start_time = req.getParameter("start_time");
+			String expired_time = req.getParameter("expired_time");
+			String str = cardService.modifyCard(id, name, shopmember_id, price, balance, start_time, expired_time);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			out.append(str);
+		}
 	}
 
 	/**
