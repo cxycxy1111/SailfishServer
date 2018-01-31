@@ -35,4 +35,24 @@ public abstract class Reference {
 	public static final int TYPE_BALANCE_CARD = 1;
 	public static final int TYPE_TIMES_CARD = 2;
 	public static final int TYPE_TIME_CARD = 3;
+
+	public static final String SC_ALLOW_VIEW_TEACHER = "allow_view_teacher";
+	public static final String SC_ALLOW_MANAGE_TEACHER = "allow_manage_teacher";
+	public static final String SC_ALLOW_VIEW_CLASSROOM = "allow_view_classroom";
+	public static final String SC_ALLOW_MANAGE_CLASSROOM = "allow_manage_classroom";
+	public static final String SC_ALLOW_VIEW_CARD_TYPE = "allow_view_card_type";
+	public static final String SC_ALLOW_MANAGE_CARD_TYPE = "allow_manage_card_type";
+	public static final String SC_ALLOW_MANAGE_COURSE = "allow_manage_course";
+	public static final String SC_ALLOW_MANAGE_COURSEPLAN = "allow_manage_courseplan";
+	public static final String SC_ALLOW_VIEW_MEMBER = "allow_view_member";
+	public static final String SC_ALLOW_MANAGE_MEMBER = "allow_manage_member";
+	public static final String SC_ALLOW_VIEW_MEMBER_CARD = "allow_view_member_card";
+	public static final String SC_ALLOW_MANAGE_MEMBER_CARD = "allow_manage_member_card";
+	public static final String SC_ALLOW_DEDUCT_AFTER_ARREARANGE = "allow_deduct_after_arrearage";
+	public static final String SC_ALLOW_DEDUCT_AFTER_OVERDUE = "allow_deduct_after_overdue";
+	public static final String SC_ALLOW_BOOK_AFTER_ARREARANGE = "allow_book_after_arrearage";
+	public static final String SC_ALLOW_BOOK_AFTER_OVERDUE = "allow_book_after_overdue";
+	public static final String SC_ALLOW_ATTENDANCE_AFTER_ARREARANGE = "allow_attendance_after_arrearage";
+	public static final String SC_ALLOW_ATTENDANCE_AFTER_OVERDUE = "allow_attendance_after_overdue";
+
 }

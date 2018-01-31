@@ -31,22 +31,14 @@ public class ShopConfigModify extends HttpServlet {
         }else {
             long s_id = MethodTool.getSessionValueToLong(session,"s_id");
             String s = request.getParameter("request");
-            String [] array= s.split(",");
-            int[] ints = new int[array.length];
-            for (int i=0;i<array.length;i++) {
-                ints[i] = Integer.parseInt(array[i]);
-            }
-
-            String str = shopConfigService.moidfy(s_id,ints[0],ints[1],ints[2],
-                    ints[3],ints[4],ints[5],
-                    ints[6],ints[7],ints[8],
-                    ints[9],ints[10],ints[11],
-                    ints[12],ints[13],ints[14],
-                    ints[15],ints[16],ints[17],
-                    ints[18],ints[19],ints[20],
-                    ints[21],ints[22],ints[23],
-                    ints[24],ints[25],ints[26],
-                    ints[27],ints[28],ints[29]);
+            String [] array= s.split("_");
+            String str = shopConfigService.moidfy(s_id,
+                    array[0],array[1],array[2],
+                    array[3],array[4],array[5],
+                    array[6],array[7],array[8],
+                    array[9],array[10],array[11],
+                    array[12],array[13],array[14],
+                    array[15],array[16],array[17]);
             out.append(str);
         }
     }

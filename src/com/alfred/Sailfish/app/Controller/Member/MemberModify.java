@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.alfred.Sailfish.app.Service.MemberService;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
@@ -32,8 +34,9 @@ public class MemberModify extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter w = response.getWriter();
+		HttpSession session = request.getSession(false);
 		long member_id = Long.parseLong(request.getParameter("member_id"));
-		long shopmember_id = Long.parseLong(request.getParameter("shopmember_id"));
+		long shopmember_id = MethodTool.getSessionValueToLong(session,"sm_id");
 		String name = request.getParameter("name");
 		String birthday = request.getParameter("birthday");
 		String phone = request.getParameter("phone");
