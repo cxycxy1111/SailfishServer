@@ -40,6 +40,7 @@ public class CoursePlanTeacherQuery extends HttpServlet {
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
 			long cp_id = MethodTool.reqParseToLong(req, "cp_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String str = coursePlanTeacherService.queryList(cp_id);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);

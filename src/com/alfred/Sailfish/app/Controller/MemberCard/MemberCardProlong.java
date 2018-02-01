@@ -42,9 +42,11 @@ public class MemberCardProlong extends HttpServlet {
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
 			long mc_id = Long.parseLong(request.getParameter("mc_id"));
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			long lmu_id = MethodTool.getSessionValueToLong(session,"sm_id");
 			String expiredTime = request.getParameter("et");
-			String str = memberCardService.changeExpiredTime(lmu_id, mc_id, expiredTime);
+			String str = memberCardService.changeExpiredTime(s_id,sm_type,lmu_id, mc_id, expiredTime);
 			System.out.println(MethodTool.getTime() + ",Response:" + str);
 			out.append(str);
 		}

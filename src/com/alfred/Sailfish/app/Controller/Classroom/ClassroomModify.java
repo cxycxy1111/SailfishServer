@@ -42,8 +42,10 @@ public class ClassroomModify extends HttpServlet {
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
 			long cr_id = MethodTool.reqParseToLong(req, "cr_id");
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String name = req.getParameter("name");
-			String str = classroomService.modify(cr_id, name);
+			String str = classroomService.modify(s_id,sm_type,cr_id, name);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

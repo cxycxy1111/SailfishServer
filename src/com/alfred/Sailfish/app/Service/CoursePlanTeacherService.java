@@ -1,9 +1,6 @@
 package com.alfred.Sailfish.app.Service;
 
-import com.alfred.Sailfish.app.DAO.CourseDAO;
-import com.alfred.Sailfish.app.DAO.CoursePlanDAO;
-import com.alfred.Sailfish.app.DAO.CoursePlanTeacherDAO;
-import com.alfred.Sailfish.app.DAO.ShopDAO;
+import com.alfred.Sailfish.app.DAO.*;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
@@ -13,6 +10,7 @@ public class CoursePlanTeacherService {
 	private ShopDAO shopDAO = new ShopDAO();
 	private CoursePlanDAO coursePlanDAO = new CoursePlanDAO();
 	private CourseDAO courseDAO = new CourseDAO();
+	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
 	
 	public CoursePlanTeacherService(){
 		
@@ -25,7 +23,10 @@ public class CoursePlanTeacherService {
 	 * @param sm_id 教师ID
 	 * @return
 	 */
-	public String modify(int type,long cp_id,long sm_id) {
+	public String modify(long shop_id,String sm_type,int type,long cp_id,long sm_id) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_COURSEPLAN,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if(shopDAO.queryShopIdByCoursePlanId(cp_id) != shopDAO.queryShopByShopmemberId(sm_id)) {
 			return MethodTool.qr(Reference.INST_NOT_MATCH);
 		}

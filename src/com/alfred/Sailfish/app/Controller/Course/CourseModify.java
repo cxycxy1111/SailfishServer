@@ -43,11 +43,13 @@ public class CourseModify extends HttpServlet {
 		}else {
 			long c_id = MethodTool.reqParseToLong(req, "c_id");
 			long lmu_id = MethodTool.getSessionValueToLong(session, "sm_id");
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String name = req.getParameter("name");
 			int last_time = MethodTool.reqParseToInt(req, "last_time");
 			int max_book_num = MethodTool.reqParseToInt(req, "max_book_num");
 			String summary = req.getParameter("summary");
-			String str = courseDAO.modify(c_id, lmu_id, name, last_time, max_book_num, summary);
+			String str = courseDAO.modify(s_id,sm_type,c_id, lmu_id, name, last_time, max_book_num, summary);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

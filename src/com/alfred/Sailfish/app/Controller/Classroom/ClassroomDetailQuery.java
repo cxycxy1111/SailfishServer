@@ -40,7 +40,9 @@ public class ClassroomDetailQuery extends HttpServlet {
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
 			long cr_id = MethodTool.reqParseToLong(req, "cr_id");
-			String str = classroomService.queryDetail(cr_id);
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String str = classroomService.queryDetail(s_id,sm_type,cr_id);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

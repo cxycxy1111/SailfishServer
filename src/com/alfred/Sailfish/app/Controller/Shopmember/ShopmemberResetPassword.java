@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.soap.MTOM;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -30,9 +31,11 @@ public class ShopmemberResetPassword extends HttpServlet {
         if (session == null) {
             out.append(Reference.SESSION_EXPIRED);
         }else {
+            long s_id = MethodTool.getSessionValueToLong(session,"s_id");
             long sm_id = MethodTool.reqParseToLong(request,"sm_id");
+            String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
             String password = request.getParameter("pwd");
-            String result = shopmemberService.modifyPassword(sm_id,password);
+            String result = shopmemberService.modifyPassword(s_id,sm_type,sm_id,password);
             response.getWriter().append(result);
         }
 

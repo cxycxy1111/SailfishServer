@@ -30,6 +30,7 @@ public class ShopConfigQuery extends HttpServlet {
             out.append(Reference.SESSION_EXPIRED);
         } else {
             long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+            String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
             String str = shopConfigService.query(s_id);
             out.append(str);
         }

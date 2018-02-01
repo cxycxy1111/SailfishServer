@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.alfred.Sailfish.app.DAO.CourseDAO;
 import com.alfred.Sailfish.app.DAO.CourseSupportedCardDAO;
+import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
@@ -13,6 +14,7 @@ public class CourseService {
 	
 	private CourseDAO courseDAO = new CourseDAO();
 	private ShopDAO shopDAO = new ShopDAO();
+	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
 	private CourseSupportedCardDAO courseSupportedCardDAO= new CourseSupportedCardDAO();
 	
 	public CourseService() {
@@ -29,7 +31,10 @@ public class CourseService {
 	 * @param summary
 	 * @return
 	 */
-	public String add(long s_id, long lmu_id, String name, int type, int last_time, int max_book_num, String summary) {
+	public String add(long s_id, String sm_type,long lmu_id, String name, int type, int last_time, int max_book_num, String summary) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_COURSE,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (courseDAO.isCourseNameExist(name, s_id)) {
 			return MethodTool.qr(Reference.DUPLICATE);
 		}
@@ -61,7 +66,10 @@ public class CourseService {
 	 * @param actual_cost
 	 * @return
 	 */
-	public String addPrivate(long s_id,long lmu_id,long sm_id,long m_id,String name,int type,int total_times,String e_time,int actual_cost) {
+	public String addPrivate(long s_id,String sm_type,long lmu_id,long sm_id,long m_id,String name,int type,int total_times,String e_time,int actual_cost) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_COURSE,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (type != Reference.TYPE_PRIVATE_COURSE) {
 			return qr(Reference.NOT_MATCH);
 		}
@@ -82,7 +90,10 @@ public class CourseService {
 	 * @param lmu
 	 * @return
 	 */
-	public String remove(long id,long lmu) {
+	public String remove(long s_id,String sm_type,long id,long lmu) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_COURSE,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (shopDAO.queryShopIdByCourseId(id) != shopDAO.queryShopByShopmemberId(lmu)) {
 			return qr(Reference.INST_NOT_MATCH);
 		}
@@ -141,7 +152,10 @@ public class CourseService {
 	 * @param summary
 	 * @return
 	 */
-	public String modify(long c_id,long lmu_id,String name,int last_time,int max_book_num,String summary) {
+	public String modify(long s_id,String sm_type,long c_id,long lmu_id,String name,int last_time,int max_book_num,String summary) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_COURSE,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		boolean isModified = false;
 		long s_id_1 = shopDAO.queryShopIdByCourseId(c_id);
 		long s_id_2 = shopDAO.queryShopByShopmemberId(lmu_id);
@@ -155,7 +169,10 @@ public class CourseService {
 		return qr(Reference.EXE_FAIL);
 	}
 
-	public String modifyPrivate(long c_id,long lmu_id,String name,int total_times,String invalid_time,int total_cost) {
+	public String modifyPrivate(long s_id,String sm_type,long c_id,long lmu_id,String name,int total_times,String invalid_time,int total_cost) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_COURSE,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		boolean isUpdated = false;
 		if (shopDAO.queryShopIdByCourseId(c_id) != shopDAO.queryShopByShopmemberId(lmu_id)) {
 			return qr(Reference.INST_NOT_MATCH);

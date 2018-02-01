@@ -28,10 +28,11 @@ public class CoursePlanDetailQuery extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session == null) {
             printWriter.append(Reference.SESSION_EXPIRED);
+        }else {
+            long cp_id = MethodTool.reqParseToLong(request,"cp_id");
+            String resp = coursePlanService.queryByCoursePlanId(cp_id);
+            System.out.println(MethodTool.getTime() +  ",Response:" + resp);
+            printWriter.append(resp);
         }
-        long cp_id = MethodTool.reqParseToLong(request,"cp_id");
-        String resp = coursePlanService.queryByCoursePlanId(cp_id);
-        System.out.println(MethodTool.getTime() +  ",Response:" + resp);
-        printWriter.append(resp);
     }
 }

@@ -3,6 +3,7 @@ package com.alfred.Sailfish.app.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.alfred.Sailfish.app.DAO.CardDAO;
+import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
@@ -11,6 +12,7 @@ public class CardService {
 	
 	private CardDAO cardDAO = new CardDAO();
 	private ShopDAO shopDAO = new ShopDAO();
+	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
 	
 	public CardService() {
 	}
@@ -27,7 +29,10 @@ public class CardService {
 	 * @param expired_time
 	 * @return
 	 */
-	public String addCard(long shop_id,String name,long shopmember_id,int type,int price,int balance,String start_time,String expired_time){
+	public String addCard(String sm_type,long shop_id,String name,long shopmember_id,int type,int price,int balance,String start_time,String expired_time){
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_CARD_TYPE,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (cardDAO.isCardNameRepeat(shop_id, name)) {
 			return qr(Reference.DUPLICATE);
 		}
@@ -44,7 +49,10 @@ public class CardService {
 	 * @param shop_id
 	 * @return
 	 */
-	public String queryCardList(long shop_id,int type) {
+	public String queryCardList(String sm_type,long shop_id,int type) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_VIEW_CARD_TYPE,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		list = cardDAO.queryList(shop_id,type);
 		if (list.size() == 0) {
@@ -58,7 +66,10 @@ public class CardService {
 	 * @param c_id
 	 * @return
 	 */
-	public String queryCardDetail(long c_id) {
+	public String queryCardDetail(String sm_type,long s_id,long c_id) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_VIEW_CARD_TYPE,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		if (cardDAO.isDel(c_id)) {
 			return MethodTool.qr(Reference.NSR);
@@ -81,7 +92,10 @@ public class CardService {
 	 * @param expired_time
 	 * @return
 	 */
-	public String modifyCard(long id,String name,long shopmember_id,int price,int balance,String start_time,String expired_time) {
+	public String modifyCard(long s_id,String sm_type,long id,String name,long shopmember_id,int price,int balance,String start_time,String expired_time) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_CARD_TYPE,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (cardDAO.isDel(id)) {
 			return qr(Reference.NSR);
 		}
@@ -98,7 +112,10 @@ public class CardService {
 	 * @param shopmember_id
 	 * @return
 	 */
-	public String removeCard(long card_id,long shopmember_id) {
+	public String removeCard(long s_id,String sm_type,long card_id,long shopmember_id) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_CARD_TYPE,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (cardDAO.removeCard(card_id, shopmember_id)) {
 			return qr(Reference.EXE_SUC);
 		}

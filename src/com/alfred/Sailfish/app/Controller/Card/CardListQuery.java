@@ -39,8 +39,9 @@ public class CardListQuery extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			long shop_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			int type = MethodTool.reqParseToInt(request,"type");
-			String str = cardService.queryCardList(shop_id,type);
+			String str = cardService.queryCardList(sm_type,shop_id,type);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}else {

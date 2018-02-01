@@ -30,6 +30,7 @@ public class ShopConfigModify extends HttpServlet {
             out.append(Reference.SESSION_EXPIRED);
         }else {
             long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+            String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
             String s = request.getParameter("request");
             String [] array= s.split("_");
             String str = shopConfigService.moidfy(s_id,

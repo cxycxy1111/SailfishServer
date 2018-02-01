@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.soap.MTOM;
 
 import com.alfred.Sailfish.app.Service.CourseService;
 import com.alfred.Sailfish.app.Util.MethodTool;
@@ -39,8 +40,10 @@ public class CourseRemove extends HttpServlet {
 			out.append(Reference.SESSION_EXPIRED);
 		} else {
 			long id = MethodTool.reqParseToLong(req, "id");
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
 			long lmu_id = MethodTool.getSessionValueToLong(session, "sm_id");
-			String str = courseService.remove(id, lmu_id);
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
+			String str = courseService.remove(s_id,sm_type,id, lmu_id);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

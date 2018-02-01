@@ -38,6 +38,7 @@ public class CourseAdd extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		response.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession(false);
+		String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 		if (session == null) {
 			out.append(Reference.SESSION_EXPIRED);
 		} else {
@@ -48,7 +49,7 @@ public class CourseAdd extends HttpServlet {
 			int last_time = MethodTool.reqParseToInt(request, "last_time");
 			int max_book_num = MethodTool.reqParseToInt(request, "max_book_num");
 			String summary = request.getParameter("summary");
-			String str = courseService.add(s_id, lmu_id, name, type, last_time, max_book_num, summary);
+			String str = courseService.add(s_id,sm_type, lmu_id, name, type, last_time, max_book_num, summary);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

@@ -33,12 +33,14 @@ public class CoursePrivateModify extends HttpServlet {
             out.append(Reference.SESSION_EXPIRED);
         } else {
             long lmu_id = MethodTool.getSessionValueToLong(session,"sm_id");
+            long s_id =MethodTool.getSessionValueToLong(session,"s_id");
+            String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
             long id = MethodTool.reqParseToLong(request,"c_id");
             int total_times = MethodTool.reqParseToInt(request,"total_times");
             String name = request.getParameter("name");
             String invalid_time = request.getParameter("invalid_time");
             int total_cost = MethodTool.reqParseToInt(request,"total_cost");
-            String str = courseService.modifyPrivate(id,lmu_id,name,total_times,invalid_time,total_cost);
+            String str = courseService.modifyPrivate(s_id,sm_type,id,lmu_id,name,total_times,invalid_time,total_cost);
             System.out.println(MethodTool.getTime() +  ",Response:" + str);
             out.append(str);
         }

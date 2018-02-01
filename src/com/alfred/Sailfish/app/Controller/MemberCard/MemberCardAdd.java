@@ -39,13 +39,15 @@ public class MemberCardAdd extends HttpServlet {
 		if (session == null) {
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
 			long shopmember_id = MethodTool.getSessionValueToLong(session,"sm_id");
 			long member_id = Long.parseLong(request.getParameter("mid"));
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			long card_id = Long.parseLong(request.getParameter("cid"));
 			int balance = Integer.parseInt(request.getParameter("balance"));
 			String start_time = request.getParameter("stime");
 			String expired_time = request.getParameter("etime");
-			String str = memberCardService.add(member_id, card_id,
+			String str = memberCardService.add(s_id,sm_type,member_id, card_id,
 					shopmember_id, balance, start_time, expired_time);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);

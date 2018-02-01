@@ -6,6 +6,7 @@ import java.util.IdentityHashMap;
 
 import com.alfred.Sailfish.app.DAO.CourseDAO;
 import com.alfred.Sailfish.app.DAO.CoursePlanDAO;
+import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
@@ -17,6 +18,7 @@ public class CoursePlanService {
 	private CoursePlanDAO coursePlanDAO = new CoursePlanDAO();
 	private ShopDAO shopDAO = new ShopDAO();
 	private CourseDAO courseDAO = new CourseDAO();
+	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
 	
 	public CoursePlanService (){
 	}
@@ -31,7 +33,10 @@ public class CoursePlanService {
 	 * @param remark
 	 * @return
 	 */
-	public String add(long c_id,long cr_id,long lmu_id,String s_time,String e_time,String remark) {
+	public String add(long shop_id,String sm_type,long c_id,long cr_id,long lmu_id,String s_time,String e_time,String remark) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_COURSEPLAN,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (!courseDAO.isExist(c_id)) {
 			return MethodTool.tfs(Reference.NSR);
 		}
@@ -59,8 +64,11 @@ public class CoursePlanService {
 	 * @param lmu_id
 	 * @return
 	 */
-	public String remove(long id,long lmu_id) {
+	public String remove(long shop_id,String sm_type,long id,long lmu_id) {
 		boolean isRemoved = false;
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_COURSEPLAN,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (!coursePlanDAO.isExist(id)) {
 			return MethodTool.tfs(Reference.NSR);
 		}
@@ -84,7 +92,10 @@ public class CoursePlanService {
 	 * @param remark 备注
 	 * @return
 	 */
-	public String modify(long id,long cr_id,long lmu_id,String s_time,String e_time,String remark) {
+	public String modify(long shop_id,String sm_type,long id,long cr_id,long lmu_id,String s_time,String e_time,String remark) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_COURSEPLAN,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		long ce_id = courseDAO.querycourseIdByCoursePlanId(id);
 		if(shopDAO.queryShopIdByCoursePlanId(id) != shopDAO.queryShopByShopmemberId(lmu_id)) {
 			return MethodTool.tfs(Reference.INST_NOT_MATCH);

@@ -38,11 +38,13 @@ public class MemberCardDeduct extends HttpServlet {
 		if (session == null) {
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
 			int num = Integer.valueOf(request.getParameter("num"));
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			long mc_id = Long.valueOf(request.getParameter("mc_id"));
 			long shop_member_id = MethodTool.getSessionValueToLong(session,"sm_id");
 			String invalid_date = request.getParameter("invalid_date");
-			String str = memberCardService.reduceBalance(mc_id, shop_member_id, num,invalid_date);
+			String str = memberCardService.reduceBalance(s_id,sm_type,mc_id, shop_member_id, num,invalid_date);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

@@ -40,7 +40,9 @@ public class CardRemove extends HttpServlet {
 			resp.setCharacterEncoding("utf-8");
 			long card_id = Long.parseLong(req.getParameter("card_id"));
 			long shopmember_id = MethodTool.getSessionValueToLong(session,"sm_id");
-			String str = cardService.removeCard(card_id, shopmember_id);
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
+			String str = cardService.removeCard(s_id,sm_type,card_id, shopmember_id);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

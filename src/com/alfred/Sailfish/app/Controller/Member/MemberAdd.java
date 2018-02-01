@@ -44,13 +44,14 @@ public class MemberAdd extends HttpServlet {
 		} else {
 			long shop_id = MethodTool.getSessionValueToLong(session,"s_id");
 			long shopmember_id = MethodTool.getSessionValueToLong(session,"sm_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String name = request.getParameter("name");
 			String login_name = request.getParameter("login_name");
 			String birthday = request.getParameter("birthday");
 			String phone = request.getParameter("phone");
 			String im = request.getParameter("im");
 			String password = request.getParameter("password");
-			String str = memberService.addMember(login_name, shop_id, shopmember_id, name, password, birthday, phone, im);
+			String str = memberService.addMember(sm_type,login_name, shop_id, shopmember_id, name, password, birthday, phone, im);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

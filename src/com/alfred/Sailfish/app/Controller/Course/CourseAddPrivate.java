@@ -31,6 +31,7 @@ public class CourseAddPrivate extends HttpServlet {
             out.append(Reference.SESSION_EXPIRED);
         } else {
             long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+            String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
             long lmu_id = MethodTool.getSessionValueToLong(session,"sm_id");
             long sm_id = MethodTool.reqParseToLong(request,"sm_id");
             long m_id = MethodTool.reqParseToLong(request,"m_id");
@@ -39,7 +40,7 @@ public class CourseAddPrivate extends HttpServlet {
             int total_times = MethodTool.reqParseToInt(request,"total_times");
             String e_time = request.getParameter("e_time");
             int acutal_cost = MethodTool.reqParseToInt(request,"actual_cost");
-            String str = courseService.addPrivate(s_id,lmu_id,sm_id,m_id,name,type,total_times,e_time,acutal_cost);
+            String str = courseService.addPrivate(s_id,sm_type,lmu_id,sm_id,m_id,name,type,total_times,e_time,acutal_cost);
             System.out.println(MethodTool.getTime() +  ",Response:" + str);
             out.append(str);
         }

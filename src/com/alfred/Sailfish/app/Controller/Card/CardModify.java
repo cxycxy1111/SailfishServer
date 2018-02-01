@@ -40,12 +40,14 @@ public class CardModify extends HttpServlet {
 		}else {
 			long id = Long.parseLong(req.getParameter("id"));
 			long shopmember_id = MethodTool.getSessionValueToLong(session,"sm_id");
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String name = req.getParameter("name");
 			int price = Integer.parseInt(req.getParameter("price"));
 			int balance = Integer.parseInt(req.getParameter("balance"));
 			String start_time = req.getParameter("start_time");
 			String expired_time = req.getParameter("expired_time");
-			String str = cardService.modifyCard(id, name, shopmember_id, price, balance, start_time, expired_time);
+			String str = cardService.modifyCard(s_id,sm_type,id, name, shopmember_id, price, balance, start_time, expired_time);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

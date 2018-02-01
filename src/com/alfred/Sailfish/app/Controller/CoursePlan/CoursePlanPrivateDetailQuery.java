@@ -26,6 +26,7 @@ public class CoursePlanPrivateDetailQuery extends HttpServlet {
             out.append(Reference.SESSION_EXPIRED);
         }else {
             long cp_id = MethodTool.reqParseToLong(request,"cp_id");
+            String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
             String str = coursePlanService.queryPrivateByCoursePlanId(cp_id);
             System.out.println(MethodTool.getTime() +  ",Response:" + str);
             response.getWriter().append(str);

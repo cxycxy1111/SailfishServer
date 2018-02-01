@@ -39,10 +39,12 @@ public class MemberRemove extends HttpServlet {
 		if (session == null) {
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
 			long sm_id = MethodTool.getSessionValueToLong(session,"sm_id");
 			long m_id = Long.parseLong(request.getParameter("member_id"));
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			System.out.println("SM_ID is :" + sm_id);
-			String str = memberService.removeMember(m_id, sm_id);
+			String str = memberService.removeMember(s_id,sm_type,m_id, sm_id);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

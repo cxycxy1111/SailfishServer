@@ -3,12 +3,14 @@ package com.alfred.Sailfish.app.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.alfred.Sailfish.app.DAO.MemberDAO;
+import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
 public class MemberService {
 	
 	private MemberDAO memberDAO = new MemberDAO();
+	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
 	
 	public MemberService(){
 	}
@@ -25,8 +27,11 @@ public class MemberService {
 	 * @param im
 	 * @return
 	 */
-	public String addMember(String login_name,long shop_id,long shopmember_id,
+	public String addMember(String sm_type,String login_name,long shop_id,long shopmember_id,
 			String name,String password,String birthday,String phone,String im) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_MEMBER,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (!memberDAO.isLoginNameExist(login_name, shop_id)) {
 			boolean isAdded = memberDAO.addNewMmember(shop_id, shopmember_id, name, login_name,
 					password, birthday, phone, im);
@@ -40,7 +45,10 @@ public class MemberService {
 		}
 	}
 	
-	public String resetPassword(long sm_id,long m_id,String password) {
+	public String resetPassword(long shop_id,String sm_type,long sm_id,long m_id,String password) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_MEMBER,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		boolean b = false;
 		if(memberDAO.isDel(m_id)) {
 			return MethodTool.qr(Reference.NSR);
@@ -57,7 +65,10 @@ public class MemberService {
 	 * @param shop_id
 	 * @return
 	 */
-	public String queryMemberList(long shop_id) {
+	public String queryMemberList(long shop_id,String sm_type) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_VIEW_MEMBER,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		list = memberDAO.queryList(shop_id);
 		if (list.size() == 0) {
@@ -72,7 +83,10 @@ public class MemberService {
 	 * @param member_id
 	 * @return
 	 */
-	public String queryMemberDetail(long shop_id,long member_id) {
+	public String queryMemberDetail(long shop_id,String sm_type,long member_id) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_VIEW_MEMBER,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		boolean isDel = memberDAO.isDel(member_id);
 		if (!isDel) {
@@ -97,7 +111,10 @@ public class MemberService {
 	 * @param im
 	 * @return
 	 */
-	public String modifyMember(long member_id,long shopmember_id,String name,String birthday,String phone,String im) {
+	public String modifyMember(long shop_id,String sm_type,long member_id,long shopmember_id,String name,String birthday,String phone,String im) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_MEMBER,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (memberDAO.isDel(member_id)) {
 			return MethodTool.qr(Reference.NSR);
 		}
@@ -115,7 +132,10 @@ public class MemberService {
 	 * @param sm_id
 	 * @return
 	 */
-	public String removeMember(long m_id,long sm_id) {
+	public String removeMember(long shop_id,String sm_type,long m_id,long sm_id) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_MEMBER,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		boolean isDel = memberDAO.isDel(m_id);
 		if (isDel) {
 			return MethodTool.qr(Reference.NSR);

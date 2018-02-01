@@ -40,8 +40,10 @@ public class CardDetailQuery extends HttpServlet {
 		if (session == null) {
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
 			long c_id = MethodTool.reqParseToLong(request, "c_id");
-			String str = cardService.queryCardDetail(c_id);
+			String str = cardService.queryCardDetail(sm_type,s_id,c_id);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

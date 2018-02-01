@@ -3,10 +3,7 @@ package com.alfred.Sailfish.app.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.alfred.Sailfish.app.DAO.CardDAO;
-import com.alfred.Sailfish.app.DAO.CourseDAO;
-import com.alfred.Sailfish.app.DAO.CourseSupportedCardDAO;
-import com.alfred.Sailfish.app.DAO.ShopDAO;
+import com.alfred.Sailfish.app.DAO.*;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
@@ -14,6 +11,7 @@ public class CourseSupportedCardService {
 	
 	private CourseSupportedCardDAO courseSupportedCardDAO = new CourseSupportedCardDAO();
 	public ShopDAO shopDAO = new ShopDAO();
+	public ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
 	private CardDAO cardDAO = new CardDAO();
 	private CourseDAO courseDAO = new CourseDAO();
 	
@@ -40,7 +38,10 @@ public class CourseSupportedCardService {
 	 * @param price 价格
 	 * @return
 	 */
-	public String modify(int type,long course_id,long card_id,int price) {
+	public String modify(long s_id,String sm_type,int type,long course_id,long card_id,int price) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_COURSE,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (!cardDAO.isExist(card_id) | !courseDAO.isExist(course_id)) {
 			return MethodTool.qr(Reference.NSR);
 		}

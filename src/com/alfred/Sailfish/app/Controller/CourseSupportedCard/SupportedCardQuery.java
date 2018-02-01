@@ -41,6 +41,7 @@ public class SupportedCardQuery extends HttpServlet {
 		}else {
 			long c_id = MethodTool.reqParseToLong(req, "c_id");
 			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String str = courseSupportedCardService.query(s_id,c_id);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);

@@ -39,9 +39,9 @@ public class MemberDetailQuery extends HttpServlet {
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
 			long member_id = Long.parseUnsignedLong(request.getParameter("member_id"));
-			System.out.println(member_id);
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			long shop_id = MethodTool.getSessionValueToLong(session,"s_id");
-			String str = memberService.queryMemberDetail(shop_id, member_id);
+			String str = memberService.queryMemberDetail(shop_id,sm_type, member_id);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

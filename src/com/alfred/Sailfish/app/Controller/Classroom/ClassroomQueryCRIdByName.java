@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.alfred.Sailfish.app.Service.ClassroomService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * Servlet implementation class ClassroomQueryCRIdByName
@@ -36,12 +37,15 @@ public class ClassroomQueryCRIdByName extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession(false);
-		if (session == null) {
+		if (session != null) {
 			long s_id = MethodTool.getSessionValueToLong(session, "s_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String cr_name = request.getParameter("cr_name");
 			String str = classroomService.queryCRIdByCRName(s_id,cr_name);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
+		}else {
+			out.append(Reference.SESSION_EXPIRED);
 		}
 
 	}

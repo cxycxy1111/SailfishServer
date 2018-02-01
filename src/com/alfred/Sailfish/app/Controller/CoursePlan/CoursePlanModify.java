@@ -42,10 +42,12 @@ public class CoursePlanModify extends HttpServlet {
 			long id = MethodTool.reqParseToLong(req, "id");
 			long cr_id = MethodTool.reqParseToLong(req, "cr_id");
 			long lmu_id = MethodTool.getSessionValueToLong(session, "sm_id");
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String s_time = req.getParameter("s_time");
 			String e_time = req.getParameter("e_time");
 			String remark = req.getParameter("remark");
-			String str = coursePlanService.modify(id, cr_id, lmu_id, s_time, e_time, remark);
+			String str = coursePlanService.modify(s_id,sm_type,id, cr_id, lmu_id, s_time, e_time, remark);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

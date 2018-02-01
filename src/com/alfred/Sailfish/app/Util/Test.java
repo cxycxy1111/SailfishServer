@@ -59,7 +59,6 @@ public class Test {
 		int i = courseDAO.queryType(3);
 		l = memberDAO.queryList(5);
 		hash = coursePlanDAO.queryByCourseId(2);
-		s=shopmemberService.modifyPassword(14, "111");
 		ja = new JSONArray(l);
 		jo = new JSONObject(s);
 		Map<String, Object> h = jo.toMap();

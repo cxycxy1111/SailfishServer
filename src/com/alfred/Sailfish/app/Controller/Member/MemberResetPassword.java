@@ -40,10 +40,12 @@ public class MemberResetPassword extends HttpServlet {
 		if (session == null) {
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
 			long m_id = MethodTool.reqParseToLong(request, "m_id");
 			long sm_id = MethodTool.getSessionValueToLong(session,"sm_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String newpwd = request.getParameter("newpwd");
-			String str = memberService.resetPassword(sm_id, m_id, newpwd);
+			String str = memberService.resetPassword(s_id,sm_type,sm_id, m_id, newpwd);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

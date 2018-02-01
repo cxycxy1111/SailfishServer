@@ -46,13 +46,14 @@ public class CardAdd extends HttpServlet {
 		}else {
 			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
 			long sm_id = MethodTool.getSessionValueToLong(session,"sm_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String name = req.getParameter("name");
 			int type = Integer.parseInt(req.getParameter("type"));
 			int price = Integer.parseInt(req.getParameter("price"));
 			int balance = Integer.parseInt(req.getParameter("balance"));
 			String start_time = req.getParameter("start_time");
 			String expired_time = req.getParameter("expired_time");
-			String str = cardService.addCard(s_id, name, sm_id, type, price, balance, start_time, expired_time);
+			String str = cardService.addCard(sm_type,s_id, name, sm_id, type, price, balance, start_time, expired_time);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

@@ -2,6 +2,7 @@ package com.alfred.Sailfish.app.Service;
 
 import com.alfred.Sailfish.app.DAO.MemberCardDAO;
 import com.alfred.Sailfish.app.DAO.MemberDAO;
+import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
@@ -14,6 +15,7 @@ public class MemberCardService {
 	private MemberDAO memberDAO = new MemberDAO();
 	private MemberCardDAO memberCardDAO = new MemberCardDAO();
 	private ShopDAO shopDAO = new ShopDAO();
+	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
 	
 	public MemberCardService() {
 	}
@@ -28,8 +30,11 @@ public class MemberCardService {
 	 * @param expired_time
 	 * @return
 	 */
-	public String add(long member_id,long card_id,
+	public String add(long s_id,String sm_type,long member_id,long card_id,
 		long shopmember_id,int balance,String start_time,String expired_time) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_MEMBER_CARD,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		boolean isMemberDeleted = memberDAO.isDel(member_id);
         long shop_id = shopDAO.queryShopIdByCardId(card_id);
 		long shop_id_1 = shopDAO.queryShopByShopmemberId(shopmember_id);
@@ -61,7 +66,10 @@ public class MemberCardService {
 	 * @param lmu_id
 	 * @return
 	 */
-	public String remove(long mc_id,long lmu_id) {
+	public String remove(long s_id,String sm_type,long mc_id,long lmu_id) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_MEMBER_CARD,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (shopDAO.queryShopByShopmemberId(lmu_id) == shopDAO.queryShopIdByMembercardId(mc_id)) {
 			if (memberCardDAO.isDel(mc_id)) {
 				return qr(Reference.NSR);
@@ -84,7 +92,10 @@ public class MemberCardService {
 	 * @param m_id 会员ID
 	 * @return
 	 */
-	public String queryListByMemberId(long m_id) {
+	public String queryListByMemberId(long s_id,String sm_type,long m_id) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_VIEW_MEMBER_CARD,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		ArrayList<HashMap<String,Object>> arrayList = new ArrayList<>();
 		arrayList = memberCardDAO.queryListByMemberId(m_id);
 		if (arrayList.size() == 0) {
@@ -100,7 +111,10 @@ public class MemberCardService {
 	 * @param num
 	 * @return
 	 */
-	public String increaseBalance(long member_card_id,long last_modify_user,String invalid_date,int num) {
+	public String increaseBalance(long s_id,String sm_type,long member_card_id,long last_modify_user,String invalid_date,int num) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_MEMBER_CARD,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		boolean isCharged = memberCardDAO.updateBalancePlus(member_card_id, num,invalid_date, last_modify_user);
 		if (shopDAO.queryShopByShopmemberId(last_modify_user) == shopDAO.queryShopIdByMembercardId(member_card_id)) {
 			if (!memberCardDAO.isDel(member_card_id)) {
@@ -124,7 +138,10 @@ public class MemberCardService {
 	 * @param num
 	 * @return
 	 */
-	public String reduceBalance(long mc_id,long shop_member_id,int num,String invalid_date) {
+	public String reduceBalance(long s_id,String sm_type,long mc_id,long shop_member_id,int num,String invalid_date) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_MEMBER_CARD,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		boolean isEnough = false;
 		isEnough = memberCardDAO.isBalanceEnough(mc_id, num);
 		if (shopDAO.queryShopIdByMembercardId(mc_id) == shopDAO.queryShopByShopmemberId(shop_member_id)) {
@@ -154,7 +171,10 @@ public class MemberCardService {
 	 * @param expiredTime
 	 * @return
 	 */
-	public String changeExpiredTime(long lmu_id,long mc_id,String expiredTime) {
+	public String changeExpiredTime(long s_id,String sm_type,long lmu_id,long mc_id,String expiredTime) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_MEMBER_CARD,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if(shopDAO.queryShopByShopmemberId(lmu_id) == shopDAO.queryShopIdByMembercardId(mc_id)) {
 			if (!memberCardDAO.isDel(mc_id)) {
 				boolean isUpdated = memberCardDAO.updateExpiredTime(mc_id, lmu_id, expiredTime);
@@ -171,7 +191,10 @@ public class MemberCardService {
 		}
 	}
 
-	public String queryDetail(long mc_id) {
+	public String queryDetail(long s_id,String sm_type,long mc_id) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_VIEW_MEMBER_CARD,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (memberCardDAO.isDel(mc_id)) {
 			return MethodTool.tfs(Reference.NSR);
 		}

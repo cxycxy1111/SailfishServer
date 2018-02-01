@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.alfred.Sailfish.app.Service.MemberService;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.alfred.Sailfish.app.Util.Reference;
 
 /**
  * Servlet implementation class ModifyMember
@@ -35,15 +36,22 @@ public class MemberModify extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter w = response.getWriter();
 		HttpSession session = request.getSession(false);
-		long member_id = Long.parseLong(request.getParameter("member_id"));
-		long shopmember_id = MethodTool.getSessionValueToLong(session,"sm_id");
-		String name = request.getParameter("name");
-		String birthday = request.getParameter("birthday");
-		String phone = request.getParameter("phone");
-		String im = request.getParameter("im");
-		String str = memberService.modifyMember(member_id, shopmember_id, name, birthday, phone, im);
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
-		w.append(str);
+		if (session == null) {
+			w.append(Reference.SESSION_EXPIRED);
+		}else {
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			long member_id = Long.parseLong(request.getParameter("member_id"));
+			long shopmember_id = MethodTool.getSessionValueToLong(session,"sm_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
+			String name = request.getParameter("name");
+			String birthday = request.getParameter("birthday");
+			String phone = request.getParameter("phone");
+			String im = request.getParameter("im");
+			String str = memberService.modifyMember(s_id,sm_type,member_id, shopmember_id, name, birthday, phone, im);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			w.append(str);
+		}
+
 	}
 
 	/**

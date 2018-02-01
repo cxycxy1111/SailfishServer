@@ -40,12 +40,14 @@ public class CoursePlanTeacherModify extends HttpServlet {
 		if (session == null) {
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String s = req.getParameter("m");
 			String [] strs = s.split("-");
 			StringBuilder builder = new StringBuilder();
 			for (int i = 0;i < strs.length;i++) {
 				String [] s_strs = strs[i].split("_");
-				String result = coursePlanTeacherService.modify(Integer.parseInt(s_strs[0]), Long.parseLong(s_strs[1]), Long.parseLong(s_strs[2]));
+				String result = coursePlanTeacherService.modify(s_id,sm_type,Integer.parseInt(s_strs[0]), Long.parseLong(s_strs[1]), Long.parseLong(s_strs[2]));
 				builder.append(result);
 				builder.append(",");
 			}

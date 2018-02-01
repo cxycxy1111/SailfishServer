@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.soap.MTOM;
 
 import com.alfred.Sailfish.app.Service.CourseSupportedCardService;
 import com.alfred.Sailfish.app.Util.MethodTool;
@@ -43,13 +44,15 @@ public class SupportedCardModify extends HttpServlet {
 		if (session == null) {
 			out.append(Reference.SESSION_EXPIRED);
 		} else {
+			long s_id =MethodTool.getSessionValueToLong(session,"s_id");
 			String s = req.getParameter("m");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String [] str = s.split("-");
 			String result;
 			StringBuilder builder = new StringBuilder();
 			for (String aStr : str) {
 				String[] strs = aStr.split("_");
-				builder.append(courseSupportedCardService.modify(Integer.valueOf(strs[0]), Integer.valueOf(strs[1]), Integer.valueOf(strs[2]), Integer.valueOf(strs[3])));
+				builder.append(courseSupportedCardService.modify(s_id,sm_type,Integer.valueOf(strs[0]), Integer.valueOf(strs[1]), Integer.valueOf(strs[2]), Integer.valueOf(strs[3])));
 				builder.append(",");
 			}
 			result = builder.toString();

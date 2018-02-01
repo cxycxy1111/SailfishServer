@@ -27,7 +27,9 @@ public class ShopmemberDelete extends HttpServlet {
         }else {
             long sm_id = MethodTool.reqParseToLong(request,"id");
             long lmu_id = MethodTool.getSessionValueToLong(session,"sm_id");
-            String str = shopmemberService.deleteShopmember(sm_id,lmu_id);
+            long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+            String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
+            String str = shopmemberService.deleteShopmember(s_id,sm_type,sm_id,lmu_id);
             System.out.println(MethodTool.getTime() +  ",Response:" + str);
             response.getWriter().append(str);
         }

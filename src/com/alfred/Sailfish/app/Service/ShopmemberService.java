@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.DAO.ShopmemberDAO;
 import com.alfred.Sailfish.app.Util.Reference;
@@ -13,6 +14,7 @@ public class ShopmemberService {
 	
 	private ShopmemberDAO shopmemberDAO = new ShopmemberDAO();
 	private ShopDAO shopDao = new ShopDAO();
+	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
 	
 	public ShopmemberService() {
 	}
@@ -27,7 +29,10 @@ public class ShopmemberService {
 	 * @param password
 	 * @return
 	 */
-	public String addShopmember(long shop_id,long shopmember_id,String name,String user_name,int type,String password) {
+	public String addShopmember(long shop_id,String sm_type,long shopmember_id,String name,String user_name,int type,String password) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_TEACHER,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		boolean isAdded = false;
 		boolean isLoginNameExist = false;
 		isLoginNameExist = shopmemberDAO.isLoginNameExist(user_name);
@@ -49,7 +54,10 @@ public class ShopmemberService {
 	 * @param lmu_id
 	 * @return
 	 */
-	public String deleteShopmember(long id,long lmu_id) {
+	public String deleteShopmember(long shop_id,String sm_type,long id,long lmu_id) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_TEACHER,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (shopDao.queryShopByShopmemberId(id) != shopDao.queryShopByShopmemberId(lmu_id)) {
 			return MethodTool.qr(Reference.INST_NOT_MATCH);
 		}
@@ -66,7 +74,10 @@ public class ShopmemberService {
 	 * @param password
 	 * @return
 	 */
-	public String modifyPassword(long sm_id,String password) {
+	public String modifyPassword(long shop_id,String sm_type,long sm_id,String password) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_TEACHER,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if(shopmemberDAO.isDel(sm_id)) {
 			return MethodTool.qr(Reference.NSR);
 		}
@@ -83,7 +94,10 @@ public class ShopmemberService {
 		}
 	}
 
-	public String modifyInfo(long sm_id,String name,long lmu_id,int new_type) throws SQLException{
+	public String modifyInfo(long shop_id,String sm_type,long sm_id,String name,long lmu_id,int new_type) throws SQLException{
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_TEACHER,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (shopDao.queryShopByShopmemberId(sm_id) != shopDao.queryShopByShopmemberId(lmu_id)) {
 			return MethodTool.qr(Reference.INST_NOT_MATCH);
 		}
@@ -98,7 +112,10 @@ public class ShopmemberService {
 	 * @param shop_id
 	 * @return
 	 */
-	public String queryShopmemberList(long shop_id,int type){
+	public String queryShopmemberList(long shop_id,String sm_type,int type){
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_VIEW_TEACHER,shop_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>> ();
 		list = shopmemberDAO.queryShopmemberList(shop_id,type);
 		if (list.size()==0) {
@@ -113,7 +130,11 @@ public class ShopmemberService {
 	 * @param s_id
 	 * @return
 	 */
-	public String queryShopmemberDetail(long sm_id,long s_id){
+
+	public String queryShopmemberDetail(long sm_id,long s_id,String sm_type){
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_VIEW_TEACHER,s_id).contains(sm_type)) {
+			return Reference.AUTHORIZE_FAIL;
+		}
 		if (shopmemberDAO.isDel(sm_id)) {
 			return MethodTool.qr(Reference.NSR);
 		}

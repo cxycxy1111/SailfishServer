@@ -28,7 +28,9 @@ public class MemberCardListQuery extends HttpServlet{
             out.append(Reference.SESSION_EXPIRED);
         }else {
             long m_id = Long.parseLong(req.getParameter("m_id"));
-            String str = memberCardService.queryListByMemberId(m_id);
+            long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+            String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
+            String str = memberCardService.queryListByMemberId(s_id,sm_type,m_id);
             System.out.println(MethodTool.getTime() +  ",Response:" + m_id);
             out.append(str);
         }

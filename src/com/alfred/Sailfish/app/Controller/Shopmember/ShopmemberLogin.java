@@ -33,19 +33,23 @@ public class ShopmemberLogin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		HttpSession session = request.getSession(true);
 		String user_name = request.getParameter("user_name");
 		String password = request.getParameter("password");
-		String str = shopMemberService.loginCheck(user_name, password);
-		if (str.startsWith("[")) {
-			long sm_id = shopmemberDAO.queryIdByUserName(user_name);
-			long s_id = shopmemberDAO.queryShopIdByUserName(user_name);
-			session.setAttribute("sm_id",sm_id);
-			session.setAttribute("s_id",s_id);
-			session.setAttribute("sm_type",shopmemberDAO.queryShopmemberTypeById(sm_id));
+		if (request.getSession(false) == null) {
+			HttpSession session = request.getSession(true);
+			String str = shopMemberService.loginCheck(user_name, password);
+			if (str.startsWith("[")) {
+				long sm_id = shopmemberDAO.queryIdByUserName(user_name);
+				long s_id = shopmemberDAO.queryShopIdByUserName(user_name);
+				session.setAttribute("sm_id",sm_id);
+				session.setAttribute("s_id",s_id);
+				session.setAttribute("sm_type",shopmemberDAO.queryShopmemberTypeById(sm_id));
+			}
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			out.append(str);
+		} else {
+			out.append(shopMemberService.loginCheck(user_name,password));
 		}
-		System.out.println(MethodTool.getTime() +  ",Response:" + str);
-		out.append(str);
 	}
 
 	/**

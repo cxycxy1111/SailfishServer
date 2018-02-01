@@ -37,11 +37,13 @@ public class MemberCardCharge extends HttpServlet {
 		if (session == null) {
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
 			long member_card_id = Long.parseLong(request.getParameter("mc_id"));
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			long last_modify_user = MethodTool.getSessionValueToLong(session,"sm_id");
 			int num = Integer.parseInt(request.getParameter("num"));
 			String new_invalid_date = request.getParameter("invalid_date");
-			String str = memberCardService.increaseBalance(member_card_id, last_modify_user, new_invalid_date, num);
+			String str = memberCardService.increaseBalance(s_id,sm_type,member_card_id, last_modify_user, new_invalid_date, num);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		}

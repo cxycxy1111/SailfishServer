@@ -27,12 +27,14 @@ public class ShopmemberModify extends HttpServlet {
         if (session == null) {
             out.append(Reference.SESSION_EXPIRED);
         }else {
+            long s_id = MethodTool.getSessionValueToLong(session,"s_id");
             long sm_id = MethodTool.reqParseToLong(request,"sm_id");
             long lmu_id = MethodTool.getSessionValueToLong(session,"lmu_id");
+            String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
             int new_type = MethodTool.reqParseToInt(request,"new_type");
             String name = request.getParameter("name");
             try {
-                String str = shopmemberService.modifyInfo(sm_id,name,lmu_id,new_type);
+                String str = shopmemberService.modifyInfo(s_id,sm_type,sm_id,name,lmu_id,new_type);
                 System.out.println(MethodTool.getTime() +  ",Response:" + str);
                 out.append(str);
                 response.flushBuffer();

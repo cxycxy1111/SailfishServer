@@ -197,5 +197,10 @@ public class MethodTool {
 		Object o = session.getAttribute(key);
 		return Long.parseLong(String.valueOf(o));
 	}
+
+	public static String getSessionValueToInt(HttpSession session,String key) {
+		Object o = session.getAttribute(key);
+		return String.valueOf(o);
+	}
 	
 }
