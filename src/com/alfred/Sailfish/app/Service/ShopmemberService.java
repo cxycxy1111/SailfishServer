@@ -7,6 +7,7 @@ import java.util.HashMap;
 import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.DAO.ShopmemberDAO;
+import com.alfred.Sailfish.app.DAO.ShopmemberLoginLogDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
@@ -15,6 +16,7 @@ public class ShopmemberService {
 	private ShopmemberDAO shopmemberDAO = new ShopmemberDAO();
 	private ShopDAO shopDao = new ShopDAO();
 	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
+	private ShopmemberLoginLogDAO shopmemberLoginLogDAO = new ShopmemberLoginLogDAO();
 	
 	public ShopmemberService() {
 	}
@@ -156,7 +158,15 @@ public class ShopmemberService {
 	 * @param password
 	 * @return
 	 */
-	public String loginCheck(String user_name,String password) {
+	public String loginCheck(String request_time,
+							 String ip_addredss,
+							 String system_version,
+							 String system_model,
+							 String device_brand,
+							 String imei,
+							 String app_version,
+							 String user_name,
+							 String password) {
 		long id = shopmemberDAO.queryIdByUserName(user_name);
 		if (!shopmemberDAO.isLoginNameExist(user_name)) {
 			return MethodTool.qr(Reference.NSR);
@@ -164,10 +174,14 @@ public class ShopmemberService {
 		if (shopmemberDAO.isDel(id)) {
 			return MethodTool.qr(Reference.NSR);
 		}
-		if (shopmemberDAO.isLoginNameAndPasswordMatch(user_name, password)) {
+		boolean isMatch = false;
+		isMatch = shopmemberDAO.isLoginNameAndPasswordMatch(user_name, password);
+		if (isMatch) {
 			long sm_id = shopmemberDAO.queryIdByUserName(user_name);
+			shopmemberLoginLogDAO.insert(request_time,1,ip_addredss,user_name,password,system_version,system_model,device_brand,imei,app_version);
 			return MethodTool.tfc(shopmemberDAO.queryEssentiailDataAfterLogin(sm_id));
 		}
+		shopmemberLoginLogDAO.insert(request_time,0,ip_addredss,user_name,password,system_version,system_model,device_brand,imei,app_version);
 		return MethodTool.qr(Reference.NOT_MATCH);
 	}
 	

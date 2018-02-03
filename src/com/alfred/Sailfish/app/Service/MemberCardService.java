@@ -7,6 +7,7 @@ import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
+import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -142,19 +143,21 @@ public class MemberCardService {
 		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_MEMBER_CARD,s_id).contains(sm_type)) {
 			return Reference.AUTHORIZE_FAIL;
 		}
+		if (!memberCardDAO.isBalanceEnough(mc_id,num) && String.valueOf(shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_DEDUCT_AFTER_ARREARANGE,s_id)).contains("0")) {
+			return Reference.BALANCE_NOT_ENOUGH;
+		}
+		if (memberCardDAO.isExpired(mc_id) && String.valueOf(shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_DEDUCT_AFTER_OVERDUE,s_id)).contains("0")) {
+
+		}
 		boolean isEnough = false;
 		isEnough = memberCardDAO.isBalanceEnough(mc_id, num);
 		if (shopDAO.queryShopIdByMembercardId(mc_id) == shopDAO.queryShopByShopmemberId(shop_member_id)) {
 			if (!memberCardDAO.isDel(mc_id)) {
-				if (isEnough) {
-					boolean isReduced = memberCardDAO.updateBalanceReduce(mc_id,shop_member_id, num,invalid_date);
-					if (isReduced) {
-						return qr(Reference.EXE_SUC);
-					}else {
-						return qr(Reference.EXE_FAIL);
-					}
+				boolean isReduced = memberCardDAO.updateBalanceReduce(mc_id,shop_member_id, num,invalid_date);
+				if (isReduced) {
+					return qr(Reference.EXE_SUC);
 				}else {
-                	return qr(Reference.BALANCE_NOT_ENOUGH);
+					return qr(Reference.EXE_FAIL);
 				}
 			} else {
 				return qr(Reference.NSR);
@@ -163,12 +166,14 @@ public class MemberCardService {
 			return qr(Reference.NOT_MATCH);
 		}
 	}
-	
+
 	/**
-	 * 对到期时间进行操作
-	 * @param lmu_id
-	 * @param mc_id
-	 * @param expiredTime
+	 *
+	 * @param s_id 商店ID
+	 * @param sm_type 修改人类型
+	 * @param lmu_id 修改人ID
+	 * @param mc_id 会员卡ID
+	 * @param expiredTime 到期时间
 	 * @return
 	 */
 	public String changeExpiredTime(long s_id,String sm_type,long lmu_id,long mc_id,String expiredTime) {
