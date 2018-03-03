@@ -26,6 +26,10 @@ public class SQLHelper {
 	int SS = Cld.get(Calendar.SECOND);
 	int MI = Cld.get(Calendar.MILLISECOND);  
 	String str = YY + "/" + MM + "/" + DD + "-" + HH + ":" + mm + ":" + SS + ":" + MI;
+
+	public SQLHelper() {
+	    
+    }
   
     /** 
      * 数据查询 
@@ -39,28 +43,36 @@ public class SQLHelper {
         }  
         ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();  
         try {  
-            conn = DatabaseBean.getConnection();  
-            ps = conn.prepareStatement(sql);  
-            rs = ps.executeQuery();  
-            ResultSetMetaData rsmd = rs.getMetaData();  
-            // 可以得到有多少列  
-            int columnNum = rsmd.getColumnCount();  
-            // 将数据封装到list中  
-            while (rs.next()) {  
-            	HashMap<String,Object> map = new HashMap<>();
-                for (int i = 0; i < columnNum; i++) {
-                	map.put(rsmd.getColumnName(i+1), rs.getObject(i+1));
-                }  
-                list.add(map); 
-            }  
-        } catch (Exception e) {  
+            conn = DatabaseBean.getConnection();
+            try {
+                ps = conn.prepareStatement(sql);
+                try {
+                    rs = ps.executeQuery();
+                    ResultSetMetaData rsmd = rs.getMetaData();
+                    // 可以得到有多少列
+                    int columnNum = rsmd.getColumnCount();
+                    // 将数据封装到list中
+                    while (rs.next()) {
+                        HashMap<String,Object> map = new HashMap<>();
+                        for (int i = 0; i < columnNum; i++) {
+                            map.put(rsmd.getColumnName(i+1), rs.getObject(i+1));
+                        }
+                        list.add(map);
+                    }
+                }catch (Exception e) {
+                    rs.close();
+                }
+            }catch (Exception e) {
+                ps.close();
+            }
+        } catch (Exception e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();  
         }
-        try {
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
         return list;  
     }  
     

@@ -39,9 +39,12 @@ public class DatabaseBean implements Serializable{
 			cpds.setCheckoutTimeout(3000);
 			cpds.setIdleConnectionTestPeriod(120);
 			cpds.setMaxIdleTime(600);
+			cpds.setMaxStatements(0);
 			cpds.setTestConnectionOnCheckin(false);
 			cpds.setMaxStatements(8);
 			cpds.setMaxStatementsPerConnection(5);
+			cpds.setUnreturnedConnectionTimeout(3);
+			cpds.setMaxConnectionAge(20);
 			ds = cpds;
     	}catch (PropertyVetoException e) {
 			e.printStackTrace();

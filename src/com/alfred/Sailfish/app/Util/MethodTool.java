@@ -1,5 +1,6 @@
 package com.alfred.Sailfish.app.Util;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -15,7 +16,7 @@ import org.json.JSONObject;
  * @author dengweixiong
  * 
  */
-public class MethodTool {
+public class MethodTool implements Serializable{
 	
 	public final static String MD5(String pwd) {  
         //用于加密的字符  

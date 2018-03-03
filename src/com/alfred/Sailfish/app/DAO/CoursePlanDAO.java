@@ -89,7 +89,7 @@ public class CoursePlanDAO {
 	}
 	
 	/**
-	 * 查询排课详情
+	 * 通过排课ID查询排课详情
 	 * @param id 排课ID
 	 * @return
 	 */
@@ -101,6 +101,11 @@ public class CoursePlanDAO {
 		return helper.query(sql);
 	}
 
+	/**
+	 * 通过排课ID查询私教排课的详情
+	 * @param id
+	 * @return
+	 */
 	public ArrayList<HashMap<String,Object>> queryPrivateById(long id) {
 		String sql = "SELECT cp.id,trim(c.name) c_name,trim(sm.name) tea_name,trim(m.name) stu_name,cp.start_time,cp.end_time,c.last_time,truncate(cr.id,0) cr_id,trim(cr.name) cr_name FROM courseplan cp " +
 				"LEFT JOIN classroom cr ON cp.classroom_id=cr.id " +
@@ -209,7 +214,7 @@ public class CoursePlanDAO {
 	}
 	
 	/**
-	 * 判断排课是否存在
+	 * 通过排课ID判断排课是否存在
 	 * @param id 排课ID
 	 * @return
 	 */
@@ -220,4 +225,36 @@ public class CoursePlanDAO {
 		}
 		return true;
 	}
+
+	/**
+	 * 通过会员ID查询私教排课
+	 * @param m_id
+	 * @return
+	 */
+	public ArrayList<HashMap<String, Object>> queryPrivateCoursePlanByMemberId(long m_id) {
+		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,trim(cr.name) classroom_name,truncate(c.last_time,0) last_time FROM courseplan cp "
+				+ "LEFT JOIN course c ON cp.course_id = c.id "
+				+ "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
+				+ "LEFT JOIN courseplan_teacher ct ON cp.id = ct.courseplan_id "
+				+ "WHERE cp.del = 0 AND c.student_id = " + m_id + " AND cp.start_time > now() ORDER BY cp.start_time DESC";
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		list = helper.query(sql);
+		return list;
+	}
+
+	/**
+	 * 查询排课开始时间
+	 * @param cp_id
+	 * @return
+	 */
+	public String queryStartDateByCourseplanId(long cp_id) {
+		String sql = "SELECT start_time FROM courseplan WHERE id = " + cp_id;
+		ArrayList<HashMap<String,Object>> list = new ArrayList<>();
+		list = helper.query(sql);
+		if (list.size() > 0) {
+			return String.valueOf(list.get(0).get("start_time"));
+		}
+		return null;
+	}
+
 }

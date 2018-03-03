@@ -8,13 +8,12 @@ import java.util.HashMap;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.SQLHelper;
 
-public class MemberDAO{
+public class MemberDAO extends DAO{
 	
-	SQLHelper helper = new SQLHelper();
 	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 
 	public MemberDAO() {
-		
+		super();
 	}
 	
 	/**
@@ -23,7 +22,7 @@ public class MemberDAO{
 	 */
 	public ArrayList<HashMap<String, Object>> queryList(long shop_id) {
 		String sql = "SELECT id,name FROM member WHERE del = 0 AND shop_id = " + shop_id + " ORDER BY name";
-		return helper.query(sql);
+		return sqlHelper.query(sql);
 	}
 	
 	/**
@@ -34,7 +33,7 @@ public class MemberDAO{
 	 */
 	public ArrayList<HashMap<String,Object>> queryDetail(long member_id,long shop_id) {
 		String sql = "select id,name,login_name,birthday,phone,im from member where id = " + member_id +" and shop_id = " + shop_id;
-		return helper.query(sql);
+		return sqlHelper.query(sql);
 	}
 	
 	/**
@@ -49,7 +48,7 @@ public class MemberDAO{
 				+ "VALUES("+ shop_id + "," + shopmember_id + ","+ shopmember_id+ ",'"+ name+ "','"+ login_name +"','" + MethodTool.MD5(password) + "',"
 				+ 0 + ",'" + birthday + "','" + phone + "','" + im + "','" + sdf.format(new Date()) + "','" + sdf.format(new Date()) + "')";
 		try {
-			isSuccessed = helper.update(sql);
+			isSuccessed = sqlHelper.update(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -69,7 +68,7 @@ public class MemberDAO{
 				+ "' WHERE id=" + m_id ;
 		boolean updated = false;
 		try {
-			updated = helper.update(sql);
+			updated = sqlHelper.update(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -93,7 +92,7 @@ public class MemberDAO{
 				+ "WHERE id = " + id;
 		boolean b = false;
 		try {
-			b = helper.update(sql);
+			b = sqlHelper.update(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -120,7 +119,7 @@ public class MemberDAO{
 				+ "',birthday = '" +birthday 
 				+ "',phone = '" + phone + "',im = '" + im + "' WHERE id = " + id;
 		try {
-			isSuccessed = helper.update(sql);
+			isSuccessed = sqlHelper.update(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -133,7 +132,7 @@ public class MemberDAO{
 	public boolean isDel(long member_id) {
 		boolean isDel = false;
 		String sql = "SELECT del FROM member WHERE id = " + member_id;
-		list = helper.query(sql);
+		list = sqlHelper.query(sql);
 		isDel = MethodTool.toBool(list, "del");
 		return isDel;
 	}
@@ -142,18 +141,15 @@ public class MemberDAO{
 	/**
 	 * 检查是否存在登录名 
 	 * @param login_name
-	 * @param shop_id
-	 * 
+	 *
 	 */
-	public boolean isLoginNameExist(String login_name,long shop_id) {
-		boolean isExist = false;
-		String sql = "select * from member where del = 0 and login_name = '"+login_name + "' and shop_id = " + shop_id;
-		list = helper.query(sql);
+	public boolean isLoginNameExist(String login_name) {
+		String sql = "SELECT * FROM member WHERE del = 0 AND login_name = '" + login_name + "'";
+		list = sqlHelper.query(sql);
 		if (list.size() != 0) {
-			isExist = true;
+			return true;
 		}
-		System.gc();
-		return isExist;
+		return false;
 	}
 	
 	/**
@@ -165,13 +161,24 @@ public class MemberDAO{
 	public boolean isLoginNameAndPasswordMatch(String login_name,String password) {
 		boolean isMatch = false;
 		String pwd = MethodTool.MD5(password);
-		String sql = "select * from member where login_name = '" + login_name + "' and password = '" + pwd + "'";
-		list = helper.query(sql);
+		String sql = "select password from member where login_name = '" + login_name + "'";
+		list = sqlHelper.query(sql);
 		if (list.size() != 0) {
-			isMatch = true;
+			String m_pwd = String.valueOf(list.get(0).get("password"));
+			if (m_pwd.equals(pwd)) {
+				isMatch = true;
+				return isMatch;
+			}
+			return isMatch;
 		}
-		System.gc();
 		return isMatch;
+	}
+
+	public ArrayList<HashMap<String,Object>> queryMemberIdByLoginName(String login_name) {
+		ArrayList<HashMap<String,Object>> mapArrayList = new ArrayList<>();
+		String sql = "SELECT id,shop_id FROM member WHERE login_name='" + login_name + "'";
+		mapArrayList = sqlHelper.query(sql);
+		return mapArrayList;
 	}
 	
 }

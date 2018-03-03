@@ -2,7 +2,6 @@ package com.alfred.Sailfish.app.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
@@ -21,11 +20,11 @@ import com.alfred.Sailfish.app.DAO.MemberCardDAO;
 import com.alfred.Sailfish.app.DAO.MemberDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.DAO.ShopmemberDAO;
-import com.alfred.Sailfish.app.Service.CardService;
-import com.alfred.Sailfish.app.Service.ClassroomService;
-import com.alfred.Sailfish.app.Service.CourseService;
-import com.alfred.Sailfish.app.Service.CourseSupportedCardService;
-import com.alfred.Sailfish.app.Service.ShopmemberService;
+import com.alfred.Sailfish.app.ShopmemberService.CardService;
+import com.alfred.Sailfish.app.ShopmemberService.ClassroomService;
+import com.alfred.Sailfish.app.ShopmemberService.CourseService;
+import com.alfred.Sailfish.app.ShopmemberService.CourseSupportedCardService;
+import com.alfred.Sailfish.app.ShopmemberService.ShopmemberService;
 
 public class Test {
 	

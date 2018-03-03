@@ -170,6 +170,30 @@ public class CourseDAO {
 				+ "WHERE del = 0 AND shop_id = " + s_id + " ORDER BY type,name DESC";
 		return helper.query(sql);
 	}
+
+	/**
+	 * 通过机构ID查询普通课程列表
+	 * @param s_id
+	 * @return
+	 */
+	public ArrayList<HashMap<String,Object>> queryNormalList(long s_id) {
+		String sql = "SELECT id,name,last_time,type FROM course "
+				+ "WHERE del = 0 AND shop_id = " + s_id + " AND type IN (1,2,3) " +
+				"ORDER BY type,name DESC";
+		return helper.query(sql);
+	}
+
+	/**
+	 * 通过会员ID查询私教课程
+	 * @param m_id
+	 * @return
+	 */
+	public ArrayList<HashMap<String,Object>> queryPrivateCourseByMemberId(long m_id) {
+		ArrayList<HashMap<String,Object>> mapArrayList = new ArrayList<>();
+		String sql = "SELECT id,name,last_time,type FROM course WHERE student_id=" + m_id + " AND type=4 AND del = 0";
+		mapArrayList = helper.query(sql);
+		return mapArrayList;
+	}
 	
 	/**
 	 * pass
@@ -215,6 +239,12 @@ public class CourseDAO {
 		}
 	}
 
+	/**
+	 * 判断课程是否存在
+	 * @param course_name
+	 * @param s_id
+	 * @return
+	 */
 	public boolean isCourseNameExist(String course_name,long s_id) {
 		String sql = "SELECT * FROM course WHERE name = '" + course_name + "' AND shop_id = " + s_id;
 		if (helper.query(sql).size() == 0) {

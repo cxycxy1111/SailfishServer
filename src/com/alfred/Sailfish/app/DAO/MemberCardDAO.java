@@ -269,7 +269,7 @@ public class MemberCardDAO {
 	 */
 	public ArrayList<HashMap<String,Object>> queryListByMemberId(long member_id) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		String sql = "SELECT mc.id,c.name,mc.balance,c.type FROM member_card mc "
+		String sql = "SELECT mc.id,c.name,mc.balance,c.type,mc.card_id FROM member_card mc "
 				+ "LEFT JOIN card c ON mc.card_id = c.id "
 				+ "WHERE mc.member_id = " + member_id + " AND mc.del = 0";
 		list = helper.query(sql);
