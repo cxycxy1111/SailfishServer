@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 
-import com.alfred.Sailfish.app.DAO.CourseDAO;
-import com.alfred.Sailfish.app.DAO.CoursePlanDAO;
-import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
-import com.alfred.Sailfish.app.DAO.ShopDAO;
+import com.alfred.Sailfish.app.DAO.*;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
@@ -17,6 +14,8 @@ public class CoursePlanService {
 	private ShopDAO shopDAO = new ShopDAO();
 	private CourseDAO courseDAO = new CourseDAO();
 	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
+	private CourseplanBookDAO courseplanBookDAO = new CourseplanBookDAO();
+	private CourseplanAttendanceDAO courseplanAttendanceDAO = new CourseplanAttendanceDAO();
 	
 	public CoursePlanService (){
 	}
@@ -113,10 +112,28 @@ public class CoursePlanService {
 	 * @param cp_id
 	 * @return
 	 */
-	public String queryByCoursePlanId(long cp_id) {
+	public String queryByCoursePlanId(long cp_id,long m_id) {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> map = new HashMap<>();
 		list = coursePlanDAO.queryById(cp_id);
-		if (list.size() != 0) {
+		if (m_id != 0) {
+			if (list.size() != 0) {
+				map = list.get(0);
+				if (courseplanBookDAO.isBooked(cp_id,m_id)) {
+					map.put("isBooked",1);
+				}else {
+					map.put("isBooked",0);
+				}
+				if (courseplanAttendanceDAO.isAttended(m_id,cp_id)) {
+					map.put("isAttended",1);
+				}else {
+					map.put("isAttended",0);
+				}
+				ArrayList<HashMap<String, Object>> list_2 = new ArrayList<HashMap<String, Object>>();
+				list_2.add(map);
+				return MethodTool.tfc(list_2);
+			}
+		}else {
 			return MethodTool.tfc(list);
 		}
 		return MethodTool.tfs(Reference.NSR);
@@ -129,6 +146,7 @@ public class CoursePlanService {
 	 */
 	public String queryPrivateByCoursePlanId(long cp_id) {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+
 		list = coursePlanDAO.queryPrivateById(cp_id);
 		if (list.size() != 0) {
 			return MethodTool.tfc(list);

@@ -55,7 +55,7 @@ public class MCoursePlanBookService{
         }
         //判断是否有预订过
         if (courseplanBookDAO.wasBooked(cp_id,m_id)) {
-            isSuccessed = courseplanBookDAO.updateBookState(cp_id,m_id);
+            isSuccessed = courseplanBookDAO.updateBookState(cp_id,m_id,0);
         }else {
             isSuccessed = courseplanBookDAO.book(cp_id,m_id);
         }
@@ -104,12 +104,25 @@ public class MCoursePlanBookService{
      */
     public String unBook(long m_id,long cp_id) {
         boolean isUnbook = false;
-        isUnbook = courseplanBookDAO.unBook(cp_id,m_id);
-        if (isUnbook) {
-            return Reference.EXE_SUC;
-        }else {
-            return Reference.EXE_FAIL;
+        if (!courseplanBookDAO.isBooked(cp_id,m_id)) {
+            return Reference.NSR;
         }
+        if (courseplanBookDAO.wasBooked(cp_id,m_id)) {
+            isUnbook = courseplanBookDAO.updateBookState(cp_id,m_id,1);
+            if (isUnbook) {
+                return Reference.EXE_SUC;
+            }else {
+                return Reference.EXE_FAIL;
+            }
+        }else {
+            isUnbook = courseplanBookDAO.unBook(cp_id,m_id);
+            if (isUnbook) {
+                return Reference.EXE_SUC;
+            }else {
+                return Reference.EXE_FAIL;
+            }
+        }
+
     }
 
     /**
@@ -137,13 +150,15 @@ public class MCoursePlanBookService{
             list_mc_temp.add(Long.parseLong(String.valueOf(list_mc.get(i).get("card_id"))));
         }
 
-        for (Long aList_temp : list_temp) {
-            for (Long aList_mc_temp : list_mc_temp) {
-                if (aList_temp.equals(aList_mc_temp)) {
+        for (int i = 0;i < list.size();i++) {
+            for (int j = 0;j < list_mc.size();j++) {
+                if (String.valueOf(list.get(i).get("c_id")).equals(String.valueOf(list_mc.get(j).get("card_id")))) {
+                    System.out.println(true);
                     return true;
                 }
             }
         }
+        System.out.println(false);
         return false;
     }
 

@@ -30,7 +30,7 @@ public class CoursePlanDetailQuery extends HttpServlet {
             printWriter.append(Reference.SESSION_EXPIRED);
         }else {
             long cp_id = MethodTool.reqParseToLong(request,"cp_id");
-            String resp = coursePlanService.queryByCoursePlanId(cp_id);
+            String resp = coursePlanService.queryByCoursePlanId(cp_id,0);
             System.out.println(MethodTool.getTime() +  ",Response:" + resp);
             printWriter.append(resp);
         }

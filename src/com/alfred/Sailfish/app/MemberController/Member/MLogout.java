@@ -1,8 +1,6 @@
-package com.alfred.Sailfish.app.MemberController.CoursePlan;
+package com.alfred.Sailfish.app.MemberController.Member;
 
-import com.alfred.Sailfish.app.ShopmemberService.CoursePlanService;
 import com.alfred.Sailfish.app.Util.BaseServlet;
-import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
 import javax.servlet.ServletException;
@@ -13,11 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "MCoursePlanDetail",urlPatterns = "/mCoursePlanDetail")
-public class MCoursePlanDetail extends BaseServlet {
-
-    private CoursePlanService coursePlanService = new CoursePlanService();
-
+@WebServlet(name = "MLogout",urlPatterns = "/mLogout")
+public class MLogout extends BaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
@@ -26,13 +21,10 @@ public class MCoursePlanDetail extends BaseServlet {
         super.doGet(request,response);
         HttpSession session = request.getSession(false);
         if (session != null) {
-            long m_id = MethodTool.getSessionValueToLong(session,"m_id");
-            String s = coursePlanService.queryByCoursePlanId(MethodTool.reqParseToLong(request,"cp_id"),m_id);
-            System.out.println(MethodTool.getTime() +  ",Response:" + s);
-            response.getWriter().append(s);
+            session.invalidate();
+            response.getWriter().append(Reference.EXE_SUC);
         }else {
-            response.getWriter().append(Reference.SESSION_EXPIRED);
+            response.getWriter().append(Reference.EXE_SUC);
         }
-
     }
 }

@@ -27,11 +27,16 @@ public class FileDownload extends HttpServlet {
         File f = new File("/usr/local/docs/"+ fileName);
         if(f.exists()){
             FileInputStream fis = new FileInputStream(f);
-            String filename= URLEncoder.encode(f.getName(),"utf-8"); //解决中文文件名下载后乱码的问题
+            String filename= URLEncoder.encode(f.getName(),"gb2312"); //解决中文文件名下载后乱码的问题
+            String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+            System.out.println(suffix);
             byte[] b = new byte[fis.available()];
             fis.read(b);
-            response.setCharacterEncoding("utf-8");
-            response.setHeader("Content-Disposition","attachment; filename="+filename+"");
+            response.setCharacterEncoding("ISO8859-1");
+            if (suffix.equals("docx")) {
+                response.setContentType("application/octet-stream");
+            }
+            response.setHeader("Content-Disposition","attachment;filename="+filename+"");
             response.addHeader("Content-Length", (new Long(f.length())).toString());
             //获取响应报文输出流对象
             ServletOutputStream out =response.getOutputStream();

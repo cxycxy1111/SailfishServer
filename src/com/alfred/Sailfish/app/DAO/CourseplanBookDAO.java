@@ -89,7 +89,7 @@ public class CourseplanBookDAO extends DAO{
      * @return
      */
     public boolean wasBooked(long cp_id,long m_id) {
-        String sql = "SELECT * FROM courseplan_book WHERE courseplan_id = " + cp_id + " AND member_id=" + m_id + " AND del=0";
+        String sql = "SELECT * FROM courseplan_book WHERE courseplan_id = " + cp_id + " AND member_id=" + m_id + " AND del=1";
         if (sqlHelper.query(sql).size() == 0) {
             return false;
         }
@@ -102,8 +102,8 @@ public class CourseplanBookDAO extends DAO{
      * @param m_id
      * @return
      */
-    public boolean updateBookState(long cp_id,long m_id) {
-        String sql = "UPDATE courseplan_book SET del = 0,last_modify_time='" + simpleDateFormat.format(new Date()) + "' " +
+    public boolean updateBookState(long cp_id,long m_id,int state) {
+        String sql = "UPDATE courseplan_book SET del = " + state + ",last_modify_time='" + simpleDateFormat.format(new Date()) + "' " +
                 "WHERE courseplan_id=" + cp_id +
                     " AND member_id=" + m_id;
         try {

@@ -298,5 +298,48 @@ public class CourseDAO {
 		String sql = "SELECT del FROM course WHERE id = " + c_id;
 		return MethodTool.toBool(helper.query(sql), "del");
 	}
+
+	/**
+	 * 查询私教课程的总次数
+	 * @param c_id
+	 * @return
+	 */
+	public int queryPrivateCourseTotalTimes(long c_id) {
+		String sql = "SELECT total_times FROM course WHERE id = " + c_id;
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		list = helper.query(sql);
+		if (list.size()>0) {
+			int total_times = Integer.parseInt(String.valueOf(list.get(0).get("total_times")));
+			return total_times;
+		}
+		return 0;
+	}
+
+	/**
+	 * 查询私教课程的剩余次数
+	 * @param c_id
+	 * @return
+	 */
+	public int queryPrivateCourseRestTimes(long c_id) {
+		String sql = "SELECT rest_times FROM course WHERE id = " + c_id;
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		list = helper.query(sql);
+		if (list.size() > 0) {
+			int rest_times = Integer.parseInt(String.valueOf(list.get(0).get("rest_times")));
+			return rest_times;
+		}
+		return 0;
+	}
+
+	public boolean updatePrivateCourseResetTimes(long c_id,int times) {
+		String sql = "UPDATE course SET rest_times=" + times + " WHERE id=" + c_id;
+		boolean isUpdated = false;
+		try {
+			isUpdated = helper.update(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isUpdated;
+	}
 	
 }

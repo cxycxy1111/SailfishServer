@@ -12,14 +12,28 @@ public class CourseplanAttendanceDAO extends DAO {
     }
 
     /**
-     * 查看签到记录
+     * 根据会员ID查看签到记录
      * @param m_id
      * @return
      */
-    public ArrayList<HashMap<String,Object>> queryList(long m_id) {
+    public ArrayList<HashMap<String,Object>> queryListByMemberId(long m_id) {
         ArrayList<HashMap<String,Object>> mapArrayList = new ArrayList<>();
         String sql = "SELECT cpa.courseplan_id FROM courseplan_attendance cpa " +
                 "WHERE cpa.del=0 AND member_id=" + m_id;
+        mapArrayList = sqlHelper.query(sql);
+        return mapArrayList;
+    }
+
+    /**
+     * 根据排课查询签到明细
+     * @param cp_id
+     * @return
+     */
+    public ArrayList<HashMap<String,Object>> queryListByCoursePlanId(long cp_id) {
+        ArrayList<HashMap<String,Object>> mapArrayList = new ArrayList<>();
+        String sql = "SELECT m.id,m.name FROM courseplan_attendance cpa" +
+                " LEFT JOIN member m ON cpa.member_id=m.id " +
+                "WHERE cpa.del=0 AND cpa.courseplan_id = " + cp_id;
         mapArrayList = sqlHelper.query(sql);
         return mapArrayList;
     }
@@ -32,7 +46,7 @@ public class CourseplanAttendanceDAO extends DAO {
      */
     public boolean attend(long m_id,long cp_id) {
         String sql = "INSERT INTO courseplan_attendance (courseplan_id,member_id,del,last_modify_time) " +
-                "VALUES (" + cp_id + "," + m_id + ",0,'" + simpleDateFormat.format(new Date()) + "'";
+                "VALUES (" + cp_id + "," + m_id + ",0,'" + simpleDateFormat.format(new Date()) + "')";
         try {
             return sqlHelper.update(sql);
         } catch (SQLException e) {
@@ -86,8 +100,9 @@ public class CourseplanAttendanceDAO extends DAO {
      * @param cp_id
      * @return
      */
-    public boolean updateAttendanceState(long m_id,long cp_id) {
-        String sql = "UPDATE courseplan_attendance SET del=0 WHERE m_id=" + m_id + " AND courseplan_id=" + cp_id;
+    public boolean updateAttendanceState(long m_id,long cp_id,int state) {
+        String sql = "UPDATE courseplan_attendance SET del=" + state +
+                " WHERE member_id=" + m_id + " AND courseplan_id=" + cp_id;
         try {
             return sqlHelper.update(sql);
         } catch (SQLException e) {

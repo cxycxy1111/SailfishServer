@@ -178,6 +178,19 @@ public class CoursePlanDAO {
 		return list;
 	}
 
+	public ArrayList<HashMap<String, Object>> queryByShopIdExceptPrivate(long s_id) {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,truncate(c.type,0) course_type,trim(cr.name) classroom_name,cp.end_time,cp.start_time FROM courseplan cp "
+				+ "LEFT JOIN course c ON cp.course_id = c.id "
+				+ "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
+				+ "WHERE cp.del = 0 " +
+				"AND cp.shop_id = " + s_id +
+				" AND cp.start_time > now() AND c.type IN (1,2,3) ORDER BY cp.start_time DESC";
+		list = helper.query(sql);
+		return list;
+	}
+
+
 	/**
 	 * 通过课程ID、课室ID、开始时间判断是否重复
 	 * @param ce_id
@@ -232,7 +245,7 @@ public class CoursePlanDAO {
 	 * @return
 	 */
 	public ArrayList<HashMap<String, Object>> queryPrivateCoursePlanByMemberId(long m_id) {
-		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,trim(cr.name) classroom_name,truncate(c.last_time,0) last_time FROM courseplan cp "
+		String sql = "SELECT truncate(cp.id,0) courseplan_id,truncate(c.type,0) course_type,trim(c.name) course_name,trim(cr.name) classroom_name,truncate(c.last_time,0) last_time,cp.start_time,cp.end_time FROM courseplan cp "
 				+ "LEFT JOIN course c ON cp.course_id = c.id "
 				+ "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
 				+ "LEFT JOIN courseplan_teacher ct ON cp.id = ct.courseplan_id "

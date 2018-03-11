@@ -24,7 +24,9 @@ public abstract class Reference {
 	public static final String SESSION_EXPIRED=prefix + "session_expired" + suffix;
 	public static final String AUTHORIZE_FAIL=prefix + "authorize_fail" + suffix;
 	public static final String COURSEPLAN_EXPIRED = prefix + "courseplan_expired" + suffix;
-	
+	public static final String MEMBER_CARD_EXPIRED = prefix + "member_card_expired" + suffix;
+	public static final String REST_TIMES_NOT_ENOUGH = prefix + "rest_times_not_enough" + suffix;
+
 	public static final int TYPE_MEMBER_COURSE = 1;
 	public static final int TYPE_TRAINNER_COURSE = 2;
 	public static final int TYPE_COLLECTION_COURSE = 3;

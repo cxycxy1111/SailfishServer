@@ -45,6 +45,7 @@ public class SupportedCardModify extends HttpServlet {
 		} else {
 			long s_id =MethodTool.getSessionValueToLong(session,"s_id");
 			String s = req.getParameter("m");
+			System.out.println(s);
 			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String [] str = s.split("-");
 			String result;

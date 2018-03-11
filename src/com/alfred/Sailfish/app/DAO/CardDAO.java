@@ -199,6 +199,18 @@ public class CardDAO {
 		list = helper.query(sql);
 		return String.valueOf(list.get(0).get("name"));
 	}
+
+	/**
+	 * 根据会员卡ID查询卡ID
+	 * @param mc_id
+	 * @return
+	 */
+	public long queryCardIdByMemberCardId(long mc_id){
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		String sql = "SELECT card_id FROM member_card WHERE id = " + mc_id;
+		list = helper.query(sql);
+		return Long.parseLong(String.valueOf(list.get(0).get("card_id")));
+	}
 	
 	/**
 	 * 通过卡ID获取卡的类型
