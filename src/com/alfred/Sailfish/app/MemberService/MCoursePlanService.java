@@ -1,7 +1,7 @@
 package com.alfred.Sailfish.app.MemberService;
 
 import com.alfred.Sailfish.app.DAO.CoursePlanDAO;
-import com.alfred.Sailfish.app.DAO.CourseplanAttendanceDAO;
+import com.alfred.Sailfish.app.DAO.CourseplanBookAndAttendDAO;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class MCoursePlanService {
 
     private CoursePlanDAO coursePlanDAO;
-    private CourseplanAttendanceDAO courseplanAttendanceDAO = new CourseplanAttendanceDAO();
+    private CourseplanBookAndAttendDAO courseplanBookAndAttendDAO = new CourseplanBookAndAttendDAO();
 
     public MCoursePlanService() {
 
@@ -46,7 +46,7 @@ public class MCoursePlanService {
     public String queryPrivateByCoursePlanId(long m_id,long cp_id) {
         ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
         list = coursePlanDAO.queryPrivateById(cp_id);
-        boolean isAttend = courseplanAttendanceDAO.isAttended(m_id,cp_id);
+        boolean isAttend = courseplanBookAndAttendDAO.isAttended(cp_id,m_id);
         if (list.size() != 0) {
             HashMap<String, Object> map = list.get(0);
             if (isAttend) {

@@ -13,6 +13,37 @@ public class ShopDAO {
 	
 	public ShopDAO () {
 	}
+
+	/**
+	 * 查询机构详情
+	 * @param id
+	 * @return
+	 */
+	public ArrayList<HashMap<String,Object>> queryShopDetailByShopId(long id) {
+		ArrayList<HashMap<String,Object>> mapArrayList = new ArrayList<HashMap<String,Object>>();
+		String sql = "SELECT * FROM shop WHERE del = 0 AND id = " + id;
+		mapArrayList = helper.query(sql);
+		return mapArrayList;
+	}
+
+	/**
+	 * 修改机构信息
+	 * @param s_id
+	 * @param name
+	 * @param remark
+	 * @return
+	 */
+	public boolean modifyShopInfo(long s_id,String name,String remark) {
+		String sql = "UPDATE shop SET name= '" + name + "',introduction='" + remark + "' WHERE id=" + s_id;
+		boolean isUpdated = false;
+		try {
+			isUpdated = helper.update(sql);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isUpdated;
+	}
 	
 	/**
 	 * 根据机构名查询机构id

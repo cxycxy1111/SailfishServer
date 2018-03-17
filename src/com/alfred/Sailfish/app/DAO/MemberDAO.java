@@ -130,11 +130,12 @@ public class MemberDAO extends DAO{
 	 * 检查会员是否已被删除
 	 */
 	public boolean isDel(long member_id) {
-		boolean isDel = false;
-		String sql = "SELECT del FROM member WHERE id = " + member_id;
+		String sql = "SELECT * FROM member WHERE id = " + member_id + " AND del=0";
 		list = sqlHelper.query(sql);
-		isDel = MethodTool.toBool(list, "del");
-		return isDel;
+		if (list.size() == 0) {
+			return true;
+		}
+		return false;
 	}
 	
 	

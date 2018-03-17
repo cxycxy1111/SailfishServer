@@ -50,7 +50,7 @@ public class CardService {
 	 * @return
 	 */
 	public String queryCardList(String sm_type,long shop_id,int type) {
-		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_VIEW_CARD_TYPE,shop_id).contains(sm_type)) {
+		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_VIEW_CARD_TYPE,shop_id).contains(String.valueOf(sm_type))) {
 			return Reference.AUTHORIZE_FAIL;
 		}
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();

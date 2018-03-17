@@ -14,8 +14,7 @@ public class CoursePlanService {
 	private ShopDAO shopDAO = new ShopDAO();
 	private CourseDAO courseDAO = new CourseDAO();
 	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
-	private CourseplanBookDAO courseplanBookDAO = new CourseplanBookDAO();
-	private CourseplanAttendanceDAO courseplanAttendanceDAO = new CourseplanAttendanceDAO();
+	private CourseplanBookAndAttendDAO courseplanBookAndAttendDAO = new CourseplanBookAndAttendDAO();
 	
 	public CoursePlanService (){
 	}
@@ -119,16 +118,8 @@ public class CoursePlanService {
 		if (m_id != 0) {
 			if (list.size() != 0) {
 				map = list.get(0);
-				if (courseplanBookDAO.isBooked(cp_id,m_id)) {
-					map.put("isBooked",1);
-				}else {
-					map.put("isBooked",0);
-				}
-				if (courseplanAttendanceDAO.isAttended(m_id,cp_id)) {
-					map.put("isAttended",1);
-				}else {
-					map.put("isAttended",0);
-				}
+				int status = courseplanBookAndAttendDAO.queryBookStatus(cp_id,m_id);
+				map.put("status",status);
 				ArrayList<HashMap<String, Object>> list_2 = new ArrayList<HashMap<String, Object>>();
 				list_2.add(map);
 				return MethodTool.tfc(list_2);
@@ -162,7 +153,6 @@ public class CoursePlanService {
 	public String queryByShopId(long s_id) {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		list = coursePlanDAO.queryByShopId(s_id);
-		System.out.println(MethodTool.tfc(list));
 		if (list.size() == 0) {
 			return MethodTool.qr(Reference.EMPTY_RESULT);
 		}

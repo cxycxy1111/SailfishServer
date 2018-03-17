@@ -1,9 +1,6 @@
 package com.alfred.Sailfish.app.ShopmemberService;
 
-import com.alfred.Sailfish.app.DAO.MemberCardDAO;
-import com.alfred.Sailfish.app.DAO.MemberDAO;
-import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
-import com.alfred.Sailfish.app.DAO.ShopDAO;
+import com.alfred.Sailfish.app.DAO.*;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
@@ -16,8 +13,10 @@ public class MemberCardService {
 	private MemberCardDAO memberCardDAO = new MemberCardDAO();
 	private ShopDAO shopDAO = new ShopDAO();
 	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
+	private MemberCardConsumeLogDAO memberCardConsumeLogDAO;
 	
 	public MemberCardService() {
+		memberCardConsumeLogDAO = new MemberCardConsumeLogDAO();
 	}
 
 	/**
@@ -119,6 +118,7 @@ public class MemberCardService {
 		if (shopDAO.queryShopByShopmemberId(last_modify_user) == shopDAO.queryShopIdByMembercardId(member_card_id)) {
 			if (!memberCardDAO.isDel(member_card_id)) {
 				if (isCharged) {
+					memberCardConsumeLogDAO.charge(s_id,member_card_id,last_modify_user,num,"");
 					return qr(Reference.EXE_SUC);
 				}else {
 					return qr(Reference.EXE_FAIL);
@@ -154,6 +154,7 @@ public class MemberCardService {
 			if (!memberCardDAO.isDel(mc_id)) {
 				boolean isReduced = memberCardDAO.updateBalanceReduce(mc_id,shop_member_id, num,invalid_date);
 				if (isReduced) {
+					memberCardConsumeLogDAO.deduct(s_id,mc_id,shop_member_id,num,"");
 					return qr(Reference.EXE_SUC);
 				}else {
 					return qr(Reference.EXE_FAIL);
@@ -183,6 +184,7 @@ public class MemberCardService {
 			if (!memberCardDAO.isDel(mc_id)) {
 				boolean isUpdated = memberCardDAO.updateExpiredTime(mc_id, lmu_id, expiredTime);
 				if (isUpdated) {
+					memberCardConsumeLogDAO.charge(s_id,mc_id,lmu_id,0L,expiredTime);
 					return qr(Reference.EXE_SUC);
 				}else {
 					return qr(Reference.EXE_FAIL);

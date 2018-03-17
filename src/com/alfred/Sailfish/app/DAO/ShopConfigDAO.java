@@ -29,14 +29,14 @@ public class ShopConfigDAO {
                 "allow_manage_courseplan," +
                 "allow_view_member," +
                 "allow_manage_member," +
-                "allow_view_member_card=," +
+                "allow_view_member_card," +
                 "allow_manage_member_card," +
                 "allow_deduct_after_arrearage," +
                 "allow_deduct_after_overdue," +
                 "allow_book_after_arrearange," +
                 "allow_book_after_overdue," +
                 "allow_attendance_after_arrearage," +
-                "allow_attendance_after_overdue VALUES(" + s_id + ",'1,2','1','1,2','1','1,2'," +
+                "allow_attendance_after_overdue) VALUES(" + s_id + ",'1,2','1','1,2','1','1,2'," +
                 "'1','1','1','1,2','1,2','1,2','1'," +
                 "1,1,1,1,1,1)";
         try {

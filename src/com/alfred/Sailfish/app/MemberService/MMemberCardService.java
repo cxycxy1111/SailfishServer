@@ -1,9 +1,6 @@
 package com.alfred.Sailfish.app.MemberService;
 
-import com.alfred.Sailfish.app.DAO.CourseDAO;
-import com.alfred.Sailfish.app.DAO.CourseSupportedCardDAO;
-import com.alfred.Sailfish.app.DAO.MemberCardDAO;
-import com.alfred.Sailfish.app.DAO.ShopDAO;
+import com.alfred.Sailfish.app.DAO.*;
 import com.alfred.Sailfish.app.ShopmemberService.MemberCardService;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
@@ -17,6 +14,7 @@ public class MMemberCardService {
     private MemberCardDAO memberCardDAO = new MemberCardDAO();
     private CourseSupportedCardDAO courseSupportedCardDAO = new CourseSupportedCardDAO();
     private ShopDAO shopDAO = new ShopDAO();
+    private MemberCardConsumeLogDAO memberCardConsumeLogDAO = new MemberCardConsumeLogDAO();
 
     public MMemberCardService() {
 
@@ -76,6 +74,16 @@ public class MMemberCardService {
             return MethodTool.tfc(mapArrayList_3);
         }else {
             return Reference.EMPTY_RESULT;
+        }
+    }
+
+    public String queryMemberCardConsumeLog(long mc_id){
+        ArrayList<HashMap<String,Object>> mapList = new ArrayList<HashMap<String,Object>>();
+        mapList = memberCardConsumeLogDAO.queryMemberCardConsumeLog(mc_id);
+        if (mapList.size() == 0) {
+            return Reference.EMPTY_RESULT;
+        }else {
+            return MethodTool.tfc(mapList);
         }
     }
 

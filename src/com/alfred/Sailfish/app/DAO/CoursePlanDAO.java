@@ -173,7 +173,7 @@ public class CoursePlanDAO {
 				+ "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
 				+ "WHERE cp.del = 0 " +
 				"AND cp.shop_id = " + s_id +
-				" AND cp.start_time > now() ORDER BY cp.start_time DESC";
+				" AND cp.start_time > now() ORDER BY cp.start_time";
 		list = helper.query(sql);
 		return list;
 	}
@@ -185,7 +185,7 @@ public class CoursePlanDAO {
 				+ "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
 				+ "WHERE cp.del = 0 " +
 				"AND cp.shop_id = " + s_id +
-				" AND cp.start_time > now() AND c.type IN (1,2,3) ORDER BY cp.start_time DESC";
+				" AND cp.start_time > now() AND c.type IN (1,2,3) ORDER BY cp.start_time";
 		list = helper.query(sql);
 		return list;
 	}

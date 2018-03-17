@@ -177,7 +177,7 @@ public class MethodTool implements Serializable{
 	 */
 	public static long reqParseToLong (HttpServletRequest req,String param) {
 		String s = req.getParameter(param);
-		if (s.equals("") || s.equals(null)) {
+		if (s == null) {
 			return 0;
 		}
 		return Long.valueOf(req.getParameter(param));

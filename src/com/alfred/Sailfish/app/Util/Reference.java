@@ -35,6 +35,11 @@ public abstract class Reference {
 	public static final int TYPE_OPERATE_ADD = 1;
 	public static final int TYPE_OPERATE_REMOVE = 2;
 	public static final int TYPE_OPERATE_MODIFY = 3;
+
+	public static final int TYPE_COURSE_PLAN_BOOK_STATE_UNBOOK = 0;
+	public static final int TYPE_COURSE_PLAN_BOOK_STATE_BOOKED = 1;
+	public static final int TYPE_COURSE_PLAN_BOOK_STATE_ATTENDED = 2;
+
 	
 	public static final int TYPE_BALANCE_CARD = 1;
 	public static final int TYPE_TIMES_CARD = 2;
