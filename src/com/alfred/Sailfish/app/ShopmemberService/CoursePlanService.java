@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 
 import com.alfred.Sailfish.app.DAO.*;
+import com.alfred.Sailfish.app.MemberService.MCoursePlanBookAndAttendService;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
@@ -15,6 +16,7 @@ public class CoursePlanService {
 	private CourseDAO courseDAO = new CourseDAO();
 	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
 	private CourseplanBookAndAttendDAO courseplanBookAndAttendDAO = new CourseplanBookAndAttendDAO();
+	private MCoursePlanBookAndAttendService mCoursePlanBookAndAttendService = new MCoursePlanBookAndAttendService();
 	
 	public CoursePlanService (){
 	}
@@ -36,6 +38,7 @@ public class CoursePlanService {
 		if (!courseDAO.isExist(c_id)) {
 			return MethodTool.tfs(Reference.NSR);
 		}
+		int course_type = courseDAO.queryType(c_id);
 		boolean isAdded = false;
 		long shopId_1 = shopDAO.queryShopIdByCourseId(c_id);
 		long shopId_2 = shopDAO.queryShopByShopmemberId(lmu_id);
@@ -43,7 +46,7 @@ public class CoursePlanService {
 		if((shopId_1 != shopId_2) |( shopId_1 != shopId_3 )|( shopId_2 != shopId_3)) {
 			return MethodTool.tfs(Reference.INST_NOT_MATCH);
 		}
-		if (coursePlanDAO.isRepeated(c_id,cr_id,s_time)) {
+		if (coursePlanDAO.isRepeated(c_id,cr_id,s_time,e_time)) {
 			return MethodTool.tfs(Reference.DUPLICATE);
 		}
 		isAdded = coursePlanDAO.addCoursePlan(c_id, cr_id, lmu_id, s_time, e_time, remark);
@@ -51,6 +54,10 @@ public class CoursePlanService {
 			return MethodTool.tfs(Reference.EXE_FAIL);
 		}
 		long id = coursePlanDAO.queryCoursePlanIdByInfo(c_id,cr_id,s_time);
+		if (course_type == 4) {
+			long m_id = courseDAO.queryPrivateCourseStudentId(c_id);
+			courseplanBookAndAttendDAO.book(id,m_id);
+		}
 		return MethodTool.tfs(Reference.dataprefix + id + Reference.datasuffix);
 	}
 	

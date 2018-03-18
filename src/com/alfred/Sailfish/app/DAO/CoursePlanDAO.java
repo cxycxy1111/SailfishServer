@@ -151,7 +151,7 @@ public class CoursePlanDAO {
 	 */
 	public ArrayList<IdentityHashMap<String, Object>> queryByShopMemberId(long sm_id) {
 		ArrayList<IdentityHashMap<String, Object>> list = new ArrayList<IdentityHashMap<String, Object>>();
-		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,trim(cr.name) classroom_name,truncate(c.last_time,0) last_time FROM courseplan cp "
+		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,trim(cr.name) classroom_name,cp.start_time,cp.end_time,truncate(c.type,0) course_type FROM courseplan cp "
 				+ "LEFT JOIN course c ON cp.course_id = c.id "
 				+ "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
 				+ "LEFT JOIN courseplan_teacher ct ON cp.id = ct.courseplan_id "
@@ -198,11 +198,11 @@ public class CoursePlanDAO {
 	 * @param start_time
 	 * @return
 	 */
-	public boolean isRepeated(long ce_id,long cr_id,String start_time) {
+	public boolean isRepeated(long ce_id,long cr_id,String start_time,String end_time) {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<>();
 		String sql = "SELECT * FROM courseplan WHERE course_id=" + ce_id +
 				" AND start_time = '" + start_time +
-				"' AND classroom_id = " + cr_id;
+				"' AND classroom_id = " + cr_id + " AND end_time='" + end_time + "'";
 		list = helper.query(sql);
 		if (list.size() != 0) {
 			return true;
@@ -268,6 +268,37 @@ public class CoursePlanDAO {
 			return String.valueOf(list.get(0).get("start_time"));
 		}
 		return null;
+	}
+
+
+	/**
+	 * 通过会员ID查询私教教师列表
+	 * @param m_id
+	 * @return
+	 */
+	public ArrayList<HashMap<String,Object>> queryPrivateTeacherByMemberId(long m_id) {
+		ArrayList<HashMap<String, Object>> mapArrayList = new ArrayList<>();
+		String sql = "SELECT sm.name,c.teacher_id FROM courseplan_book cpb " +
+				"LEFT JOIN couseplan cp ON cpb.courseplan_id=cp.id " +
+				"LEFT JOIN course c ON cp.course_id=c.id " +
+				"LEFT JOIN shopmember WHERE cp.del = 0 AND c.del = 0 AND cp.student_id = " + m_id;
+		return mapArrayList;
+	}
+
+	/**
+	 * 通过排课详情查询排课ID
+	 * @param c_id
+	 * @param cr_id
+	 * @param s_time
+	 * @param e_time
+	 * @return
+	 */
+	public long queryCourseplanId(long c_id, long cr_id,String s_time,String e_time) {
+		ArrayList<HashMap<String, Object>> mapArrayList = new ArrayList<>();
+		String sql = "SELECT id FROM courseplan cp " +
+				"WHERE cp.course_id=" + c_id + " AND cp.classroom_id=" + cr_id +
+				" AND cp.start_time='" + s_time + "' AND cp.end_time='" + e_time + "'";
+		return Long.parseLong(String.valueOf(mapArrayList.get(0).get("id")));
 	}
 
 }

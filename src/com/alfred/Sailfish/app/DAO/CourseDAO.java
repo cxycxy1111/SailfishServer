@@ -341,5 +341,19 @@ public class CourseDAO {
 		}
 		return isUpdated;
 	}
+
+	public long queryPrivateCourseStudentId(long c_id) {
+		String sql = "SELECT student_id FROM course WHERE id=" + c_id;
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		list = helper.query(sql);
+		return Long.parseLong(String.valueOf(list.get(0).get("student_id")));
+	}
+
+	public long queryPrivateCourseTeacherId(long c_id) {
+		String sql = "SELECT teacher_id FROM course WHERE id=" + c_id;
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		list = helper.query(sql);
+		return Long.parseLong(String.valueOf(list.get(0).get("student_id")));
+	}
 	
 }

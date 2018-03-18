@@ -348,4 +348,38 @@ public class CourseplanBookAndAttendDAO extends DAO{
         return true;
     }
 
+    /**
+     * 查询普通课程排课ID
+     * @param m_id
+     * @return
+     */
+    public ArrayList<HashMap<String, Object>> queryTeacherListByMemberId(long m_id) {
+        ArrayList<HashMap<String, Object>> mapArrayList = new ArrayList<>();
+        String sql = "SELECT cpb.courseplan_id,truncate(sm.id,0) teacher_id,trim(sm.name) sm_name FROM courseplan_book cpb " +
+                "LEFT JOIN courseplan_teacher cpt ON cpb.courseplan_id = cpt.courseplan_id " +
+                "LEFT JOIN courseplan cp ON cpb.courseplan_id=cp.id " +
+                "LEFT JOIN shopmember sm ON cpt.teacher_id=sm.id " +
+                "WHERE cp.del=0 AND sm.del=0 AND cpt.del=0 AND cpb.status=1 AND cpb.member_id=" + m_id +
+                " ORDER BY cpt.courseplan_id";
+        mapArrayList = super.sqlHelper.query(sql);
+        return mapArrayList;
+    }
+
+    /**
+     * 查询私教课程
+     * @param m_id
+     * @return
+     */
+    public ArrayList<HashMap<String,Object>> queryCoursePrivateTeacherList(long m_id) {
+        String sql = "SELECT cpb.courseplan_id,c.teacher_id,trim(sm.name) sm_name FROM courseplan_book cpb " +
+                "LEFT JOIN courseplan cp ON cpb.courseplan_id=cp.id " +
+                "LEFT JOIN course c ON cp.course_id=c.id " +
+                "LEFT JOIN shopmember sm ON c.teacher_id=sm.id " +
+                "WHERE cp.del=0 AND sm.del=0 AND cpb.status=1 AND cpb.member_id=" + m_id + " AND c.type IN (4) " +
+                "ORDER BY cpb.courseplan_id";
+        ArrayList<HashMap<String,Object>> mapArrayList = new ArrayList<>();
+        mapArrayList = sqlHelper.query(sql);
+        return mapArrayList;
+    }
+
 }

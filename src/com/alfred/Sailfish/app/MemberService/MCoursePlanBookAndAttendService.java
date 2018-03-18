@@ -78,11 +78,37 @@ public class MCoursePlanBookAndAttendService {
      */
     public String queryBookList(long m_id) {
         ArrayList<HashMap<String,Object>> book_list = new ArrayList<>();
-        ArrayList<HashMap<String,Object>> attendance_list = new ArrayList<>();
-        ArrayList<HashMap<String,Object>> result = new ArrayList<>();
+        ArrayList<HashMap<String,Object>> teacher_list = new ArrayList<>();
+        ArrayList<HashMap<String,Object>> private_teacher_list = new ArrayList<>();
+        ArrayList<HashMap<String,Object>> join_teacher_list = new ArrayList<>();
+        ArrayList<HashMap<String,Object>> result_list = new ArrayList<>();
         book_list = courseplanBookAndAttendDAO.queryBookListByMemberId(m_id);
         if (book_list.size() >0) {
-            return MethodTool.tfc(book_list);
+            teacher_list = courseplanBookAndAttendDAO.queryTeacherListByMemberId(m_id);
+            private_teacher_list = courseplanBookAndAttendDAO.queryCoursePrivateTeacherList(m_id);
+            join_teacher_list.addAll(teacher_list);
+            join_teacher_list.addAll(private_teacher_list);
+            for (int i = 0;i < book_list.size();i++) {
+                HashMap<String,Object> book_map = new HashMap<String,Object>();
+                book_map = book_list.get(i);
+                StringBuilder builder = new StringBuilder();
+                for (int j =0;j < join_teacher_list.size();j++) {
+                    HashMap<String,Object> teacher_map = new HashMap<String,Object>();
+                    teacher_map = join_teacher_list.get(j);
+                    if (String.valueOf(book_map.get("courseplan_id")).equals(String.valueOf(teacher_map.get("courseplan_id")))) {
+                        builder.append(teacher_map.get("sm_name")).append("、");
+                    }
+                }
+                String str_teacher = builder.toString();
+                if (str_teacher.length()>1) {
+                    str_teacher = str_teacher.substring(0,str_teacher.length()-1);
+                }else {
+                    str_teacher = "暂未设置教师";
+                }
+                book_map.put("teacher",str_teacher);
+                result_list.add(book_map);
+            }
+            return MethodTool.tfc(result_list);
         }else {
             return Reference.EMPTY_RESULT;
         }
