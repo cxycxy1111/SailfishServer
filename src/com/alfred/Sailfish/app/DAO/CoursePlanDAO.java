@@ -137,8 +137,9 @@ public class CoursePlanDAO {
 	 */
 	public ArrayList<HashMap<String, Object>> queryByCourseId(long course_id) {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,truncate(c.last_time,0) last_time,cp.start_time FROM courseplan cp "
-				+ "LEFT JOIN course c ON cp.course_id = c.id "
+		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,trim(cr.name) classroom_name,truncate(c.last_time,0) last_time,cp.start_time,cp.end_time,truncate(c.type,0) course_type FROM courseplan cp "
+				+ "LEFT JOIN course c ON cp.course_id = c.id " +
+				"LEFT JOIN classroom cr ON cp.classroom_id=cr.id "
 				+ "WHERE cp.del = 0 AND course_id = " + course_id + " ORDER BY cp.start_time DESC";
 		list = helper.query(sql);
 		return list;
@@ -178,6 +179,11 @@ public class CoursePlanDAO {
 		return list;
 	}
 
+	/**
+	 * 通过机构ID查询会员课、教练班、集训课
+	 * @param s_id
+	 * @return
+	 */
 	public ArrayList<HashMap<String, Object>> queryByShopIdExceptPrivate(long s_id) {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,truncate(c.type,0) course_type,trim(cr.name) classroom_name,cp.end_time,cp.start_time FROM courseplan cp "
