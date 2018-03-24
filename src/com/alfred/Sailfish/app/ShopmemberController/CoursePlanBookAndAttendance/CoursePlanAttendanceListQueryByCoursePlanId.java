@@ -1,6 +1,6 @@
-package com.alfred.Sailfish.app.MemberController.MemberCard;
+package com.alfred.Sailfish.app.ShopmemberController.CoursePlanBookAndAttendance;
 
-import com.alfred.Sailfish.app.MemberService.MMemberCardService;
+import com.alfred.Sailfish.app.ShopmemberService.CourseplanBookAndAttendanceService;
 import com.alfred.Sailfish.app.Util.BaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "MMemberCardAttendList",urlPatterns = "/mMemberCardAttendList")
-public class MMemberCardAttendList extends BaseServlet {
+@WebServlet(name = "CoursePlanAttendanceListQueryByCoursePlanId",urlPatterns = "/coursePlanAttendanceListQueryByCoursePlanId")
+public class CoursePlanAttendanceListQueryByCoursePlanId extends BaseServlet {
 
-    private MMemberCardService mMemberCardService = new MMemberCardService();
+    private CourseplanBookAndAttendanceService courseplanBookAndAttendanceService = new CourseplanBookAndAttendanceService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
@@ -25,15 +25,13 @@ public class MMemberCardAttendList extends BaseServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doGet(request,response);
         HttpSession session = request.getSession(false);
-        if (session != null) {
-            long m_id = 0;
-            m_id = MethodTool.getSessionValueToLong(session,"m_id");
-            long cp_id = MethodTool.reqParseToLong(request,"cp_id");
-            String s = mMemberCardService.querySupportedMemberCard(m_id,cp_id);
-            response.getWriter().append(s);
-        }else {
+        if (session == null){
             response.getWriter().append(Reference.SESSION_EXPIRED);
+        }else {
+            long cp_id = MethodTool.reqParseToLong(request,"cp_id");
+            String s = courseplanBookAndAttendanceService.queryAttendanceListByCoursePlanId(cp_id);
+            System.out.println(s);
+            response.getWriter().append(s);
         }
-
     }
 }

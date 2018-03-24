@@ -4,6 +4,7 @@ import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.Reference;
 import com.alfred.Sailfish.app.Util.MethodTool;
+import com.sun.webkit.graphics.Ref;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +25,9 @@ public class ShopService {
 	 * @return
 	 */
 	public String register(String name,String intro) {
+		if (name.length() > 20) {
+			return Reference.EXE_FAIL;
+		}
 		boolean isExist = shopDAO.isShopNameRepeat(name);
 		if (!isExist) {
 			boolean created = shopDAO.createShop(name, intro);

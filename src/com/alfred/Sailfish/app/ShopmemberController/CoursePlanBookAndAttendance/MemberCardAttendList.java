@@ -1,4 +1,4 @@
-package com.alfred.Sailfish.app.MemberController.MemberCard;
+package com.alfred.Sailfish.app.ShopmemberController.CoursePlanBookAndAttendance;
 
 import com.alfred.Sailfish.app.MemberService.MMemberCardService;
 import com.alfred.Sailfish.app.Util.BaseServlet;
@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Base64;
 
-@WebServlet(name = "MMemberCardAttendList",urlPatterns = "/mMemberCardAttendList")
-public class MMemberCardAttendList extends BaseServlet {
+@WebServlet(name = "MemberCardAttendList",urlPatterns = "/memberCardAttendList")
+public class MemberCardAttendList extends BaseServlet {
 
     private MMemberCardService mMemberCardService = new MMemberCardService();
 
@@ -27,13 +28,12 @@ public class MMemberCardAttendList extends BaseServlet {
         HttpSession session = request.getSession(false);
         if (session != null) {
             long m_id = 0;
-            m_id = MethodTool.getSessionValueToLong(session,"m_id");
+            m_id = MethodTool.reqParseToLong(request,"m_id");
             long cp_id = MethodTool.reqParseToLong(request,"cp_id");
             String s = mMemberCardService.querySupportedMemberCard(m_id,cp_id);
             response.getWriter().append(s);
         }else {
             response.getWriter().append(Reference.SESSION_EXPIRED);
         }
-
     }
 }

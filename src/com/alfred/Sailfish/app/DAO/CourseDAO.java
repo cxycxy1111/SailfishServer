@@ -331,6 +331,12 @@ public class CourseDAO {
 		return 0;
 	}
 
+	/**
+	 *
+	 * @param c_id
+	 * @param times
+	 * @return
+	 */
 	public boolean updatePrivateCourseResetTimes(long c_id,int times) {
 		String sql = "UPDATE course SET rest_times=" + times + " WHERE id=" + c_id;
 		boolean isUpdated = false;
@@ -342,6 +348,11 @@ public class CourseDAO {
 		return isUpdated;
 	}
 
+	/**
+	 *
+	 * @param c_id
+	 * @return
+	 */
 	public long queryPrivateCourseStudentId(long c_id) {
 		String sql = "SELECT student_id FROM course WHERE id=" + c_id;
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
@@ -349,11 +360,30 @@ public class CourseDAO {
 		return Long.parseLong(String.valueOf(list.get(0).get("student_id")));
 	}
 
+	/**
+	 *
+	 * @param c_id
+	 * @return
+	 */
 	public long queryPrivateCourseTeacherId(long c_id) {
 		String sql = "SELECT teacher_id FROM course WHERE id=" + c_id;
 		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 		list = helper.query(sql);
 		return Long.parseLong(String.valueOf(list.get(0).get("student_id")));
+	}
+
+	/**
+	 *
+	 * @param cp_id
+	 * @return
+	 */
+	public int queryBookNum(long cp_id) {
+		String sql = "SELECT c.max_book_num FROM course c " +
+				"LEFT JOIN courseplan cp ON cp.course_id=c.id" +
+				" WHERE cp.id=" + cp_id;
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		list = helper.query(sql);
+		return Integer.parseInt(String.valueOf(list.get(0).get("max_book_num")));
 	}
 	
 }

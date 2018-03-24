@@ -36,7 +36,16 @@ public class MCoursePlanBookAndAttendService {
      */
     public String book(long cp_id,long m_id) {
         boolean isSuccessed = false;
-
+        //判断是否满人
+        long course_id = courseDAO.querycourseIdByCoursePlanId(cp_id);
+        int coursetype = courseDAO.queryType(course_id);
+        if (coursetype != Reference.TYPE_PRIVATE_COURSE) {
+            int max_book_num = courseDAO.queryBookNum(cp_id);
+            int booked_num = courseplanBookAndAttendDAO.queryBookAndAttendanceNumByCoursePlanId(cp_id);
+            if (max_book_num <= booked_num) {
+                return Reference.BALANCE_NOT_ENOUGH;
+            }
+        }
         //判断是否已办理课程所支持的会员卡
         if (!canMemberBookCoursePlan(m_id,cp_id)) {
             return Reference.AUTHORIZE_FAIL;

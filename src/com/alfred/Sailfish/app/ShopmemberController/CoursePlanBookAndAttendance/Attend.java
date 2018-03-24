@@ -1,6 +1,6 @@
-package com.alfred.Sailfish.app.MemberController.MemberCard;
+package com.alfred.Sailfish.app.ShopmemberController.CoursePlanBookAndAttendance;
 
-import com.alfred.Sailfish.app.MemberService.MMemberCardService;
+import com.alfred.Sailfish.app.MemberService.MCoursePlanBookAndAttendService;
 import com.alfred.Sailfish.app.Util.BaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "MMemberCardAttendList",urlPatterns = "/mMemberCardAttendList")
-public class MMemberCardAttendList extends BaseServlet {
+@WebServlet(name = "Attend",urlPatterns = "/attend")
+public class Attend extends BaseServlet {
 
-    private MMemberCardService mMemberCardService = new MMemberCardService();
+    private MCoursePlanBookAndAttendService mCoursePlanBookAndAttendService = new MCoursePlanBookAndAttendService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
@@ -26,14 +26,14 @@ public class MMemberCardAttendList extends BaseServlet {
         super.doGet(request,response);
         HttpSession session = request.getSession(false);
         if (session != null) {
-            long m_id = 0;
-            m_id = MethodTool.getSessionValueToLong(session,"m_id");
+            long m_id = MethodTool.reqParseToLong(request,"m_id");
             long cp_id = MethodTool.reqParseToLong(request,"cp_id");
-            String s = mMemberCardService.querySupportedMemberCard(m_id,cp_id);
+            long mc_id = MethodTool.reqParseToLong(request,"mc_id");
+            String s = mCoursePlanBookAndAttendService.attend(m_id,cp_id,mc_id);
+            System.out.println(s);
             response.getWriter().append(s);
         }else {
             response.getWriter().append(Reference.SESSION_EXPIRED);
         }
-
     }
 }

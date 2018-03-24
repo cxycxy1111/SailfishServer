@@ -29,45 +29,10 @@ import com.alfred.Sailfish.app.ShopmemberService.ShopmemberService;
 public class Test {
 	
 	public static void main(String args[]) {
-		
-		CardDAO cardDAO = new CardDAO();
-		ClassroomDAO classroomDAO = new ClassroomDAO();
-		CourseDAO courseDAO = new CourseDAO();
-		CoursePlanDAO coursePlanDAO = new CoursePlanDAO();
-		CoursePlanTeacherDAO coursePlanTeacherDAO = new CoursePlanTeacherDAO();
-		CourseSupportedCardDAO courseSupportedCardDAO = new CourseSupportedCardDAO();
-		MemberCardDAO memberCardDAO = new MemberCardDAO();
-		MemberDAO memberDAO = new MemberDAO();
-		ShopDAO shopDAO = new ShopDAO();
-		ShopmemberDAO shopmemberDAO = new ShopmemberDAO();
-		
-		ClassroomService classroomService = new ClassroomService();
-		CardService cardService = new CardService();
-		CourseService courseService = new CourseService();
-		CourseSupportedCardService courseSupportedCardService = new CourseSupportedCardService();
-		ShopmemberService shopmemberService = new ShopmemberService();
-		
-		ArrayList<HashMap<String,Object>> l = new ArrayList<HashMap<String,Object>>();
-		LinkedList<HashMap<String,Object>> ll = new LinkedList<HashMap<String,Object>>();
-		ArrayList<HashMap<String,Object>> hash = new ArrayList<HashMap<String,Object>>();
-		String s = null;
-
-		JSONObject jo = null;
-		JSONArray ja = null;
-		
-		int i = courseDAO.queryType(3);
-		l = memberDAO.queryList(5);
-		hash = coursePlanDAO.queryByCourseId(2);
-		ja = new JSONArray(l);
-		jo = new JSONObject(s);
-		Map<String, Object> h = jo.toMap();
-		Set<String> set = h.keySet();
-		Iterator<String> iterator = set.iterator();
-		if(iterator.hasNext()) {
-			String key = iterator.next();
-		}
-		p(courseService.queryList(5));
-		ja = null;
+		String s = "hello";
+		String s1 = "你好";
+		System.out.println(s.length());
+		System.out.println(s1.length());
 	}
 	
 	private static void p(Object obj) {
