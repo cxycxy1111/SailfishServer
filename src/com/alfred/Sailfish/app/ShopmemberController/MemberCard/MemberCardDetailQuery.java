@@ -19,7 +19,7 @@ public class MemberCardDetailQuery extends HttpServlet {
     private MemberCardService memberCardService = new MemberCardService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -220,6 +220,23 @@ public class CourseplanBookAndAttendDAO extends DAO{
     }
 
     /**
+     *
+     * @param cp_id
+     * @param m_id
+     * @param mc_id
+     * @return
+     */
+    public boolean updateMemberCardIdAfterAttend(long cp_id,long m_id,long mc_id) {
+        String sql = "UPDATE courseplan_book SET member_card_id=" + mc_id + " WHERE courseplan_id=" + cp_id + " AND member_id=" + m_id;
+        try {
+            return sqlHelper.update(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * 根据会员ID查看签到记录
      * @param m_id
      * @return
@@ -246,6 +263,12 @@ public class CourseplanBookAndAttendDAO extends DAO{
         return mapArrayList;
     }
 
+    /**
+     *
+     * @param cp_id
+     * @param m_id
+     * @return
+     */
     public int queryBookStatus(long cp_id,long m_id) {
         String sql = "SELECT status FROM courseplan_book WHERE courseplan_id = " + cp_id + " AND member_id=" + m_id;
         ArrayList<HashMap<String,Object>> mapArrayList = new ArrayList<>();
@@ -342,11 +365,23 @@ public class CourseplanBookAndAttendDAO extends DAO{
         return mapArrayList;
     }
 
+    /**
+     *
+     * @param cp_id
+     * @return
+     */
     public int queryBookAndAttendanceNumByCoursePlanId(long cp_id) {
         String sql = "SELECT COUNT(1) FROM courseplan_book WHERE courseplan_id = " + cp_id + " AND status IN (1,2)";
         ArrayList<HashMap<String,Object>> mapArrayList = new ArrayList<>();
         mapArrayList = sqlHelper.query(sql);
         return Integer.parseInt(String.valueOf(mapArrayList.get(0).get("COUNT(1)")));
+    }
+
+    public long queryMemberCardIdByCoursePlanIdAndMemberId(long m_id,long cp_id){
+        String sql = "SELECT member_card_id FROM courseplan_book WHERE courseplan_id = " + cp_id + " AND member_id=" + m_id;
+        ArrayList<HashMap<String,Object>> mapArrayList = new ArrayList<>();
+        mapArrayList = sqlHelper.query(sql);
+        return Long.parseLong(String.valueOf(mapArrayList.get(0).get("member_card_id")));
     }
 
     /**
@@ -402,7 +437,5 @@ public class CourseplanBookAndAttendDAO extends DAO{
         }
         return true;
     }
-
-
 
 }

@@ -20,7 +20,7 @@ public class MCourseListQuery extends BaseServlet {
     private CourseService courseService = new CourseService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        super.doPost(request,response);
+        super.doGet(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

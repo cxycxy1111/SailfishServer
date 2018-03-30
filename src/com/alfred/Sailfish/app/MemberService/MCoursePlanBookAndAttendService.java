@@ -1,6 +1,7 @@
 package com.alfred.Sailfish.app.MemberService;
 
 import com.alfred.Sailfish.app.DAO.*;
+import com.alfred.Sailfish.app.Util.EnumPackage.EnumMemberCardConsumeLogOperatorType;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
@@ -248,6 +249,7 @@ public class MCoursePlanBookAndAttendService {
         boolean done = memberCardDAO.updateBalanceReduce(member_card_id, 0, price, "");//扣费
         if (done) {//扣费成功，记录会员卡消费日志
             memberCardConsumeLogDAO.attend(s_id, member_card_id, cp_id, m_id, 2, price, "");//记录签到日志
+            courseplanBookAndAttendDAO.updateMemberCardIdAfterAttend(cp_id,m_id,member_card_id);//更新预订签到表的会员卡ID
             return Reference.EXE_SUC;
         } else {//扣费失败，更新为预订状态
             courseplanBookAndAttendDAO.updateStatus(cp_id, m_id, Reference.TYPE_COURSE_PLAN_BOOK_STATE_BOOKED);//撤销签到

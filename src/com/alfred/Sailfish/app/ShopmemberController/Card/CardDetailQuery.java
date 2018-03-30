@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.alfred.Sailfish.app.ShopmemberService.CardService;
+import com.alfred.Sailfish.app.Util.BaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
@@ -18,7 +19,7 @@ import com.alfred.Sailfish.app.Util.Reference;
  * Servlet implementation class CardDetailQuery
  */
 @WebServlet(name = "CardDetailQuery",urlPatterns = "/CardDetailQuery")
-public class CardDetailQuery extends HttpServlet {
+public class CardDetailQuery extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	private CardService cardService = new CardService();
        
@@ -34,6 +35,7 @@ public class CardDetailQuery extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		super.doGet(request,response);
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession(false);

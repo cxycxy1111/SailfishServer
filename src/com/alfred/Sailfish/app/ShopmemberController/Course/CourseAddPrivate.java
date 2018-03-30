@@ -1,6 +1,7 @@
 package com.alfred.Sailfish.app.ShopmemberController.Course;
 
 import com.alfred.Sailfish.app.ShopmemberService.CourseService;
+import com.alfred.Sailfish.app.Util.BaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
@@ -14,15 +15,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet(name = "CourseAddPrivate",urlPatterns = "/CourseAddPrivate")
-public class CourseAddPrivate extends HttpServlet {
+public class CourseAddPrivate extends BaseServlet {
 
     CourseService courseService = new CourseService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        super.doGet(request,response);
         response.setCharacterEncoding("utf-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
