@@ -1,11 +1,9 @@
 package com.alfred.Sailfish.app.ShopmemberController.Other;
 
 import com.alfred.Sailfish.app.Util.BaseServlet;
-import com.sun.xml.internal.rngom.parse.host.Base;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;

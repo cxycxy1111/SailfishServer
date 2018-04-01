@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Sailfish.iml" filepath="$PROJECT_DIR$/Sailfish.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SailfishServer.iml" filepath="$PROJECT_DIR$/SailfishServer.iml" />
     </modules>
   </component>
 </project>

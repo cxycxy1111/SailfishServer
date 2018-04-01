@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SailfishServer:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/SailfishServer_war</output-path>
+    <root id="archive" name="SailfishServer_war.war">
+      <element id="artifact" artifact-name="SailfishServer:war exploded" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/WebContent/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

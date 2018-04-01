@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -142,7 +143,12 @@ public class MethodTool implements Serializable{
 	 */
 	public static String tfs(String s) {
 		if (s != null && !Objects.equals(s, "")) {
-			JSONObject js = new JSONObject(s);
+			JSONObject js = null;
+			try {
+				js = new JSONObject(s);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			return js.toString();
 		}else {
 			return e();
@@ -165,7 +171,12 @@ public class MethodTool implements Serializable{
 	}
 	
 	public static String e() {
-		JSONObject j = new JSONObject("{\"status\":\"Interal Error\"}");
+		JSONObject j = null;
+		try {
+			j = new JSONObject("{\"status\":\"Interal Error\"}");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 		return j.toString();
 	}
 	
