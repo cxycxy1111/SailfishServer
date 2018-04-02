@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Sailfish">
+    <output-path>$PROJECT_DIR$/out/artifacts/Sailfish</output-path>
+    <root id="archive" name="Sailfish.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="TomcatLib" />
+          <element id="library" level="project" name="c3p0-0.9.5.2" />
+          <element id="file-copy" path="$USER_HOME$/develop/lib/server/c3p0-0.9.5.2.jar" />
+          <element id="file-copy" path="$USER_HOME$/develop/lib/server/mchange-commons-java-0.2.11.jar" />
+          <element id="file-copy" path="$USER_HOME$/develop/lib/server/mysql-connector-java-5.1.46.jar" />
+          <element id="file-copy" path="$USER_HOME$/develop/lib/server/org.json.jar" />
+        </element>
+        <element id="directory" name="classes">
+          <element id="module-output" name="SailfishServer" />
+        </element>
+        <element id="file-copy" path="$PROJECT_DIR$/WebContent/WEB-INF/web.xml" />
+      </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/WebContent/res" />
+    </root>
+  </artifact>
+</component>
