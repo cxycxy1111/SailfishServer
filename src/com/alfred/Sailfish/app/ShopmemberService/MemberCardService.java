@@ -58,6 +58,28 @@ public class MemberCardService {
         	return qr(Reference.NSR);
         }
 	}
+
+	public String addBatch(long s_id,String sm_type,long c_id,String m_id,long sm_id,int balance,String start_time,String expired_time) {
+		String[] strs_m_id = new String[]{};
+		strs_m_id = m_id.split("_");
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0;i < strs_m_id.length;i++) {
+			String result = add(s_id,sm_type,Long.parseLong(strs_m_id[i]),c_id,sm_id,balance,start_time,expired_time);
+			builder.append(result).append(",");
+		}
+		String resp = builder.toString();
+		resp = resp.substring(0,resp.length()-1);
+		if (resp.contains(Reference.AUTHORIZE_FAIL)) {
+			return Reference.AUTHORIZE_FAIL;
+		}else if (resp.contains(Reference.DUPLICATE) || resp.contains(Reference.AUTHORIZE_FAIL) || resp.contains(Reference.NOT_MATCH) || resp.contains(Reference.NSR)) {
+		    if (!resp.contains(Reference.EXE_SUC)) {
+		        return Reference.EXE_FAIL;
+            }
+			return Reference.EXE_PARTLY_FAIL;
+		}else {
+			return Reference.EXE_SUC;
+		}
+	}
 	
 	/**
 	 * 删除会员卡

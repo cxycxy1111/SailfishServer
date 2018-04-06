@@ -259,16 +259,32 @@ public class CardDAO {
 	 * @return
 	 */
 	public ArrayList<HashMap<String,Object>> queryList(long shop_id,int type) {
-		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		String sql;
-		if (type != 0) {
-			sql = "SELECT id,name,type FROM card WHERE shop_id = " + shop_id + " AND type =" + type + " AND del = 0 ORDER BY type";
-		} else {
-			sql = "SELECT id,name,type FROM card WHERE shop_id = " + shop_id + " AND del = 0 ORDER BY type";
-		}
-		list = helper.query(sql);
-		return list;
+		String field = "id,name,type";
+		return basicListQuery(field,shop_id,type);
 	}
+
+	/**
+	 * pass
+	 * 获取卡列表
+	 * @param shop_id 机构ID
+	 * @return
+	 */
+	public ArrayList<HashMap<String,Object>> queryCardSelectList(long shop_id) {
+		String field = "id,name,type,balance,start_time,expired_time,price";
+		return basicListQuery(field,shop_id,0);
+	}
+
+	private ArrayList<HashMap<String,Object>> basicListQuery(String field,long shop_id,int type) {
+        ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT ").append(field).append(" FROM card WHERE shop_id = " + shop_id + " ");
+        if (type != 0) {
+            builder.append("AND type=" + type + " ");
+        }
+        builder.append("AND del = 0 ORDER BY type");
+        list = helper.query(builder.toString());
+        return list;
+    }
 	
 	/**
 	 * pass

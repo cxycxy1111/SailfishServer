@@ -61,6 +61,18 @@ public class CardService {
 		return MethodTool.tfc(list);
 	}
 
+	public String querySelectCardList(String sm_type,long s_id) {
+        if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_VIEW_CARD_TYPE,s_id).contains(String.valueOf(sm_type))) {
+            return Reference.AUTHORIZE_FAIL;
+        }
+        ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+        list = cardDAO.queryCardSelectList(s_id);
+        if (list.size() == 0) {
+            return qr(Reference.NSR);
+        }
+        return MethodTool.tfc(list);
+    }
+
 	/**
 	 * 查询卡明细
 	 * @param c_id
