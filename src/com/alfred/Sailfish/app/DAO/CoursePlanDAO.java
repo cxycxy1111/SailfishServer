@@ -156,11 +156,27 @@ public class CoursePlanDAO {
 				+ "LEFT JOIN course c ON cp.course_id = c.id "
 				+ "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
 				+ "LEFT JOIN courseplan_teacher ct ON cp.id = ct.courseplan_id "
-				+ "WHERE cp.del = 0 AND ct.teacher_id = " + sm_id + " AND cp.start_time > now() ORDER BY cp.start_time DESC";
+				+ "WHERE cp.del = 0 AND c.del = 0 AND ct.teacher_id = " + sm_id + " AND cp.start_time > now() ORDER BY cp.start_time DESC";
 		list = helper.linkquery(sql);
 		System.out.println(list.size());
 		return list;
 	}
+
+    /**
+     * 通过教师ID查询私教排课列表
+     * @param sm_id
+     * @return
+     */
+	public ArrayList<IdentityHashMap<String, Object>> queryPrivateCourseplanByShopMemberId(long sm_id) {
+        ArrayList<IdentityHashMap<String, Object>> list = new ArrayList<IdentityHashMap<String, Object>>();
+        String sql = "SELECT truncate(cp.id,0) courseplan_id,trim(c.name) course_name,trim(cr.name) classroom_name,cp.start_time,cp.end_time,truncate(c.type,0) course_type FROM courseplan cp "
+                + "LEFT JOIN course c ON cp.course_id = c.id "
+                + "LEFT JOIN classroom cr ON cp.classroom_id = cr.id "
+                + "WHERE cp.del = 0 AND c.del = 0 AND c.teacher_id = " + sm_id + " AND cp.start_time > now() ORDER BY cp.start_time DESC";
+        list = helper.linkquery(sql);
+        System.out.println(list.size());
+        return list;
+    }
 	
 	/**
 	 * 通过机构ID获取排课列表

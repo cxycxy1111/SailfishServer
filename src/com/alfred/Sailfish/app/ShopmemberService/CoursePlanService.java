@@ -203,11 +203,16 @@ public class CoursePlanService {
 	 */
 	public String queryByShopmemberId(long sm_id){
 		ArrayList<IdentityHashMap<String, Object>> list = new ArrayList<IdentityHashMap<String, Object>>();
+		ArrayList<IdentityHashMap<String, Object>> list_private = new ArrayList<IdentityHashMap<String, Object>>();
+        ArrayList<IdentityHashMap<String, Object>> list_total = new ArrayList<IdentityHashMap<String, Object>>();
 		list = coursePlanDAO.queryByShopMemberId(sm_id);
-		if (list.size() == 0) {
+		list_private = coursePlanDAO.queryPrivateCourseplanByShopMemberId(sm_id);
+        list_total.addAll(list);
+        list_total.addAll(list_private);
+		if (list_total.size() == 0) {
 			return MethodTool.qr(Reference.EMPTY_RESULT);
 		}
-		return MethodTool.tfc(list);
+		return MethodTool.tfc(list_total);
 	}
 	
 }
