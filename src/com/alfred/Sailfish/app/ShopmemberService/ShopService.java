@@ -1,5 +1,7 @@
 package com.alfred.Sailfish.app.ShopmemberService;
 
+import com.alfred.Sailfish.app.DAO.CardDAO;
+import com.alfred.Sailfish.app.DAO.ClassroomDAO;
 import com.alfred.Sailfish.app.DAO.ShopConfigDAO;
 import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.Util.Reference;
@@ -13,9 +15,11 @@ public class ShopService {
 	
 	private ShopDAO shopDAO = new ShopDAO();
 	private ShopConfigDAO shopConfigDAO = new ShopConfigDAO();
-	
+	private CardDAO cardDAO;
+	private ClassroomDAO classroomDAO;
 	public ShopService(){
-		
+		cardDAO = new CardDAO();
+		classroomDAO = new ClassroomDAO();
 	}
 
 	/**
@@ -34,6 +38,8 @@ public class ShopService {
 			if (created) {
 				long id = shopDAO.queryShopByName(name);
 				shopConfigDAO.initParamaterAfterShopCreated(id);
+				cardDAO.addNewCard(id,0,"余额卡",1,1000,1000,"2018-01-01 00:00:00","2020-12-31 23:59:59");
+				classroomDAO.add(id,"教室1");
 				return Reference.dataprefix + String.valueOf(id) + Reference.datasuffix;
 			}else {
 				return MethodTool.qr(Reference.EXE_FAIL);

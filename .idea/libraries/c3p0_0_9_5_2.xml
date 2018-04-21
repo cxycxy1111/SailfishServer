@@ -5,6 +5,7 @@
       <root url="jar://$USER_HOME$/develop/lib/server/mchange-commons-java-0.2.11.jar!/" />
       <root url="jar://$USER_HOME$/develop/lib/server/mysql-connector-java-5.1.46.jar!/" />
       <root url="jar://$USER_HOME$/develop/lib/server/org.json.jar!/" />
+      <root url="jar://$USER_HOME$/develop/lib/server/MiPush_SDK_Server_2_2_19.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
