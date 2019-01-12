@@ -6,6 +6,11 @@
         <element id="directory" name="classes">
           <element id="module-output" name="SailfishServer" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Database" />
+          <element id="library" level="project" name="lib" />
+          <element id="library" level="project" name="Stuff" />
+        </element>
       </element>
       <element id="javaee-facet-resources" facet="SailfishServer/web/Web" />
     </root>

@@ -7,20 +7,20 @@ package com.alfred.Sailfish.app.Util;
  */
 public abstract class Reference {
 	
-	public static final String prefix = "{\"stat\":\"";
+	public static final String prefix = "{\"status\":\"";
 	public static final String id_prefix = "{\"id\":";
 	public static final String dataprefix = "{\"data\":";
 	public static final String suffix = "\"}";
 	public static final String datasuffix = "}";
 	public static final String NSR = prefix + "no_such_record" + suffix;
-	public static final String EXE_FAIL =prefix +  "exe_fail" + suffix;
+	public static final String EXE_FAIL =prefix +  "fail" + suffix;
 	public static final String EXE_PARTLY_FAIL =prefix +  "exe_partly_fail" + suffix;
-	public static final String EXE_SUC = prefix + "exe_suc" + suffix;
+	public static final String EXE_SUC = prefix + "success" + suffix;
 	public static final String DUPLICATE = prefix + "duplicate" + suffix;
 	public static final String INST_NOT_MATCH = prefix + "institution_not_match" + suffix;
 	public static final String BALANCE_NOT_ENOUGH = prefix + "balance_not_enough" + suffix;
 	public static final String NOT_MATCH = prefix + "not_match" + suffix;
-	public static final String EMPTY_RESULT = prefix + "empty_result" + suffix;
+	public static final String EMPTY_RESULT = prefix + "empty" + suffix;
 	public static final String SESSION_EXPIRED=prefix + "session_expired" + suffix;
 	public static final String AUTHORIZE_FAIL=prefix + "authorize_fail" + suffix;
 	public static final String COURSEPLAN_EXPIRED = prefix + "courseplan_expired" + suffix;

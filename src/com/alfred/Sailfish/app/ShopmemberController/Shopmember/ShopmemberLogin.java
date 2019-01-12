@@ -33,6 +33,8 @@ public class ShopmemberLogin extends HttpServlet implements Serializable{
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
 		response.setCharacterEncoding("utf-8");
 		String ip_address = request.getRemoteAddr();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -50,18 +52,20 @@ public class ShopmemberLogin extends HttpServlet implements Serializable{
 			String str = shopMemberService.loginCheck(request_time,ip_address,system_version,system_model,device_brand,imei,app_version,user_name,password);
 			if (str.startsWith("[")) {
 				HttpSession session = request.getSession(true);
-				System.out.println("ShopmemberLogin Session:" + session.getId());
+				System.out.println("ShopmemberLogin Session Before Check:" + session.getId());
 				long sm_id = shopmemberDAO.queryIdByUserName(user_name);
 				long s_id = shopmemberDAO.queryShopIdByUserName(user_name);
 				session.setAttribute("sm_id",sm_id);
 				session.setAttribute("s_id",s_id);
 				session.setAttribute("sm_type",shopmemberDAO.queryShopmemberTypeById(sm_id));
-				System.out.println("ShopmemberLogin Session:" + session.getId());
+				System.out.println("ShopmemberLogin Session After Check:" + session.getId());
 			}
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
 			out.append(str);
 		} else {
+			System.out.println("Session Id is :" + request.getSession().getId());
 			out.append(shopMemberService.loginCheck(request_time,ip_address,system_version,system_model,device_brand,imei,app_version,user_name,password));
+			System.out.println(response.getHeader("Set-Cookie"));
 		}
 
 	}

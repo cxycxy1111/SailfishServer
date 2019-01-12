@@ -38,7 +38,11 @@ public class ClassroomService {
 		if (!isAdded) {
 			return MethodTool.tfs(Reference.EXE_FAIL);
 		}
-		return MethodTool.tfs(Reference.id_prefix + classroomDAO.queryCRIdByCRName(shop_id,name) + Reference.datasuffix);
+		ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
+		HashMap<String,String> hashMap = new HashMap<>();
+		hashMap.put("id",String.valueOf(classroomDAO.queryCRIdByCRName(shop_id,name)));
+		arrayList.add(hashMap);
+		return MethodTool.tfc(arrayList);
 	}
 	
 	/**

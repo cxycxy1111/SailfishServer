@@ -42,10 +42,10 @@ public class CoursePlanListQurey extends HttpServlet implements Serializable{
 			out.append(Reference.SESSION_EXPIRED);
 		}else {
 			long s_id = MethodTool.getSessionValueToLong(session, "s_id");
-			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String str = coursePlanService.queryByShopId(s_id);
 			out.append(str);
 			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			System.out.println(MethodTool.getTime() +  ",Response Header:"  + resp.getHeader("Set-Cookie : "));
 		}
 	}
 

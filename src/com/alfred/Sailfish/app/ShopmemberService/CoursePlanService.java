@@ -3,6 +3,7 @@ package com.alfred.Sailfish.app.ShopmemberService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
+import java.util.Map;
 
 import com.alfred.Sailfish.app.DAO.*;
 import com.alfred.Sailfish.app.MemberService.MCoursePlanBookAndAttendService;
@@ -67,7 +68,11 @@ public class CoursePlanService {
 		if (batch) {
 			return String.valueOf(id);
 		}
-		return MethodTool.tfs(Reference.dataprefix + id + Reference.datasuffix);
+		Map<String,Long> map = new HashMap<>();
+		ArrayList<Map<String,Long>> arrayList = new ArrayList<>();
+		map.put("id",id);
+		arrayList.add(map);
+		return MethodTool.tfc(arrayList);
 	}
 	
 	/**

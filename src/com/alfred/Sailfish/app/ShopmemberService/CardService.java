@@ -38,8 +38,11 @@ public class CardService {
 		}
 		boolean isAdded = cardDAO.addNewCard(shop_id, shopmember_id, name, type, price, balance, start_time, expired_time);
 		if (isAdded) {
-			long id = cardDAO.queryIdByName(name, shop_id);
-			return qr(Reference.id_prefix + id + Reference.datasuffix);
+			ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
+			HashMap<String,String> hashMap = new HashMap<>();
+			hashMap.put("id",String.valueOf(cardDAO.queryIdByName(name, shop_id)));
+			arrayList.add(hashMap);
+			return MethodTool.tfc(arrayList);
 		}
 		return qr(Reference.EXE_SUC);
 	}

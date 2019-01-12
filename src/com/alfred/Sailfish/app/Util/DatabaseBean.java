@@ -14,11 +14,11 @@ public class DatabaseBean implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/MainDatabase?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/MainDatabase?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&useSSL=false";
     private static final String USER = "root";
     private static final String PASSWORD = "cxycxy11";
   
-    private static DataSource ds;
+    private static DataSource ds = null;
     
     /** 
      * 初始化连接池代码块 
@@ -26,6 +26,7 @@ public class DatabaseBean implements Serializable{
     static {  
     	try {
     		ComboPooledDataSource cpds = new ComboPooledDataSource();
+    		System.out.println(cpds.toString());
 			cpds.setDriverClass(JDBC_DRIVER);
 			cpds.setJdbcUrl(JDBC_URL);
 			cpds.setUser(USER);
@@ -46,12 +47,13 @@ public class DatabaseBean implements Serializable{
 			cpds.setUnreturnedConnectionTimeout(3);
 			cpds.setMaxConnectionAge(20);
 			ds = cpds;
+			System.out.println(ds.toString());
     	}catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
     }
     
-    public static DataSource getDs() {
+    private static DataSource getDs() {
 		return ds;
 	}
 
@@ -61,9 +63,28 @@ public class DatabaseBean implements Serializable{
      * @return 数据连接对象 
      * @throws SQLException 
      */  
-    public static synchronized Connection getConnection() throws SQLException {  
-        final Connection conn = ds.getConnection();  
-        conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-        return conn;
+    static synchronized Connection getConnection() throws SQLException {
+    	Connection connection = null;
+    	try {
+    		connection = ds.getConnection();
+		}catch (Exception e) {
+    		e.printStackTrace();
+		}
+		//final Connection conn = getDs().getConnection();
+
+		assert connection != null;
+		connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+        return connection;
     }
+
+	static void closeConn(Connection conn){
+		try {
+			if(conn!=null && conn.isClosed()){
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

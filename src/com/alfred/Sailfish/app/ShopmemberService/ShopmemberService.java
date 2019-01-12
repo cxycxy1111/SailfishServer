@@ -41,7 +41,11 @@ public class ShopmemberService {
 		if (!isLoginNameExist) {
 			isAdded = shopmemberDAO.addNewShopmember(shop_id, shopmember_id, type, name, user_name, password);
 			if (isAdded) {
-				return MethodTool.qr(Reference.dataprefix + shopmemberDAO.queryIdByUserName(user_name) + Reference.datasuffix);
+				ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
+				HashMap<String,String> hashMap = new HashMap<>();
+				hashMap.put("id",String.valueOf(shopmemberDAO.queryIdByUserName(user_name)));
+				arrayList.add(hashMap);
+				return MethodTool.tfc(arrayList);
 			} else {
 				return MethodTool.qr(Reference.EXE_FAIL);
 			}

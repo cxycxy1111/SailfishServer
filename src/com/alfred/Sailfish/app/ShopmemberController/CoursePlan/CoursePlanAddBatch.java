@@ -14,8 +14,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 @WebServlet(name = "CoursePlanAddBatch",urlPatterns = "/coursePlanAddBatch")
 public class CoursePlanAddBatch extends BaseServlet {
@@ -65,7 +67,12 @@ public class CoursePlanAddBatch extends BaseServlet {
             }
             String last_id = builder.toString();
             last_id = last_id.substring(0,last_id.length()-1);
-            System.out.println(last_id);
+            ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
+            HashMap<String,String> hashMap = new HashMap<>();
+            hashMap.put("id",last_id);
+            arrayList.add(hashMap);
+
+            System.out.println(MethodTool.tfc(arrayList));
             response.getWriter().append(last_id);
         }
     }

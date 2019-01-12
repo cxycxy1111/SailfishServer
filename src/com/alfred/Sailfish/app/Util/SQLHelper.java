@@ -59,19 +59,18 @@ public class SQLHelper {
                         }
                         list.add(map);
                     }
+                    DatabaseBean.closeConn(conn);
                 }catch (Exception e) {
                     rs.close();
+                    e.printStackTrace();
                 }
             }catch (Exception e) {
                 ps.close();
+                e.printStackTrace();
             }
         } catch (Exception e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            e.printStackTrace();  
+            DatabaseBean.closeConn(conn);
+            e.printStackTrace();
         }
         return list;  
     }  

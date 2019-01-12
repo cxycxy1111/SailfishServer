@@ -10,7 +10,6 @@ import com.alfred.Sailfish.app.Util.SQLHelper;
 
 public class ShopmemberDAO {
 
-	SQLHelper helper = new SQLHelper();
 	private ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -26,6 +25,7 @@ public class ShopmemberDAO {
 	 * @throws SQLException
 	 */
 	public boolean modifyPassword(long sm_id,String password) throws SQLException {
+		SQLHelper helper = new SQLHelper();
 		String sql = "UPDATE shopmember SET password = '" + MethodTool.MD5(password) + "' WHERE id = " + sm_id;
 		return helper.update(sql);
 	}
@@ -39,6 +39,7 @@ public class ShopmemberDAO {
 	 * @throws SQLException
 	 */
 	public boolean modifyInfo(long sm_id,long lmu_id,String name,int new_type) throws SQLException {
+		SQLHelper helper = new SQLHelper();
 		String sql = "UPDATE shopmember SET name='" + name +
 				"' , last_modify_user=" + lmu_id +
 				" , last_modify_time='" +sdf.format(new Date()) + "',type=" + new_type +" WHERE id=" + sm_id;
@@ -52,6 +53,7 @@ public class ShopmemberDAO {
 	 * @return
 	 */
 	public long queryIdByName(String name) {
+		SQLHelper helper = new SQLHelper();
 		String sql = "select id from shopmember where name = '" + name + "'";
 		long shopmember_id = 0;
 		if (helper.query(sql).size() == 0) {
@@ -68,6 +70,7 @@ public class ShopmemberDAO {
 	 * @param shop_id 机构ID
 	 */
 	public ArrayList<HashMap<String,Object>> queryShopmemberList(long shop_id,int type) {
+		SQLHelper helper = new SQLHelper();
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>> ();
 		String sql;
 		if (type == 0) {
@@ -80,6 +83,7 @@ public class ShopmemberDAO {
 	}
 
 	public int queryShopmemberTypeById(long id) {
+		SQLHelper helper = new SQLHelper();
 		String sql = "SELECT type FROM shopmember WHERE id=" + id;
 		ArrayList<HashMap<String,Object>> maps = new ArrayList<>();
 		maps = helper.query(sql);
@@ -92,6 +96,7 @@ public class ShopmemberDAO {
 	 * @return
 	 */
 	public ArrayList<HashMap<String,Object>> queryDetail(long sm_id) {
+		SQLHelper helper = new SQLHelper();
 		ArrayList<HashMap<String,Object>> list = new ArrayList<>();
 		String sql = "SELECT id,type,name,user_name FROM shopmember WHERE id = " + sm_id;
 		list = helper.query(sql);
@@ -105,6 +110,7 @@ public class ShopmemberDAO {
 	 * @return
 	 */
 	public long queryIdByUserName(String user_name) {
+		SQLHelper helper = new SQLHelper();
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>> ();
 		String sql = "SELECT id FROM shopmember WHERE user_name = '" + user_name + "'";
 		list = helper.query(sql);
@@ -116,6 +122,7 @@ public class ShopmemberDAO {
 	}
 
 	public long queryShopIdByUserName(String user_name) {
+		SQLHelper helper = new SQLHelper();
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>> ();
 		String sql = "SELECT shop_id FROM shopmember WHERE user_name = '" + user_name + "'";
 		list = helper.query(sql);
@@ -137,6 +144,7 @@ public class ShopmemberDAO {
 	 */
 	public boolean addNewShopmember(long shop_id,int type,String name,String login_name,String password) {
 		boolean isSuccessed = false;
+		SQLHelper helper = new SQLHelper();
 		String pwd = MethodTool.MD5(password);
 		String sql = "INSERT INTO shopmember (shop_id,type,user_name,password,del,name,create_time) VALUES ("
 		+ shop_id + "," + type + ",'" + login_name + "','" + pwd + "'," + 0 + ",'" + name + "','"
@@ -160,6 +168,7 @@ public class ShopmemberDAO {
 	 */
 	public boolean addNewShopmember(long shop_id,long shopmember_id,int type,String name,String user_name,String password) {
 		boolean isSuccessed = false;
+		SQLHelper helper = new SQLHelper();
 		String sql = "INSERT INTO shopmember (shop_id,last_modify_user,creator,type,user_name,password,del,name,create_time,last_modify_time) VALUES (" +
 				shop_id + "," +
 				shopmember_id + "," +
@@ -186,6 +195,7 @@ public class ShopmemberDAO {
 	 */
 	public boolean deleteMember(long lmu_id,long id) {
 		boolean isUpdated = false;
+		SQLHelper helper = new SQLHelper();
 		String sql = "UPDATE shopmember SET del = 1 ,"
 				+ "last_modify_user = " + lmu_id + ","
 				+ "last_modify_time = '" + sdf.format(new Date())
@@ -205,6 +215,7 @@ public class ShopmemberDAO {
 	 * @return
 	 */
 	public boolean isDel(long sm_id) {
+		SQLHelper helper = new SQLHelper();
 		String sql = "select del from shopmember where id = "+ sm_id;
 		return MethodTool.toBool(helper.query(sql), "del");
 	}
@@ -219,6 +230,7 @@ public class ShopmemberDAO {
 	public boolean isLoginNameExist(String login_name) {
 		boolean isExist = false;
 		String sql = "SELECT * FROM shopmember WHERE user_name = '" + login_name + "' AND del = 0";
+		SQLHelper helper = new SQLHelper();
 		list = helper.query(sql);
 		if (list.size() != 0) {
 			isExist = true;
@@ -237,6 +249,7 @@ public class ShopmemberDAO {
 		boolean isMatch = false;
 		String pwd = MethodTool.MD5(password);
 		String sql = "select * from shopmember where user_name = '" + login_name + "' and password = '" + pwd + "'";
+		SQLHelper helper = new SQLHelper();
 		list = helper.query(sql);
 		if (list.size() != 0) {
 			isMatch = true;
@@ -248,6 +261,7 @@ public class ShopmemberDAO {
 	public ArrayList<HashMap<String,Object>> queryEssentiailDataAfterLogin(long sm_id) {
 		String sql = "SELECT id,shop_id,user_name,type FROM shopmember WHERE id=" + sm_id;
 		ArrayList<HashMap<String,Object>> list = new ArrayList<>();
+		SQLHelper helper = new SQLHelper();
 		list = helper.query(sql);
 		return list;
 	}

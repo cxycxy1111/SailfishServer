@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Stuff">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../software/Jar/json-20170516.jar!/" />
+      <root url="jar:///usr/local/Tomcat/lib/gson-2.8.2.jar!/" />
+      <root url="jar:///usr/local/Tomcat/lib/json-lib-2.4-jdk15.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar:///usr/local/Tomcat/lib/gson-2.8.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar:///usr/local/Tomcat/lib/gson-2.8.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

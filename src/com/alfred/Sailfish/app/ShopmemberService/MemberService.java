@@ -164,6 +164,13 @@ public class MemberService {
 	 * 登录检查
 	 * @param login_name
 	 * @param password
+	 * @param request_time
+	 * @param ip_addredss
+	 * @param system_version
+	 * @param system_model
+	 * @param device_brand
+	 * @param imei
+	 * @param app_version
 	 * @return
 	 */
 	public String loginCheck(String request_time,

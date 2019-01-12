@@ -40,7 +40,11 @@ public class ShopService {
 				shopConfigDAO.initParamaterAfterShopCreated(id);
 				cardDAO.addNewCard(id,0,"余额卡",1,1000,1000,"2018-01-01 00:00:00","2020-12-31 23:59:59");
 				classroomDAO.add(id,"教室1");
-				return Reference.dataprefix + String.valueOf(id) + Reference.datasuffix;
+				ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
+				HashMap<String,String> hashMap = new HashMap<>();
+				hashMap.put("data",String.valueOf(id));
+				arrayList.add(hashMap);
+				return MethodTool.tfc(arrayList);
 			}else {
 				return MethodTool.qr(Reference.EXE_FAIL);
 			}

@@ -40,7 +40,7 @@ public class MemberModify extends HttpServlet {
 			w.append(Reference.SESSION_EXPIRED);
 		}else {
 			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
-			long member_id = MethodTool.getSessionValueToLong(session,"m_id");
+			long member_id = MethodTool.reqParseToLong(request,"member_id");
 			long shopmember_id = MethodTool.getSessionValueToLong(session,"sm_id");
 			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
 			String name = request.getParameter("name");
