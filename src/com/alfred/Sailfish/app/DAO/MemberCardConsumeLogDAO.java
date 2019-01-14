@@ -14,8 +14,8 @@ public class MemberCardConsumeLogDAO extends DAO{
         super();
     }
 
-    public boolean charge(long s_id,long mc_id,long sm_id,long num,String remark) {
-        return this.publicInsert(s_id,mc_id,0,sm_id, 1,num,remark, 1);
+    public boolean charge(long s_id,long mc_id,long sm_id,long num,String remark,long charge_fee) {
+        return this.publicInsert(s_id,mc_id,0,sm_id, 1,num,remark, 1,charge_fee);
     }
 
     /**
@@ -28,7 +28,7 @@ public class MemberCardConsumeLogDAO extends DAO{
      * @return
      */
     public boolean deduct(long s_id,long mc_id,long sm_id,long num,String remark) {
-        return this.publicInsert(s_id,mc_id,0,sm_id, 1,num,remark, 2);
+        return this.publicInsert(s_id,mc_id,0,sm_id, 1,num,remark, 2,0);
     }
 
     /**
@@ -42,7 +42,7 @@ public class MemberCardConsumeLogDAO extends DAO{
      * @param remark
      */
     public void attend(long s_id, long mc_id, long cp_id, long u_id, int u_type, long num, String remark) {
-        this.publicInsert(s_id,mc_id,cp_id,u_id, u_type,num,remark, 3);
+        this.publicInsert(s_id,mc_id,cp_id,u_id, u_type,num,remark, 3,0);
     }
 
     /**
@@ -56,7 +56,7 @@ public class MemberCardConsumeLogDAO extends DAO{
      * @return
      */
     public boolean unAttend(long s_id,long mc_id,long cp_id,long u_id,long num,String remark) {
-        return this.publicInsert(s_id,mc_id,cp_id,u_id, 2,num,remark, 4);
+        return this.publicInsert(s_id,mc_id,cp_id,u_id, 2,num,remark, 4,0);
     }
 
     /**
@@ -71,12 +71,12 @@ public class MemberCardConsumeLogDAO extends DAO{
      * @param operation
      * @return
      */
-    public boolean publicInsert(long s_id,long mc_id,long cp_id,long u_id,int u_type,long num,String remark,int operation) {
+    public boolean publicInsert(long s_id,long mc_id,long cp_id,long u_id,int u_type,long num,String remark,int operation,long charge_fee) {
         boolean done = false;
         String sql = "INSERT INTO member_card_consume_log " +
-                "(shop_id,membercard_id,courseplan_id,consume,consume_time,remark,operation,operator,operator_type) " +
+                "(shop_id,membercard_id,courseplan_id,consume,consume_time,remark,operation,operator,operator_type,charge_fee) " +
                 "VALUES (" + s_id + "," + mc_id + "," + cp_id + "," +num + ",'" + simpleDateFormat.format(new Date()) + "','"
-                + remark + "'," + operation +  ","+ u_id + "," + u_type + ")";
+                + remark + "'," + operation +  ","+ u_id + "," + u_type + "," +  charge_fee + ")";
         try {
             done = super.sqlHelper.update(sql);
         } catch (SQLException e) {

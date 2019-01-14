@@ -132,7 +132,7 @@ public class MemberCardService {
 	 * @param num
 	 * @return
 	 */
-	public String increaseBalance(long s_id,String sm_type,long member_card_id,long last_modify_user,String invalid_date,int num) {
+	public String increaseBalance(long s_id,String sm_type,long member_card_id,long last_modify_user,String invalid_date,int num,long charge_fee) {
 		if (!shopConfigDAO.queryShopConfig(Reference.SC_ALLOW_MANAGE_MEMBER_CARD,s_id).contains(sm_type)) {
 			return Reference.AUTHORIZE_FAIL;
 		}
@@ -140,7 +140,7 @@ public class MemberCardService {
 		if (shopDAO.queryShopByShopmemberId(last_modify_user) == shopDAO.queryShopIdByMembercardId(member_card_id)) {
 			if (!memberCardDAO.isDel(member_card_id)) {
 				if (isCharged) {
-					memberCardConsumeLogDAO.charge(s_id,member_card_id,last_modify_user,num,"");
+					memberCardConsumeLogDAO.charge(s_id,member_card_id,last_modify_user,num,"",charge_fee);
 					return qr(Reference.EXE_SUC);
 				}else {
 					return qr(Reference.EXE_FAIL);
@@ -206,7 +206,7 @@ public class MemberCardService {
 			if (!memberCardDAO.isDel(mc_id)) {
 				boolean isUpdated = memberCardDAO.updateExpiredTime(mc_id, lmu_id, expiredTime);
 				if (isUpdated) {
-					memberCardConsumeLogDAO.charge(s_id,mc_id,lmu_id,0L,expiredTime);
+					memberCardConsumeLogDAO.charge(s_id,mc_id,lmu_id,0L,expiredTime,0);
 					return qr(Reference.EXE_SUC);
 				}else {
 					return qr(Reference.EXE_FAIL);
