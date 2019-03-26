@@ -13,11 +13,11 @@ public class MEnrollPrivDAO {
         helper = new SQLHelper();
     }
 
-    public boolean add(String name,String number,long time,long course) throws SQLException {
-        return helper.update("INSERT INTO enroll_priv (name,phone,course,time,create_time) VALUES ('" +
+    public boolean add(String name,String number,int grade,long time,long course) throws SQLException {
+        return helper.update("INSERT INTO enroll_priv (name,phone,course,time,create_time,grade) VALUES ('" +
                 name + "','" +
                 number + "'," +
-                course + "," + time + ",now())");
+                course + "," + time + ",now()," + grade + ")");
 
     }
 

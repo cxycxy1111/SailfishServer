@@ -27,8 +27,9 @@ public class EnrollPrivAdd extends HttpServlet {
         String number = request.getParameter("number");
         long course = MethodTool.reqParseToLong(request,"course");
         long time = MethodTool.reqParseToLong(request,"time");
+        int grade = MethodTool.reqParseToInt(request,"grade");
         try {
-            printWriter.append(mEnrollPrivService.add(name,number,time,course));
+            printWriter.append(mEnrollPrivService.add(name,number,grade,time,course));
         } catch (SQLException e) {
             e.printStackTrace();
         }
