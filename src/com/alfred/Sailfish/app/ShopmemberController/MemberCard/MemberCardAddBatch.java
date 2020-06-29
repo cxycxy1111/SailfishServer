@@ -1,21 +1,19 @@
 package com.alfred.Sailfish.app.ShopmemberController.MemberCard;
 
 import com.alfred.Sailfish.app.ShopmemberService.MemberCardService;
-import com.alfred.Sailfish.app.Util.BaseServlet;
+import com.alfred.Sailfish.app.Util.ShopMemberBaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.soap.MTOM;
 import java.io.IOException;
 
 @WebServlet(name = "MemberCardAddBatch",urlPatterns = "/MemberCardAddBatch")
-public class MemberCardAddBatch extends BaseServlet {
+public class MemberCardAddBatch extends ShopMemberBaseServlet {
 
     private MemberCardService memberCardService = new MemberCardService();
 

@@ -1,6 +1,7 @@
 package com.alfred.Sailfish.app.MemberController;
 
 import com.alfred.Sailfish.app.MemberService.MEnrollPrivService;
+import com.alfred.Sailfish.app.Util.MemberBaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
 import javax.servlet.ServletException;
@@ -13,7 +14,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 
 @WebServlet(name = "EnrollPrivAdd",urlPatterns="/EnrollPriv/Add")
-public class EnrollPrivAdd extends HttpServlet {
+public class EnrollPrivAdd extends MemberBaseServlet {
 
     private MEnrollPrivService mEnrollPrivService = new MEnrollPrivService();
 

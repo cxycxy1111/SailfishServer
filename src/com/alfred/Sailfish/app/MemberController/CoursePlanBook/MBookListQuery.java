@@ -1,7 +1,8 @@
 package com.alfred.Sailfish.app.MemberController.CoursePlanBook;
 
 import com.alfred.Sailfish.app.MemberService.MCoursePlanBookAndAttendService;
-import com.alfred.Sailfish.app.Util.BaseServlet;
+import com.alfred.Sailfish.app.Util.MemberBaseServlet;
+import com.alfred.Sailfish.app.Util.ShopMemberBaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 //查询已预订的排课列表
 @WebServlet(name = "MBookListQuery",urlPatterns = "/mBookListQuery")
-public class MBookListQuery extends BaseServlet {
+public class MBookListQuery extends MemberBaseServlet {
 
     private MCoursePlanBookAndAttendService mCoursePlanBookAndAttendService = new MCoursePlanBookAndAttendService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

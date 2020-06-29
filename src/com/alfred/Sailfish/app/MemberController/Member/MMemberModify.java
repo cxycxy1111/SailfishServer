@@ -2,6 +2,7 @@ package com.alfred.Sailfish.app.MemberController.Member;
 
 import com.alfred.Sailfish.app.MemberService.MMemberService;
 import com.alfred.Sailfish.app.ShopmemberService.MemberService;
+import com.alfred.Sailfish.app.Util.MemberBaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
@@ -18,7 +19,7 @@ import java.io.PrintWriter;
  * Servlet implementation class ModifyMember
  */
 @WebServlet(name = "MMemberModify",urlPatterns = "/MModifyMember")
-public class MMemberModify extends HttpServlet {
+public class MMemberModify extends MemberBaseServlet {
 	private static final long serialVersionUID = 1L;
 	private MMemberService mMemberService = new MMemberService();
 

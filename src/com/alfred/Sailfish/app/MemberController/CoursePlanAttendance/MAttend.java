@@ -1,7 +1,8 @@
 package com.alfred.Sailfish.app.MemberController.CoursePlanAttendance;
 
 import com.alfred.Sailfish.app.MemberService.MCoursePlanBookAndAttendService;
-import com.alfred.Sailfish.app.Util.BaseServlet;
+import com.alfred.Sailfish.app.Util.MemberBaseServlet;
+import com.alfred.Sailfish.app.Util.ShopMemberBaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
@@ -10,11 +11,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.soap.MTOM;
 import java.io.IOException;
 
 @WebServlet(name = "MAttend",urlPatterns = "/mAttend")
-public class MAttend extends BaseServlet {
+public class MAttend extends MemberBaseServlet {
 
     private MCoursePlanBookAndAttendService mCoursePlanBookAndAttendService = new MCoursePlanBookAndAttendService();
 

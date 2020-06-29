@@ -1,7 +1,8 @@
 package com.alfred.Sailfish.app.MemberController.CoursePlanBook;
 
 import com.alfred.Sailfish.app.MemberService.MCoursePlanBookAndAttendService;
-import com.alfred.Sailfish.app.Util.BaseServlet;
+import com.alfred.Sailfish.app.Util.MemberBaseServlet;
+import com.alfred.Sailfish.app.Util.ShopMemberBaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "MBook",urlPatterns = "/mBook")
-public class MBook extends BaseServlet {
+public class MBook extends MemberBaseServlet {
 
     private MCoursePlanBookAndAttendService mCoursePlanBookAndAttendService = new MCoursePlanBookAndAttendService();
 

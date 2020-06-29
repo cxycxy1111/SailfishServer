@@ -1,21 +1,19 @@
 package com.alfred.Sailfish.app.ShopmemberController.Shop;
 
-import com.alfred.Sailfish.app.DAO.ShopDAO;
 import com.alfred.Sailfish.app.ShopmemberService.ShopService;
-import com.alfred.Sailfish.app.Util.BaseServlet;
+import com.alfred.Sailfish.app.Util.ShopMemberBaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "ShopDetailQuery",urlPatterns = "/shopDetailQuery")
-public class ShopDetailQuery extends BaseServlet {
+public class ShopDetailQuery extends ShopMemberBaseServlet {
 
     private ShopService shopService = new ShopService();
 

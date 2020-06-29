@@ -1,12 +1,12 @@
 package com.alfred.Sailfish.app.MemberController.Member;
 
 import com.alfred.Sailfish.app.ShopmemberService.MemberService;
-import com.alfred.Sailfish.app.Util.BaseServlet;
+import com.alfred.Sailfish.app.Util.MemberBaseServlet;
+import com.alfred.Sailfish.app.Util.ShopMemberBaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 @WebServlet(name = "MemberLogin",urlPatterns = "/memberLogin")
-public class MemberLogin extends BaseServlet {
+public class MemberLogin extends MemberBaseServlet {
 
     private MemberService memberService = new MemberService();
 

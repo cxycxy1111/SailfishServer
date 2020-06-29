@@ -1,13 +1,12 @@
 package com.alfred.Sailfish.app.ShopmemberController.CoursePlan;
 
 import com.alfred.Sailfish.app.ShopmemberService.CoursePlanService;
-import com.alfred.Sailfish.app.Util.BaseServlet;
+import com.alfred.Sailfish.app.Util.ShopMemberBaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 @WebServlet(name = "CoursePlanAddBatch",urlPatterns = "/coursePlanAddBatch")
-public class CoursePlanAddBatch extends BaseServlet {
+public class CoursePlanAddBatch extends ShopMemberBaseServlet {
 
     private CoursePlanService coursePlanService = new CoursePlanService();
 

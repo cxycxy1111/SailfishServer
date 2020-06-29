@@ -1,20 +1,19 @@
 package com.alfred.Sailfish.app.ShopmemberController.CoursePlanTeacher;
 
 import com.alfred.Sailfish.app.ShopmemberService.CoursePlanTeacherService;
-import com.alfred.Sailfish.app.Util.BaseServlet;
+import com.alfred.Sailfish.app.Util.ShopMemberBaseServlet;
 import com.alfred.Sailfish.app.Util.MethodTool;
 import com.alfred.Sailfish.app.Util.Reference;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "CoursePlanTeacherModifyBatch",urlPatterns = "/coursePlanTeacherModifyBatch")
-public class CoursePlanTeacherModifyBatch extends BaseServlet {
+public class CoursePlanTeacherModifyBatch extends ShopMemberBaseServlet {
 
     private CoursePlanTeacherService coursePlanTeacherService = new CoursePlanTeacherService();
 

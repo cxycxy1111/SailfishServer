@@ -2,13 +2,12 @@ package com.alfred.Sailfish.app.Util;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "TestServlet",urlPatterns = "/testServlet")
-public class TestServlet extends BaseServlet {
+@WebServlet(name = "TestServletShopMember",urlPatterns = "/testServlet")
+public class TestServletShopMember extends ShopMemberBaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doGet(request,response);
         doGet(request,response);

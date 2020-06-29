@@ -32,6 +32,18 @@ public class ShopmemberListQuery extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			out.append(Reference.SESSION_EXPIRED);
+		}else {
+			int type = MethodTool.reqParseToInt(request,"type");
+			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
+			String sm_type = MethodTool.getSessionValueToInt(session,"sm_type");
+			String str = shopmemberService.queryShopmemberList(s_id,sm_type,type);
+			System.out.println(MethodTool.getTime() +  ",Response:" + str);
+			response.getWriter().append(str);
+		}
 	}
 
 	/**

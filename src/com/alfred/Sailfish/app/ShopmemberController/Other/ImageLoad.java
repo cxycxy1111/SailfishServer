@@ -1,6 +1,6 @@
 package com.alfred.Sailfish.app.ShopmemberController.Other;
 
-import com.alfred.Sailfish.app.Util.BaseServlet;
+import com.alfred.Sailfish.app.Util.ShopMemberBaseServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 @WebServlet(name = "ImageLoad",urlPatterns = "/imageLoad")
-public class ImageLoad extends BaseServlet {
+public class ImageLoad extends ShopMemberBaseServlet {
 
     private static final String content_type_jpeg = "image/jpeg";
     private static final String content_type_bmp = "image/bmp";
