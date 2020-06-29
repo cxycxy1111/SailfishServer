@@ -14,7 +14,7 @@ public class MEnrollPrivService {
 
     }
 
-    public String add(String name,String number,int grade,long time,long course) throws SQLException {
+    public String add(String name,String number,int grade,long time,long course) {
         if (name.length()>20 || number.length()>11) {
             return Reference.EXE_FAIL;
         }
@@ -24,9 +24,12 @@ public class MEnrollPrivService {
         if (name.contains("'") || number.equals("'")) {
             return Reference.EXE_FAIL;
         }
-        if (mEnrollPrivDAO.add(name,number,grade,time,course)) {
+        String s = "";
+        try {
+            mEnrollPrivDAO.add(name,number,grade,time,course);
             return Reference.EXE_SUC;
-        }else  {
+        } catch (Exception e) {
+            e.printStackTrace();
             return Reference.EXE_FAIL;
         }
     }

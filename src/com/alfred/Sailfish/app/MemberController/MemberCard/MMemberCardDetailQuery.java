@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet(name = "MMemberCardDetailQuery",urlPatterns = "/mMemberCardDetailQuery")
 public class MMemberCardDetailQuery extends MemberBaseServlet {
@@ -26,17 +27,24 @@ public class MMemberCardDetailQuery extends MemberBaseServlet {
         super.doGet(request,response);
         HttpSession session = request.getSession(false);
         if (session != null) {
-            long mc_id = MethodTool.reqParseToLong(request,"mc_id");
-            if (mc_id != 0) {
-                String s = mMemberCardService.queryDetail(mc_id);
-                System.out.append(s);
-                response.getWriter().append(s);
-            }else {
-                response.getWriter().append(Reference.SESSION_EXPIRED);
-            }
+
 
         }else {
             response.getWriter().append(Reference.SESSION_EXPIRED);
         }
+    }
+
+    @Override
+    protected void dealWithSessionAlive(HttpServletRequest request, HttpServletResponse response, HttpSession session, PrintWriter out, long s_id, long m_id) throws IOException {
+        super.dealWithSessionAlive(request, response, session, out, s_id, m_id);
+        long mc_id = MethodTool.reqParseToLong(request,"mc_id");
+        String s = mMemberCardService.queryDetail(mc_id);
+        System.out.append(s);
+        out.append(s);
+    }
+
+    @Override
+    protected void dealWithSessionDead(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws IOException {
+        super.dealWithSessionDead(request, response, out);
     }
 }

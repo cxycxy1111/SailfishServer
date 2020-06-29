@@ -15,49 +15,34 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/**
- * Servlet implementation class ModifyMember
- */
 @WebServlet(name = "MMemberModify",urlPatterns = "/MModifyMember")
 public class MMemberModify extends MemberBaseServlet {
 	private static final long serialVersionUID = 1L;
 	private MMemberService mMemberService = new MMemberService();
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MMemberModify() {
-        super();
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("utf-8");
-		PrintWriter w = response.getWriter();
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-			w.append(Reference.SESSION_EXPIRED);
-		}else {
-			long s_id = MethodTool.getSessionValueToLong(session,"s_id");
-			long member_id = MethodTool.getSessionValueToLong(session,"m_id");
-			String name = request.getParameter("name");
-			String birthday = request.getParameter("birthday");
-			String phone = request.getParameter("phone");
-			String im = request.getParameter("im");
-			String str = mMemberService.modifyMember(s_id,member_id, name, birthday, phone, im);
-			System.out.println(MethodTool.getTime() +  ",Response:" + str);
-			w.append(str);
-		}
-
+    	super.doGet(request,response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		super.doPost(request,response);
 	}
 
+	@Override
+	protected void dealWithSessionAlive(HttpServletRequest request, HttpServletResponse response, HttpSession session, PrintWriter out, long s_id, long m_id) throws IOException {
+		super.dealWithSessionAlive(request, response, session, out, s_id, m_id);
+		long member_id = MethodTool.getSessionValueToLong(session,"m_id");
+		String name = request.getParameter("name");
+		String birthday = request.getParameter("birthday");
+		String phone = request.getParameter("phone");
+		String im = request.getParameter("im");
+		String str = mMemberService.modifyMember(s_id,member_id, name, birthday, phone, im);
+		System.out.println(MethodTool.getTime() +  ",Response:" + str);
+		out.append(str);
+	}
+
+	@Override
+	protected void dealWithSessionDead(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws IOException {
+		super.dealWithSessionDead(request, response, out);
+	}
 }

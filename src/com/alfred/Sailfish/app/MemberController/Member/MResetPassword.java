@@ -20,22 +20,24 @@ public class MResetPassword extends MemberBaseServlet {
     private MMemberService mMemberService = new MMemberService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request,response);
+        super.doPost(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doGet(request,response);
-        PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            out.append(Reference.SESSION_EXPIRED);
-        }else {
-            long s_id = MethodTool.getSessionValueToLong(session,"s_id");
-            long m_id = MethodTool.getSessionValueToLong(session,"m_id");
-            String newpwd = request.getParameter("newpwd");
-            String str = mMemberService.resetPassword(s_id, m_id, newpwd);
-            System.out.println(MethodTool.getTime() +  ",Response:" + str);
-            out.append(str);
-        }
+    }
+
+    @Override
+    protected void dealWithSessionAlive(HttpServletRequest request, HttpServletResponse response, HttpSession session, PrintWriter out, long s_id, long m_id) throws IOException {
+        super.dealWithSessionAlive(request, response, session, out, s_id, m_id);
+        String newpwd = request.getParameter("newpwd");
+        String str = mMemberService.resetPassword(s_id, m_id, newpwd);
+        System.out.println(MethodTool.getTime() +  ",Response:" + str);
+        out.append(str);
+    }
+
+    @Override
+    protected void dealWithSessionDead(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws IOException {
+        super.dealWithSessionDead(request, response, out);
     }
 }
